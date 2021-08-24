@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,14 +17,39 @@ class WeatherFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val weatherAdapter = WeatherAdapter()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO: Use the ViewModel
+        prepareViews()
+        observeViewModel()
+    }
+
+    private fun prepareViews(): Unit = with(binding) {
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = weatherAdapter
+        }
+        swipeToRefreshLayout.apply {
+            setProgressViewEndTarget(true, progressViewEndOffset)
+        }
+    }
+
+    private fun observeViewModel(): Unit = with(viewModel) {
+        viewState.observe(viewLifecycleOwner) { viewState -> render(viewState) }
+    }
+
+    private fun render(viewState: ViewState): Unit = with(binding) {
+        weatherAdapter.submitList(viewState.items)
     }
 
     override fun onDestroyView() {
