@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Cyclone</string>
+    <string name="weather_now_title">Now</string>
+    <string name="weather_wind">Wind</string>
+    <string name="weather_pressure">Pressure</string>
+    <string name="weather_humidity">Humidity</string>
+    <string name="weather_dew_point">Dew point</string>
+    <string name="weather_visibility">Visibility</string>
+    <string name="weather_uv_index">UV index</string>
 </resources>

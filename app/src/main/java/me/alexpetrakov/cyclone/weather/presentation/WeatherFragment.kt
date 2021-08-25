@@ -17,7 +17,7 @@ class WeatherFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val weatherAdapter = WeatherAdapter()
+    private val weatherAdapter by lazy { WeatherAdapter(resources) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

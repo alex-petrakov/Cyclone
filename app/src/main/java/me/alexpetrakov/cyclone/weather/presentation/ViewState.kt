@@ -1,15 +1,36 @@
 package me.alexpetrakov.cyclone.weather.presentation
 
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
+import me.alexpetrakov.cyclone.common.TextResource
 
-data class ViewState(val items: List<String>)
+data class ViewState(val items: List<DisplayableItem>)
 
-val stringDiffCallback = object : DiffUtil.ItemCallback<String>() {
-    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-        return oldItem == newItem
-    }
+sealed class DisplayableItem {
+    data class Header(val text: TextResource) : DisplayableItem()
+    data class CurrentConditions(
+        val temperature: TextResource,
+        val conditions: TextResource,
+        val feelsLikeTemperature: TextResource,
+        @DrawableRes val conditionsIconRes: Int,
+        val wind: TextResource,
+        val pressure: TextResource,
+        val humidity: TextResource,
+        val dewPoint: TextResource,
+        val visibility: TextResource,
+        val uvIndex: TextResource
+    ) : DisplayableItem()
 
-    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-        return areItemsTheSame(oldItem, newItem)
+    object DiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
+        override fun areItemsTheSame(oldItem: DisplayableItem, newItem: DisplayableItem): Boolean {
+            return false
+        }
+
+        override fun areContentsTheSame(
+            oldItem: DisplayableItem,
+            newItem: DisplayableItem
+        ): Boolean {
+            return false
+        }
     }
 }
