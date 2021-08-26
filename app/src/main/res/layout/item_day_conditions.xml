@@ -29,13 +29,15 @@
         android:textColor="?colorPrecipitation"
         tools:text="38%" />
 
+    <!-- Content description is set programmatically -->
     <ImageView
         android:id="@+id/conditions_image_view"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="40dp"
-        tools:src="@drawable/ic_weather_cloudy" />
+        tools:src="@drawable/ic_weather_cloudy"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/temp_low_text_view"

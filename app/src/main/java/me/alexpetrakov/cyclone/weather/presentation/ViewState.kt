@@ -8,6 +8,7 @@ data class ViewState(val items: List<DisplayableItem>)
 
 sealed class DisplayableItem {
     data class Header(val text: TextResource) : DisplayableItem()
+
     data class CurrentConditions(
         val temperature: TextResource,
         val conditions: TextResource,
@@ -31,6 +32,9 @@ sealed class DisplayableItem {
         val precipitationChanceIsVisible: Boolean
     ) : DisplayableItem()
 
+    data class HourlyForecast(val hourConditions: List<HourConditions>) : DisplayableItem()
+
+    // TODO: Implement DiffUtil.ItemCallback
     object DiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
         override fun areItemsTheSame(oldItem: DisplayableItem, newItem: DisplayableItem): Boolean {
             return false
@@ -40,6 +44,26 @@ sealed class DisplayableItem {
             oldItem: DisplayableItem,
             newItem: DisplayableItem
         ): Boolean {
+            return false
+        }
+    }
+}
+
+data class HourConditions(
+    val time: TextResource,
+    val temperature: TextResource,
+    val precipitationChance: TextResource,
+    val precipitationChanceIsVisible: Boolean,
+    val conditions: TextResource,
+    @DrawableRes val conditionsIconRes: Int
+) {
+    // TODO: Implement DiffUtil.ItemCallback
+    object DiffCallback : DiffUtil.ItemCallback<HourConditions>() {
+        override fun areItemsTheSame(oldItem: HourConditions, newItem: HourConditions): Boolean {
+            return false
+        }
+
+        override fun areContentsTheSame(oldItem: HourConditions, newItem: HourConditions): Boolean {
             return false
         }
     }

@@ -22,6 +22,18 @@ class WeatherViewModel : ViewModel() {
                 "0".asTextResource()
             ),
             DisplayableItem.Header("Today".asTextResource()),
+            DisplayableItem.HourlyForecast(
+                (12..19).map { hour ->
+                    HourConditions(
+                        "$hour pm".asTextResource(),
+                        "19°".asTextResource(),
+                        "0%".asTextResource(),
+                        hour % 2 == 0,
+                        "Cloudy".asTextResource(),
+                        R.drawable.ic_weather_cloudy
+                    )
+                }
+            ),
             DisplayableItem.Header("This week".asTextResource()),
             DisplayableItem.DayConditions(
                 "Aug 26".asTextResource(),

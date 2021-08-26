@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.R
@@ -11,6 +12,7 @@ import me.alexpetrakov.cyclone.common.asString
 import me.alexpetrakov.cyclone.databinding.ItemCurrentConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemDayConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemHeaderBinding
+import me.alexpetrakov.cyclone.databinding.ItemHourlyForecastBinding
 
 class WeatherAdapter :
     ListAdapter<DisplayableItem, RecyclerView.ViewHolder>(DisplayableItem.DiffCallback) {
@@ -19,6 +21,7 @@ class WeatherAdapter :
         return when (getItem(position)) {
             is DisplayableItem.Header -> R.layout.item_header
             is DisplayableItem.CurrentConditions -> R.layout.item_current_conditions
+            is DisplayableItem.HourlyForecast -> R.layout.item_hourly_forecast
             is DisplayableItem.DayConditions -> R.layout.item_day_conditions
         }
     }
@@ -27,6 +30,7 @@ class WeatherAdapter :
         return when (viewType) {
             R.layout.item_header -> HeaderViewHolder.from(parent)
             R.layout.item_current_conditions -> CurrentConditionsViewHolder.from(parent)
+            R.layout.item_hourly_forecast -> HourlyForecastViewHolder.from(parent)
             R.layout.item_day_conditions -> DayConditionsViewHolder.from(parent)
             else -> throw IllegalStateException("Unknown view type: $viewType")
         }
@@ -37,6 +41,7 @@ class WeatherAdapter :
         when (holder) {
             is HeaderViewHolder -> holder.bind(item as DisplayableItem.Header)
             is CurrentConditionsViewHolder -> holder.bind(item as DisplayableItem.CurrentConditions)
+            is HourlyForecastViewHolder -> holder.bind(item as DisplayableItem.HourlyForecast)
             is DayConditionsViewHolder -> holder.bind(item as DisplayableItem.DayConditions)
             else -> throw IllegalStateException("Unexpected view holder type: ${holder::class.java}")
         }
@@ -89,6 +94,36 @@ class WeatherAdapter :
         }
     }
 
+    class HourlyForecastViewHolder(
+        private val binding: ItemHourlyForecastBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: DisplayableItem.HourlyForecast): Unit = with(binding) {
+            hourlyForecastRecyclerView.adapter = HourlyForecastAdapter().apply {
+                submitList(item.hourConditions)
+            }
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): HourlyForecastViewHolder {
+                val context = parent.context
+                val binding = ItemHourlyForecastBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ).apply {
+                    hourlyForecastRecyclerView.layoutManager = LinearLayoutManager(
+                        context,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
+                }
+                return HourlyForecastViewHolder(
+                    binding
+                )
+            }
+        }
+    }
+
     class DayConditionsViewHolder(
         private val binding: ItemDayConditionsBinding,
         private val resources: Resources
@@ -101,7 +136,10 @@ class WeatherAdapter :
                 isVisible = item.precipitationChanceIsVisible
                 text = item.precipitationChance.asString(resources)
             }
-            conditionsImageView.setImageResource(item.conditionsIconRes)
+            conditionsImageView.apply {
+                setImageResource(item.conditionsIconRes)
+                contentDescription = item.conditions.asString(resources)
+            }
         }
 
         companion object {

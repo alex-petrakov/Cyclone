@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="80dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="12dp">
+
+    <TextView
+        android:id="@+id/temperature_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceBody1"
+        tools:text="25°" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <!-- Content description is set programmatically -->
+        <ImageView
+            android:id="@+id/conditions_image_view"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            tools:src="@drawable/ic_weather_cloudy"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/precipitation_chance_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?textAppearanceBody2"
+            android:textColor="?colorPrecipitation"
+            tools:text="100%" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/time_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?textAppearanceBody1"
+        tools:text="11 am" />
+</LinearLayout>
