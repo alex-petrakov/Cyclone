@@ -11,5 +11,6 @@
 
         <!-- Custom attributes -->
         <item name="colorCloudy">#C0C0C0</item>
+        <item name="colorPrecipitation">#1B9AD0</item>
     </style>
 </resources>

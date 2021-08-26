@@ -22,7 +22,16 @@ class WeatherViewModel : ViewModel() {
                 "0".asTextResource()
             ),
             DisplayableItem.Header("Today".asTextResource()),
-            DisplayableItem.Header("This week".asTextResource())
+            DisplayableItem.Header("This week".asTextResource()),
+            DisplayableItem.DayConditions(
+                "Aug 26".asTextResource(),
+                "17°".asTextResource(),
+                "25°".asTextResource(),
+                "Cloudy".asTextResource(),
+                R.drawable.ic_weather_cloudy,
+                "38%".asTextResource(),
+                true
+            )
         )
         emit(ViewState(items))
     }

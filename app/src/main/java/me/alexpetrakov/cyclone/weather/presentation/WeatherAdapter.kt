@@ -3,11 +3,13 @@ package me.alexpetrakov.cyclone.weather.presentation
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.asString
 import me.alexpetrakov.cyclone.databinding.ItemCurrentConditionsBinding
+import me.alexpetrakov.cyclone.databinding.ItemDayConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemHeaderBinding
 
 class WeatherAdapter :
@@ -17,6 +19,7 @@ class WeatherAdapter :
         return when (getItem(position)) {
             is DisplayableItem.Header -> R.layout.item_header
             is DisplayableItem.CurrentConditions -> R.layout.item_current_conditions
+            is DisplayableItem.DayConditions -> R.layout.item_day_conditions
         }
     }
 
@@ -24,14 +27,17 @@ class WeatherAdapter :
         return when (viewType) {
             R.layout.item_header -> HeaderViewHolder.from(parent)
             R.layout.item_current_conditions -> CurrentConditionsViewHolder.from(parent)
+            R.layout.item_day_conditions -> DayConditionsViewHolder.from(parent)
             else -> throw IllegalStateException("Unknown view type: $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = getItem(position)
         when (holder) {
-            is HeaderViewHolder -> holder.bind(getItem(position) as DisplayableItem.Header)
-            is CurrentConditionsViewHolder -> holder.bind(getItem(position) as DisplayableItem.CurrentConditions)
+            is HeaderViewHolder -> holder.bind(item as DisplayableItem.Header)
+            is CurrentConditionsViewHolder -> holder.bind(item as DisplayableItem.CurrentConditions)
+            is DayConditionsViewHolder -> holder.bind(item as DisplayableItem.DayConditions)
             else -> throw IllegalStateException("Unexpected view holder type: ${holder::class.java}")
         }
     }
@@ -67,7 +73,7 @@ class WeatherAdapter :
             windValueTextView.text = item.wind.asString(resources)
             pressureValueTextView.text = item.pressure.asString(resources)
             humidityValueTextView.text = item.humidity.asString(resources)
-            dewPointValueTextView.text = item.humidity.asString(resources)
+            dewPointValueTextView.text = item.dewPoint.asString(resources)
             visibilityValueTextView.text = item.visibility.asString(resources)
             uvIndexTextView.text = item.uvIndex.asString(resources)
         }
@@ -77,6 +83,32 @@ class WeatherAdapter :
                 val layoutInflater = LayoutInflater.from(parent.context)
                 return CurrentConditionsViewHolder(
                     ItemCurrentConditionsBinding.inflate(layoutInflater, parent, false),
+                    parent.context.resources
+                )
+            }
+        }
+    }
+
+    class DayConditionsViewHolder(
+        private val binding: ItemDayConditionsBinding,
+        private val resources: Resources
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: DisplayableItem.DayConditions): Unit = with(binding) {
+            dateTextView.text = item.date.asString(resources)
+            tempLowTextView.text = item.temperatureLow.asString(resources)
+            tempHighTextView.text = item.temperatureHigh.asString(resources)
+            precipitationChanceTextView.apply {
+                isVisible = item.precipitationChanceIsVisible
+                text = item.precipitationChance.asString(resources)
+            }
+            conditionsImageView.setImageResource(item.conditionsIconRes)
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): DayConditionsViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return DayConditionsViewHolder(
+                    ItemDayConditionsBinding.inflate(layoutInflater, parent, false),
                     parent.context.resources
                 )
             }

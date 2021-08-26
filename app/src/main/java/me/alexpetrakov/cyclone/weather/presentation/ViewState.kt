@@ -21,6 +21,16 @@ sealed class DisplayableItem {
         val uvIndex: TextResource
     ) : DisplayableItem()
 
+    data class DayConditions(
+        val date: TextResource,
+        val temperatureLow: TextResource,
+        val temperatureHigh: TextResource,
+        val conditions: TextResource,
+        @DrawableRes val conditionsIconRes: Int,
+        val precipitationChance: TextResource,
+        val precipitationChanceIsVisible: Boolean
+    ) : DisplayableItem()
+
     object DiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
         override fun areItemsTheSame(oldItem: DisplayableItem, newItem: DisplayableItem): Boolean {
             return false

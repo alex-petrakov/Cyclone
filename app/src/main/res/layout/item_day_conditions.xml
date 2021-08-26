@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp">
+
+    <TextView
+        android:id="@+id/date_text_view"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textAppearance="?textAppearanceSubtitle1"
+        tools:text="Today" />
+
+    <TextView
+        android:id="@+id/precipitation_chance_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical|end"
+        android:maxLines="1"
+        android:minWidth="48dp"
+        android:textAppearance="?textAppearanceBody2"
+        android:textColor="?colorPrecipitation"
+        tools:text="38%" />
+
+    <ImageView
+        android:id="@+id/conditions_image_view"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="40dp"
+        tools:src="@drawable/ic_weather_cloudy" />
+
+    <TextView
+        android:id="@+id/temp_low_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|end"
+        android:maxLines="1"
+        android:minWidth="48dp"
+        android:textAppearance="?textAppearanceBody1"
+        android:textColor="?android:textColorSecondary"
+        tools:text="17°" />
+
+    <TextView
+        android:id="@+id/temp_high_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|end"
+        android:maxLines="1"
+        android:minWidth="48dp"
+        android:textAppearance="?textAppearanceBody1"
+        tools:text="25°" />
+</LinearLayout>
