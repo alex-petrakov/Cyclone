@@ -10,9 +10,8 @@ import me.alexpetrakov.cyclone.common.asString
 import me.alexpetrakov.cyclone.databinding.ItemCurrentConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemHeaderBinding
 
-class WeatherAdapter(
-    private val resources: Resources
-) : ListAdapter<DisplayableItem, RecyclerView.ViewHolder>(DisplayableItem.DiffCallback) {
+class WeatherAdapter :
+    ListAdapter<DisplayableItem, RecyclerView.ViewHolder>(DisplayableItem.DiffCallback) {
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -22,16 +21,9 @@ class WeatherAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.item_header -> HeaderViewHolder(
-                ItemHeaderBinding.inflate(layoutInflater, parent, false),
-                resources
-            )
-            R.layout.item_current_conditions -> CurrentConditionsViewHolder(
-                ItemCurrentConditionsBinding.inflate(layoutInflater, parent, false),
-                resources
-            )
+            R.layout.item_header -> HeaderViewHolder.from(parent)
+            R.layout.item_current_conditions -> CurrentConditionsViewHolder.from(parent)
             else -> throw IllegalStateException("Unknown view type: $viewType")
         }
     }
@@ -51,6 +43,16 @@ class WeatherAdapter(
         fun bind(item: DisplayableItem.Header): Unit = with(binding) {
             titleTextView.text = item.text.asString(resources)
         }
+
+        companion object {
+            fun from(parent: ViewGroup): HeaderViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return HeaderViewHolder(
+                    ItemHeaderBinding.inflate(layoutInflater, parent, false),
+                    parent.context.resources
+                )
+            }
+        }
     }
 
     class CurrentConditionsViewHolder(
@@ -68,6 +70,16 @@ class WeatherAdapter(
             dewPointValueTextView.text = item.humidity.asString(resources)
             visibilityValueTextView.text = item.visibility.asString(resources)
             uvIndexTextView.text = item.uvIndex.asString(resources)
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): CurrentConditionsViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return CurrentConditionsViewHolder(
+                    ItemCurrentConditionsBinding.inflate(layoutInflater, parent, false),
+                    parent.context.resources
+                )
+            }
         }
     }
 }
