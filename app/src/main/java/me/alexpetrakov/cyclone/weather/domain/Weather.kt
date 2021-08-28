@@ -26,10 +26,22 @@ data class CurrentConditions(
 
 data class OverallConditions(
     val id: Int,
-    val main: String,
+    val title: String,
     val description: String,
-    val icon: String
+    val icon: Icon
 )
+
+enum class Icon(val id: Int) {
+    CLEAR(0),
+    FEW_CLOUDS(1),
+    SCATTERED_CLOUDS(2),
+    BROKEN_CLOUDS(3),
+    SHOWER_RAIN(4),
+    RAIN(5),
+    THUNDERSTORM(6),
+    SNOW(7),
+    MIST(8)
+}
 
 data class Wind(
     val speed: Speed,

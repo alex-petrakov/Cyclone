@@ -31,7 +31,7 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
     private fun CurrentConditions.toUiModel(): DisplayableItem.CurrentConditions {
         return DisplayableItem.CurrentConditions(
             temperature.value.toString().asTextResource(),
-            overallConditions[0].main.asTextResource(),
+            overallConditions[0].title.asTextResource(),
             temperature.value.toString().asTextResource(),
             R.drawable.ic_weather_cloudy,
             "${wind.speed.value}".asTextResource(),
