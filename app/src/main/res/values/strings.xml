@@ -14,4 +14,6 @@
     <string name="template_pressure_pascal"><![CDATA[%d Pa]]></string>
     <string name="weather_today_title">Today</string>
     <string name="weather_this_week_title">This week</string>
+    <string name="weather_error_cant_connect">Can\'t connect to the server</string>
+    <string name="app_action_try_again">Try again</string>
 </resources>

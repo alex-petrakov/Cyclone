@@ -1,5 +1,6 @@
 package me.alexpetrakov.cyclone.weather.data
 
+import kotlinx.coroutines.delay
 import me.alexpetrakov.cyclone.weather.domain.*
 import me.alexpetrakov.cyclone.weather.domain.units.*
 import me.alexpetrakov.cyclone.weather.domain.units.PressureUnit.Companion.pascal
@@ -133,6 +134,7 @@ class WeatherProvider : WeatherRepository {
     )
 
     override suspend fun getWeather(): Result<Weather> {
+        delay(3000L)
         return Result.success(weather)
     }
 }

@@ -5,7 +5,17 @@ import androidx.recyclerview.widget.DiffUtil
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.TextResource
 
-data class ViewState(val items: List<DisplayableItem>)
+sealed class ViewState {
+
+    object Loading : ViewState()
+
+    object Error : ViewState()
+
+    data class Content(
+        val isRefreshing: Boolean,
+        val items: List<DisplayableItem>
+    ) : ViewState()
+}
 
 sealed class DisplayableItem {
     data class HeaderUi(val text: TextResource) : DisplayableItem()

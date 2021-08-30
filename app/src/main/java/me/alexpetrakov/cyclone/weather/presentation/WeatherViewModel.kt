@@ -14,9 +14,10 @@ import java.util.*
 class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
 
     private val _viewState = liveData {
+        emit(ViewState.Loading)
         weatherRepository.getWeather().fold(
-            { weather -> emit(ViewState(weather.toUiModel())) },
-            { TODO("Not implemented") }
+            { weather -> emit(ViewState.Content(false, weather.toUiModel())) },
+            { emit(ViewState.Error) }
         )
     }
 

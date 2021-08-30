@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
@@ -35,12 +36,14 @@ class WeatherFragment : Fragment() {
     }
 
     private fun prepareViews(): Unit = with(binding) {
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = weatherAdapter
-        }
-        swipeToRefreshLayout.apply {
-            setProgressViewEndTarget(true, progressViewEndOffset)
+        contentView.apply {
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = weatherAdapter
+            }
+            swipeToRefreshLayout.apply {
+                setProgressViewEndTarget(true, progressViewEndOffset)
+            }
         }
     }
 
@@ -49,6 +52,29 @@ class WeatherFragment : Fragment() {
     }
 
     private fun render(viewState: ViewState): Unit = with(binding) {
+        when (viewState) {
+            ViewState.Loading -> {
+                contentView.root.isVisible = false
+                errorView.root.isVisible = false
+                progressIndicator.isVisible = true
+            }
+            is ViewState.Content -> {
+                contentView.root.isVisible = true
+                errorView.root.isVisible = false
+                progressIndicator.isVisible = false
+                renderContent(viewState)
+            }
+            is ViewState.Error -> {
+                contentView.root.isVisible = false
+                errorView.root.isVisible = true
+                progressIndicator.isVisible = false
+            }
+
+        }
+    }
+
+    private fun renderContent(viewState: ViewState.Content) = with(binding.contentView) {
+        swipeToRefreshLayout.isRefreshing = viewState.isRefreshing
         weatherAdapter.submitList(viewState.items)
     }
 
