@@ -19,10 +19,10 @@ class WeatherAdapter :
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is DisplayableItem.Header -> R.layout.item_header
-            is DisplayableItem.CurrentConditions -> R.layout.item_current_conditions
-            is DisplayableItem.HourlyForecast -> R.layout.item_hourly_forecast
-            is DisplayableItem.DayConditions -> R.layout.item_day_conditions
+            is DisplayableItem.HeaderUi -> R.layout.item_header
+            is DisplayableItem.CurrentConditionsUi -> R.layout.item_current_conditions
+            is DisplayableItem.HourlyForecastUi -> R.layout.item_hourly_forecast
+            is DisplayableItem.DayConditionsUi -> R.layout.item_day_conditions
         }
     }
 
@@ -39,10 +39,10 @@ class WeatherAdapter :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         when (holder) {
-            is HeaderViewHolder -> holder.bind(item as DisplayableItem.Header)
-            is CurrentConditionsViewHolder -> holder.bind(item as DisplayableItem.CurrentConditions)
-            is HourlyForecastViewHolder -> holder.bind(item as DisplayableItem.HourlyForecast)
-            is DayConditionsViewHolder -> holder.bind(item as DisplayableItem.DayConditions)
+            is HeaderViewHolder -> holder.bind(item as DisplayableItem.HeaderUi)
+            is CurrentConditionsViewHolder -> holder.bind(item as DisplayableItem.CurrentConditionsUi)
+            is HourlyForecastViewHolder -> holder.bind(item as DisplayableItem.HourlyForecastUi)
+            is DayConditionsViewHolder -> holder.bind(item as DisplayableItem.DayConditionsUi)
             else -> throw IllegalStateException("Unexpected view holder type: ${holder::class.java}")
         }
     }
@@ -51,7 +51,7 @@ class WeatherAdapter :
         private val binding: ItemHeaderBinding,
         private val resources: Resources
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DisplayableItem.Header): Unit = with(binding) {
+        fun bind(item: DisplayableItem.HeaderUi): Unit = with(binding) {
             titleTextView.text = item.text.asString(resources)
         }
 
@@ -70,11 +70,11 @@ class WeatherAdapter :
         private val binding: ItemCurrentConditionsBinding,
         private val resources: Resources
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DisplayableItem.CurrentConditions): Unit = with(binding) {
+        fun bind(item: DisplayableItem.CurrentConditionsUi): Unit = with(binding) {
             temperatureTextView.text = item.temperature.asString(resources)
             feelsLikeTextView.text = item.feelsLikeTemperature.asString(resources)
             conditionsTextView.text = item.conditions.asString(resources)
-            conditionsImageView.setImageResource(item.conditionsIconRes)
+            conditionsImageView.setImageResource(item.icon.resId)
             windValueTextView.text = item.wind.asString(resources)
             pressureValueTextView.text = item.pressure.asString(resources)
             humidityValueTextView.text = item.humidity.asString(resources)
@@ -97,7 +97,7 @@ class WeatherAdapter :
     class HourlyForecastViewHolder(
         private val binding: ItemHourlyForecastBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DisplayableItem.HourlyForecast): Unit = with(binding) {
+        fun bind(item: DisplayableItem.HourlyForecastUi): Unit = with(binding) {
             hourlyForecastRecyclerView.adapter = HourlyForecastAdapter().apply {
                 submitList(item.hourConditions)
             }
@@ -128,7 +128,7 @@ class WeatherAdapter :
         private val binding: ItemDayConditionsBinding,
         private val resources: Resources
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DisplayableItem.DayConditions): Unit = with(binding) {
+        fun bind(item: DisplayableItem.DayConditionsUi): Unit = with(binding) {
             dateTextView.text = item.date.asString(resources)
             tempLowTextView.text = item.temperatureLow.asString(resources)
             tempHighTextView.text = item.temperatureHigh.asString(resources)
@@ -137,7 +137,7 @@ class WeatherAdapter :
                 text = item.precipitationChance.asString(resources)
             }
             conditionsImageView.apply {
-                setImageResource(item.conditionsIconRes)
+                setImageResource(item.icon.resId)
                 contentDescription = item.conditions.asString(resources)
             }
         }

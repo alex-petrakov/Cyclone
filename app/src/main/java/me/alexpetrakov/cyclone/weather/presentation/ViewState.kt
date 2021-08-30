@@ -2,18 +2,19 @@ package me.alexpetrakov.cyclone.weather.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
+import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.TextResource
 
 data class ViewState(val items: List<DisplayableItem>)
 
 sealed class DisplayableItem {
-    data class Header(val text: TextResource) : DisplayableItem()
+    data class HeaderUi(val text: TextResource) : DisplayableItem()
 
-    data class CurrentConditions(
+    data class CurrentConditionsUi(
         val temperature: TextResource,
         val conditions: TextResource,
         val feelsLikeTemperature: TextResource,
-        @DrawableRes val conditionsIconRes: Int,
+        val icon: IconUi,
         val wind: TextResource,
         val pressure: TextResource,
         val humidity: TextResource,
@@ -22,17 +23,17 @@ sealed class DisplayableItem {
         val uvIndex: TextResource
     ) : DisplayableItem()
 
-    data class DayConditions(
+    data class DayConditionsUi(
         val date: TextResource,
         val temperatureLow: TextResource,
         val temperatureHigh: TextResource,
         val conditions: TextResource,
-        @DrawableRes val conditionsIconRes: Int,
+        val icon: IconUi,
         val precipitationChance: TextResource,
         val precipitationChanceIsVisible: Boolean
     ) : DisplayableItem()
 
-    data class HourlyForecast(val hourConditions: List<HourConditions>) : DisplayableItem()
+    data class HourlyForecastUi(val hourConditions: List<HourConditionsUi>) : DisplayableItem()
 
     // TODO: Implement DiffUtil.ItemCallback
     object DiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
@@ -49,22 +50,40 @@ sealed class DisplayableItem {
     }
 }
 
-data class HourConditions(
+data class HourConditionsUi(
     val time: TextResource,
     val temperature: TextResource,
     val precipitationChance: TextResource,
     val precipitationChanceIsVisible: Boolean,
     val conditions: TextResource,
-    @DrawableRes val conditionsIconRes: Int
+    val icon: IconUi
 ) {
     // TODO: Implement DiffUtil.ItemCallback
-    object DiffCallback : DiffUtil.ItemCallback<HourConditions>() {
-        override fun areItemsTheSame(oldItem: HourConditions, newItem: HourConditions): Boolean {
+    object DiffCallback : DiffUtil.ItemCallback<HourConditionsUi>() {
+        override fun areItemsTheSame(
+            oldItem: HourConditionsUi,
+            newItem: HourConditionsUi
+        ): Boolean {
             return false
         }
 
-        override fun areContentsTheSame(oldItem: HourConditions, newItem: HourConditions): Boolean {
+        override fun areContentsTheSame(
+            oldItem: HourConditionsUi,
+            newItem: HourConditionsUi
+        ): Boolean {
             return false
         }
     }
+}
+
+enum class IconUi(@DrawableRes val resId: Int) {
+    CLEAR(R.drawable.ic_weather_clear),
+    FEW_CLOUDS(R.drawable.ic_weather_partly_cloudy),
+    SCATTERED_CLOUDS(R.drawable.ic_weather_cloudy),
+    BROKEN_CLOUDS(R.drawable.ic_weather_cloudy),
+    RAIN_SHOWER(R.drawable.ic_weather_rain_shower),
+    RAIN(R.drawable.ic_weather_rain),
+    THUNDERSTORM(R.drawable.ic_weather_thunderstorm),
+    SNOW(R.drawable.ic_weather_snow),
+    MIST(R.drawable.ic_weather_mist)
 }

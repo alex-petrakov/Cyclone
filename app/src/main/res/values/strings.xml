@@ -7,4 +7,11 @@
     <string name="weather_dew_point">Dew point</string>
     <string name="weather_visibility">Visibility</string>
     <string name="weather_uv_index">UV index</string>
+    <string name="template_temperature_degree">%d°</string>
+    <string name="template_temperature_kelvin"><![CDATA[%d K]]></string>
+    <string name="template_speed_meter_per_second"><![CDATA[%d m/s]]></string>
+    <string name="template_length_meter"><![CDATA[%d m]]></string>
+    <string name="template_pressure_pascal"><![CDATA[%d Pa]]></string>
+    <string name="weather_today_title">Today</string>
+    <string name="weather_this_week_title">This week</string>
 </resources>

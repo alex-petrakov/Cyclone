@@ -4,7 +4,10 @@ import me.alexpetrakov.cyclone.weather.domain.units.Distance
 import me.alexpetrakov.cyclone.weather.domain.units.Pressure
 import me.alexpetrakov.cyclone.weather.domain.units.Speed
 import me.alexpetrakov.cyclone.weather.domain.units.Temperature
-import java.time.LocalDateTime
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
 
 data class Weather(
     val currentConditions: CurrentConditions,
@@ -36,7 +39,7 @@ enum class Icon(val id: Int) {
     FEW_CLOUDS(1),
     SCATTERED_CLOUDS(2),
     BROKEN_CLOUDS(3),
-    SHOWER_RAIN(4),
+    RAIN_SHOWER(4),
     RAIN(5),
     THUNDERSTORM(6),
     SNOW(7),
@@ -50,16 +53,22 @@ data class Wind(
 )
 
 data class HourConditions(
-    val dateTime: LocalDateTime,
+    val timestamp: Instant,
     val temperature: Temperature,
     val overallConditions: List<OverallConditions>,
     val precipitationChance: Double
-)
+) {
+    val localTime: LocalTime
+        get() = timestamp.atZone(ZoneId.systemDefault()).toLocalTime()
+}
 
 data class DayConditions(
-    val dateTime: LocalDateTime,
+    val timestamp: Instant,
     val tempHigh: Temperature,
     val tempLow: Temperature,
     val overallConditions: List<OverallConditions>,
     val precipitationChance: Double
-)
+) {
+    val localDate: LocalDate
+        get() = timestamp.atZone(ZoneId.systemDefault()).toLocalDate()
+}

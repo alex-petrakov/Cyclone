@@ -10,7 +10,7 @@ import me.alexpetrakov.cyclone.common.asString
 import me.alexpetrakov.cyclone.databinding.ItemHourConditionsBinding
 
 class HourlyForecastAdapter :
-    ListAdapter<HourConditions, HourlyForecastAdapter.ViewHolder>(HourConditions.DiffCallback) {
+    ListAdapter<HourConditionsUi, HourlyForecastAdapter.ViewHolder>(HourConditionsUi.DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -32,14 +32,14 @@ class HourlyForecastAdapter :
         private val resources: Resources
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HourConditions): Unit = with(binding) {
+        fun bind(item: HourConditionsUi): Unit = with(binding) {
             temperatureTextView.text = item.temperature.asString(resources)
             precipitationChanceTextView.apply {
                 text = item.precipitationChance.asString(resources)
                 isVisible = item.precipitationChanceIsVisible
             }
             conditionsImageView.apply {
-                setImageResource(item.conditionsIconRes)
+                setImageResource(item.icon.resId)
                 contentDescription = item.conditions.asString(resources)
             }
             timeTextView.text = item.time.asString(resources)
