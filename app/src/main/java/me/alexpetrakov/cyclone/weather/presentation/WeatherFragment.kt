@@ -43,8 +43,11 @@ class WeatherFragment : Fragment() {
             }
             swipeToRefreshLayout.apply {
                 setProgressViewEndTarget(true, progressViewEndOffset)
+                setOnRefreshListener { viewModel.onRefresh() }
             }
         }
+
+        errorView.retryButton.setOnClickListener { viewModel.onRetryAfterFailure() }
     }
 
     private fun observeViewModel(): Unit = with(viewModel) {
@@ -56,25 +59,27 @@ class WeatherFragment : Fragment() {
             ViewState.Loading -> {
                 contentView.root.isVisible = false
                 errorView.root.isVisible = false
-                progressIndicator.isVisible = true
+                progressIndicator.show()
             }
             is ViewState.Content -> {
                 contentView.root.isVisible = true
                 errorView.root.isVisible = false
-                progressIndicator.isVisible = false
+                progressIndicator.hide()
                 renderContent(viewState)
             }
             is ViewState.Error -> {
                 contentView.root.isVisible = false
                 errorView.root.isVisible = true
-                progressIndicator.isVisible = false
+                progressIndicator.hide()
             }
 
         }
     }
 
     private fun renderContent(viewState: ViewState.Content) = with(binding.contentView) {
-        swipeToRefreshLayout.isRefreshing = viewState.isRefreshing
+        if (swipeToRefreshLayout.isRefreshing != viewState.isRefreshing) {
+            swipeToRefreshLayout.isRefreshing = viewState.isRefreshing
+        }
         weatherAdapter.submitList(viewState.items)
     }
 

@@ -5,6 +5,7 @@ import me.alexpetrakov.cyclone.weather.domain.*
 import me.alexpetrakov.cyclone.weather.domain.units.*
 import me.alexpetrakov.cyclone.weather.domain.units.PressureUnit.Companion.pascal
 import java.time.ZonedDateTime
+import kotlin.random.Random
 
 class WeatherProvider : WeatherRepository {
 
@@ -133,8 +134,14 @@ class WeatherProvider : WeatherRepository {
         )
     )
 
+    private val random = Random(System.currentTimeMillis())
+
     override suspend fun getWeather(): Result<Weather> {
         delay(3000L)
-        return Result.success(weather)
+        return if (random.nextBoolean()) {
+            Result.success(weather)
+        } else {
+            Result.failure(RuntimeException())
+        }
     }
 }

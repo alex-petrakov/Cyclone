@@ -1,7 +1,9 @@
 package me.alexpetrakov.cyclone.weather.presentation
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.TextResource
 import me.alexpetrakov.cyclone.common.asTextResource
@@ -13,12 +15,8 @@ import java.util.*
 
 class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
 
-    private val _viewState = liveData {
-        emit(ViewState.Loading)
-        weatherRepository.getWeather().fold(
-            { weather -> emit(ViewState.Content(false, weather.toUiModel())) },
-            { emit(ViewState.Error) }
-        )
+    private val _viewState = MutableLiveData<ViewState>().apply {
+        value = ViewState.Loading
     }
 
     val viewState get() = _viewState
@@ -30,6 +28,38 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
     private val percentFormatter = NumberFormat.getPercentInstance().apply {
         minimumFractionDigits = 0
         maximumFractionDigits = 0
+    }
+
+    init {
+        loadForecast()
+    }
+
+    private fun loadForecast() {
+        viewModelScope.launch {
+            _viewState.value = ViewState.Loading
+            _viewState.value = weatherRepository.getWeather()
+                .fold(::handleForecast, ::handleFailure)
+        }
+    }
+
+    private fun refreshForecast() {
+        val currentViewState = _viewState.value
+        check(currentViewState is ViewState.Content) {
+            "Refresh can be triggered only from ViewState.Content state"
+        }
+        viewModelScope.launch {
+            _viewState.value = currentViewState.copy(isRefreshing = true)
+            _viewState.value = weatherRepository.getWeather()
+                .fold(::handleForecast, ::handleFailure)
+        }
+    }
+
+    private fun handleForecast(weather: Weather): ViewState {
+        return ViewState.Content(false, weather.toUiModel())
+    }
+
+    private fun handleFailure(throwable: Throwable): ViewState {
+        return ViewState.Error
     }
 
     private fun Weather.toUiModel(): List<DisplayableItem> {
@@ -99,6 +129,14 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
             Icon.SNOW -> IconUi.SNOW
             Icon.MIST -> IconUi.MIST
         }
+    }
+
+    fun onRetryAfterFailure() {
+        loadForecast()
+    }
+
+    fun onRefresh() {
+        refreshForecast()
     }
 }
 
