@@ -3,7 +3,9 @@ package me.alexpetrakov.cyclone.weather.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.TextResource
 import me.alexpetrakov.cyclone.common.asTextResource
@@ -38,7 +40,7 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
         viewModelScope.launch {
             _viewState.value = ViewState.Loading
             _viewState.value = weatherRepository.getWeather()
-                .fold(::handleForecast, ::handleFailure)
+                .fold({ handleForecast(it) }, ::handleFailure)
         }
     }
 
@@ -50,12 +52,14 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
         viewModelScope.launch {
             _viewState.value = currentViewState.copy(isRefreshing = true)
             _viewState.value = weatherRepository.getWeather()
-                .fold(::handleForecast, ::handleFailure)
+                .fold({ handleForecast(it) }, ::handleFailure)
         }
     }
 
-    private fun handleForecast(weather: Weather): ViewState {
-        return ViewState.Content(false, weather.toUiModel())
+    private suspend fun handleForecast(weather: Weather): ViewState {
+        return withContext(Dispatchers.Default) {
+            ViewState.Content(false, weather.toUiModel())
+        }
     }
 
     private fun handleFailure(throwable: Throwable): ViewState {

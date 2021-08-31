@@ -1,5 +1,6 @@
 package me.alexpetrakov.cyclone.weather.data
 
+import com.github.kittinunf.result.Result
 import kotlinx.coroutines.delay
 import me.alexpetrakov.cyclone.weather.domain.*
 import me.alexpetrakov.cyclone.weather.domain.units.*
@@ -136,7 +137,7 @@ class WeatherProvider : WeatherRepository {
 
     private val random = Random(System.currentTimeMillis())
 
-    override suspend fun getWeather(): Result<Weather> {
+    override suspend fun getWeather(): Result<Weather, Throwable> {
         delay(3000L)
         return if (random.nextBoolean()) {
             Result.success(weather)
