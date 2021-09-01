@@ -1,6 +1,4 @@
-package me.alexpetrakov.cyclone.weather.domain.units
-
-import me.alexpetrakov.cyclone.weather.domain.units.base.Converter
+package me.alexpetrakov.cyclone.units.domain.converters
 
 object NothingConverter : Converter {
     override fun toBaseUnit(value: Double): Double {

@@ -1,8 +1,8 @@
 package me.alexpetrakov.cyclone.units.domain
 
-import me.alexpetrakov.cyclone.weather.domain.units.LengthUnit
-import me.alexpetrakov.cyclone.weather.domain.units.SpeedUnit
-import me.alexpetrakov.cyclone.weather.domain.units.TemperatureUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.TemperatureUnit
 
 enum class UnitsLocale(
     val temperatureUnit: TemperatureUnit,

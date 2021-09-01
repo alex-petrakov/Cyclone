@@ -13,7 +13,8 @@ val weatherModule = module {
     viewModel {
         WeatherViewModel(
             weatherRepository = get(),
-            locationsRepository = get()
+            locationsRepository = get(),
+            unitsRepository = get()
         )
     }
 }

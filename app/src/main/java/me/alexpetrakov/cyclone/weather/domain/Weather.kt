@@ -1,9 +1,9 @@
 package me.alexpetrakov.cyclone.weather.domain
 
-import me.alexpetrakov.cyclone.weather.domain.units.Distance
-import me.alexpetrakov.cyclone.weather.domain.units.Pressure
-import me.alexpetrakov.cyclone.weather.domain.units.Speed
-import me.alexpetrakov.cyclone.weather.domain.units.Temperature
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Distance
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Pressure
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Speed
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Temperature
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime

@@ -1,8 +1,9 @@
-package me.alexpetrakov.cyclone.weather.domain.units
+package me.alexpetrakov.cyclone.units.domain.unitsofmeasure
 
-import me.alexpetrakov.cyclone.weather.domain.units.base.Converter
-import me.alexpetrakov.cyclone.weather.domain.units.base.Measurement
-import me.alexpetrakov.cyclone.weather.domain.units.base.UnitDimension
+import me.alexpetrakov.cyclone.units.domain.converters.Converter
+import me.alexpetrakov.cyclone.units.domain.converters.LinearConverter
+import me.alexpetrakov.cyclone.units.domain.converters.NothingConverter
+import me.alexpetrakov.cyclone.units.domain.measurements.Measurement
 
 class LengthUnit(override val converter: Converter) : UnitDimension<LengthUnit> {
 

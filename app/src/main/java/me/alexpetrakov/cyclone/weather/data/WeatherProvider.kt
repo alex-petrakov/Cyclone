@@ -3,9 +3,8 @@ package me.alexpetrakov.cyclone.weather.data
 import com.github.kittinunf.result.Result
 import kotlinx.coroutines.delay
 import me.alexpetrakov.cyclone.locations.domain.Location
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.*
 import me.alexpetrakov.cyclone.weather.domain.*
-import me.alexpetrakov.cyclone.weather.domain.units.*
-import me.alexpetrakov.cyclone.weather.domain.units.PressureUnit.Companion.pascal
 import java.time.ZonedDateTime
 import kotlin.random.Random
 
@@ -16,7 +15,7 @@ class WeatherProvider : WeatherRepository {
             Temperature(17.0, TemperatureUnit.celsius),
             Temperature(18.0, TemperatureUnit.celsius),
             listOf(OverallConditions(801, "Clouds", "few clouds", Icon.SCATTERED_CLOUDS)),
-            Pressure(747.0, pascal),
+            Pressure(747.0, PressureUnit.millimeterOfMercury),
             0.67,
             Temperature(14.0, TemperatureUnit.celsius),
             1,

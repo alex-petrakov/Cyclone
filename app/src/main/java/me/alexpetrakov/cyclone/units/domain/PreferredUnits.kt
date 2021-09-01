@@ -1,9 +1,9 @@
 package me.alexpetrakov.cyclone.units.domain
 
-import me.alexpetrakov.cyclone.weather.domain.units.LengthUnit
-import me.alexpetrakov.cyclone.weather.domain.units.PressureUnit
-import me.alexpetrakov.cyclone.weather.domain.units.SpeedUnit
-import me.alexpetrakov.cyclone.weather.domain.units.TemperatureUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.PressureUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.TemperatureUnit
 
 data class PreferredUnits(
     val temperatureUnit: TemperatureUnit,

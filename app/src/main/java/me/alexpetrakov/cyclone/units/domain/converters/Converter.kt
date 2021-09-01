@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.weather.domain.units.base
+package me.alexpetrakov.cyclone.units.domain.converters
 
 interface Converter {
     fun toBaseUnit(value: Double): Double

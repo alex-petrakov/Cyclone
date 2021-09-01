@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.flowOf
 import me.alexpetrakov.cyclone.units.domain.PreferredUnits
 import me.alexpetrakov.cyclone.units.domain.UnitsLocale
 import me.alexpetrakov.cyclone.units.domain.UnitsRepository
-import me.alexpetrakov.cyclone.weather.domain.units.PressureUnit
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.PressureUnit
 
 class UnitsDataStore : UnitsRepository {
 

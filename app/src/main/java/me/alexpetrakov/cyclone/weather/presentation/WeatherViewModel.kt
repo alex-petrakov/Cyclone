@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,6 +14,8 @@ import me.alexpetrakov.cyclone.common.TextResource
 import me.alexpetrakov.cyclone.common.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import me.alexpetrakov.cyclone.units.domain.PreferredUnits
+import me.alexpetrakov.cyclone.units.domain.UnitsRepository
 import me.alexpetrakov.cyclone.weather.domain.*
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
@@ -21,7 +24,8 @@ import java.util.*
 
 class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
-    private val locationsRepository: LocationsRepository
+    private val locationsRepository: LocationsRepository,
+    private val unitsRepository: UnitsRepository
 ) : ViewModel() {
 
     private val _weatherViewState = MutableLiveData<WeatherViewState>().apply {
@@ -45,13 +49,23 @@ class WeatherViewModel(
         maximumFractionDigits = 0
     }
 
+    private val temperatureFormatter = TemperatureFormatter()
+
+    private val distanceFormatter = DistanceFormatter()
+
+    private val speedFormatter = SpeedFormatter()
+
+    private val pressureFormatter = PressureFormatter()
+
     init {
         viewModelScope.launch {
-            locationsRepository.observeSelectedLocation().onEach { location ->
-                _toolbarViewState.value = ToolbarViewState(location.toUiModel())
-                _weatherViewState.value = WeatherViewState.Loading
-                loadForecast()
-            }.collect()
+            locationsRepository.observeSelectedLocation()
+                .combine(unitsRepository.observePreferredUnits()) { location, _ -> location }
+                .onEach { location ->
+                    _toolbarViewState.value = ToolbarViewState(location.toUiModel())
+                    _weatherViewState.value = WeatherViewState.Loading
+                    loadForecast()
+                }.collect()
         }
     }
 
@@ -78,8 +92,9 @@ class WeatherViewModel(
     }
 
     private suspend fun mapWeatherToViewState(weather: Weather): WeatherViewState {
+        val preferredUnits = unitsRepository.getPreferredUnits()
         return withContext(Dispatchers.Default) {
-            WeatherViewState.Content(false, weather.toUiModel())
+            WeatherViewState.Content(false, weather.toUiModel(preferredUnits))
         }
     }
 
@@ -87,38 +102,38 @@ class WeatherViewModel(
         return WeatherViewState.Error
     }
 
-    private fun Weather.toUiModel(): List<DisplayableItem> {
+    private fun Weather.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem> {
         return listOf(
-            currentConditions.toUiModel(),
+            currentConditions.toUiModel(preferredUnits),
             DisplayableItem.HeaderUi(TextResource.from(R.string.weather_today_title)),
-            hourlyForecast.toUiModel(),
+            hourlyForecast.toUiModel(preferredUnits),
             DisplayableItem.HeaderUi(TextResource.from(R.string.weather_this_week_title)),
-        ) + dailyForecast.toUiModel()
+        ) + dailyForecast.toUiModel(preferredUnits)
     }
 
-    private fun CurrentConditions.toUiModel(): DisplayableItem.CurrentConditionsUi {
+    private fun CurrentConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.CurrentConditionsUi {
         return DisplayableItem.CurrentConditionsUi(
-            temperature.value.toString().asTextResource(),
+            temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
             overallConditions[0].title.asTextResource(),
-            temperature.value.toString().asTextResource(),
+            temperatureFormatter.format(feelsLike, preferredUnits.temperatureUnit),
             overallConditions[0].icon.toUiModel(),
-            "${wind.speed.value}".asTextResource(),
-            "${pressure.value}".asTextResource(),
+            speedFormatter.format(wind.speed, preferredUnits.speedUnit),
+            pressureFormatter.format(pressure, preferredUnits.pressureUnit),
             percentFormatter.format(humidity).asTextResource(),
-            "${dewPoint.value}".asTextResource(),
-            "${visibility.value}".asTextResource(),
-            "$uvIndex".asTextResource()
+            temperatureFormatter.format(dewPoint, preferredUnits.temperatureUnit),
+            distanceFormatter.format(visibility, preferredUnits.lengthUnit),
+            uvIndex.toString().asTextResource()
         )
     }
 
-    private fun List<HourConditions>.toUiModel(): DisplayableItem.HourlyForecastUi {
-        return DisplayableItem.HourlyForecastUi(map { it.toUiModel() })
+    private fun List<HourConditions>.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.HourlyForecastUi {
+        return DisplayableItem.HourlyForecastUi(map { it.toUiModel(preferredUnits) })
     }
 
-    private fun HourConditions.toUiModel(): HourConditionsUi {
+    private fun HourConditions.toUiModel(preferredUnits: PreferredUnits): HourConditionsUi {
         return HourConditionsUi(
             timeFormatter.format(localTime).asTextResource(),
-            temperature.value.toString().asTextResource(),
+            temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
             percentFormatter.format(precipitationChance).asTextResource(),
             precipitationChance > 0,
             overallConditions[0].title.asTextResource(),
@@ -126,15 +141,15 @@ class WeatherViewModel(
         )
     }
 
-    private fun List<DayConditions>.toUiModel(): List<DisplayableItem.DayConditionsUi> {
-        return map { it.toUiModel() }
+    private fun List<DayConditions>.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem.DayConditionsUi> {
+        return map { it.toUiModel(preferredUnits) }
     }
 
-    private fun DayConditions.toUiModel(): DisplayableItem.DayConditionsUi {
+    private fun DayConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.DayConditionsUi {
         return DisplayableItem.DayConditionsUi(
             dateFormatter.format(localDate).capitalizingFirstLetter().asTextResource(),
-            tempLow.value.toString().asTextResource(),
-            tempHigh.value.toString().asTextResource(),
+            temperatureFormatter.format(tempLow, preferredUnits.temperatureUnit),
+            temperatureFormatter.format(tempHigh, preferredUnits.temperatureUnit),
             overallConditions[0].title.asTextResource(),
             overallConditions[0].icon.toUiModel(),
             percentFormatter.format(precipitationChance).asTextResource(),

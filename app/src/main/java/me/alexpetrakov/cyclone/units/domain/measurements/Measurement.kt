@@ -1,4 +1,6 @@
-package me.alexpetrakov.cyclone.weather.domain.units.base
+package me.alexpetrakov.cyclone.units.domain.measurements
+
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.UnitDimension
 
 data class Measurement<U : UnitDimension<U>>(val value: Double, val unit: U) {
     fun convertTo(otherUnit: U): Measurement<U> {
