@@ -16,4 +16,5 @@
     <string name="weather_this_week_title">This week</string>
     <string name="weather_error_cant_connect">Can\'t connect to the server</string>
     <string name="app_action_try_again">Try again</string>
+    <string name="app_current_location">Current location</string>
 </resources>

@@ -10,5 +10,10 @@ val weatherModule = module {
 
     single<WeatherRepository> { WeatherProvider() }
 
-    viewModel { WeatherViewModel(weatherRepository = get()) }
+    viewModel {
+        WeatherViewModel(
+            weatherRepository = get(),
+            locationsRepository = get()
+        )
+    }
 }

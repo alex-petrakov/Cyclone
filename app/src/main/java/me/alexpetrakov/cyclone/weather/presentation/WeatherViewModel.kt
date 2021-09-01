@@ -4,24 +4,37 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.TextResource
 import me.alexpetrakov.cyclone.common.asTextResource
+import me.alexpetrakov.cyclone.locations.domain.Location
+import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
 import me.alexpetrakov.cyclone.weather.domain.*
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
 
-class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
+class WeatherViewModel(
+    private val weatherRepository: WeatherRepository,
+    private val locationsRepository: LocationsRepository
+) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewState>().apply {
-        value = ViewState.Loading
+    private val _weatherViewState = MutableLiveData<WeatherViewState>().apply {
+        value = WeatherViewState.Loading
     }
 
-    val viewState get() = _viewState
+    val weatherViewState get() = _weatherViewState
+
+    private val _toolbarViewState = MutableLiveData<ToolbarViewState>().apply {
+        value = ToolbarViewState("".asTextResource())
+    }
+
+    val toolbarViewState get() = _toolbarViewState
 
     private val dateFormatter = DateTimeFormatter.ofPattern("EEEE d")
 
@@ -33,37 +46,45 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
     }
 
     init {
+        viewModelScope.launch {
+            locationsRepository.observeSelectedLocation().onEach { location ->
+                _toolbarViewState.value = ToolbarViewState(location.toUiModel())
+                _weatherViewState.value = WeatherViewState.Loading
+                loadForecast()
+            }.collect()
+        }
+    }
+
+    fun onRetryAfterFailure() {
+        _weatherViewState.value = WeatherViewState.Loading
+        loadForecast()
+    }
+
+    fun onRefresh() {
+        val currentViewState = _weatherViewState.value
+        check(currentViewState is WeatherViewState.Content) {
+            "Refresh can be triggered only from ViewState.Content state"
+        }
+        _weatherViewState.value = currentViewState.copy(isRefreshing = true)
         loadForecast()
     }
 
     private fun loadForecast() {
         viewModelScope.launch {
-            _viewState.value = ViewState.Loading
-            _viewState.value = weatherRepository.getWeather()
-                .fold({ handleForecast(it) }, ::handleFailure)
+            val selectedLocation = locationsRepository.getSelectedLocation()
+            _weatherViewState.value = weatherRepository.getWeather(selectedLocation)
+                .fold({ mapWeatherToViewState(it) }, ::mapFailureToViewState)
         }
     }
 
-    private fun refreshForecast() {
-        val currentViewState = _viewState.value
-        check(currentViewState is ViewState.Content) {
-            "Refresh can be triggered only from ViewState.Content state"
-        }
-        viewModelScope.launch {
-            _viewState.value = currentViewState.copy(isRefreshing = true)
-            _viewState.value = weatherRepository.getWeather()
-                .fold({ handleForecast(it) }, ::handleFailure)
-        }
-    }
-
-    private suspend fun handleForecast(weather: Weather): ViewState {
+    private suspend fun mapWeatherToViewState(weather: Weather): WeatherViewState {
         return withContext(Dispatchers.Default) {
-            ViewState.Content(false, weather.toUiModel())
+            WeatherViewState.Content(false, weather.toUiModel())
         }
     }
 
-    private fun handleFailure(throwable: Throwable): ViewState {
-        return ViewState.Error
+    private fun mapFailureToViewState(throwable: Throwable): WeatherViewState {
+        return WeatherViewState.Error
     }
 
     private fun Weather.toUiModel(): List<DisplayableItem> {
@@ -135,12 +156,11 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
         }
     }
 
-    fun onRetryAfterFailure() {
-        loadForecast()
-    }
-
-    fun onRefresh() {
-        refreshForecast()
+    private fun Location.toUiModel(): TextResource {
+        return when (this) {
+            Location.CurrentLocation -> TextResource.from(R.string.app_current_location)
+            is Location.SavedLocation -> TextResource.from(name)
+        }
     }
 }
 

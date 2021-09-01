@@ -5,16 +5,18 @@ import androidx.recyclerview.widget.DiffUtil
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.TextResource
 
-sealed class ViewState {
+data class ToolbarViewState(val title: TextResource)
 
-    object Loading : ViewState()
+sealed class WeatherViewState {
 
-    object Error : ViewState()
+    object Loading : WeatherViewState()
+
+    object Error : WeatherViewState()
 
     data class Content(
         val isRefreshing: Boolean,
         val items: List<DisplayableItem>
-    ) : ViewState()
+    ) : WeatherViewState()
 }
 
 sealed class DisplayableItem {

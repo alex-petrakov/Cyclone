@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import me.alexpetrakov.cyclone.common.asString
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,23 +52,28 @@ class WeatherFragment : Fragment() {
     }
 
     private fun observeViewModel(): Unit = with(viewModel) {
-        viewState.observe(viewLifecycleOwner) { viewState -> render(viewState) }
+        toolbarViewState.observe(viewLifecycleOwner) { renderToolbar(it) }
+        weatherViewState.observe(viewLifecycleOwner) { renderWeather(it) }
     }
 
-    private fun render(viewState: ViewState): Unit = with(binding) {
+    private fun renderToolbar(viewState: ToolbarViewState): Unit = with(binding) {
+        toolbar.title = viewState.title.asString(resources)
+    }
+
+    private fun renderWeather(viewState: WeatherViewState): Unit = with(binding) {
         when (viewState) {
-            ViewState.Loading -> {
+            WeatherViewState.Loading -> {
                 contentView.root.isVisible = false
                 errorView.root.isVisible = false
                 progressIndicator.show()
             }
-            is ViewState.Content -> {
+            is WeatherViewState.Content -> {
                 contentView.root.isVisible = true
                 errorView.root.isVisible = false
                 progressIndicator.hide()
                 renderContent(viewState)
             }
-            is ViewState.Error -> {
+            is WeatherViewState.Error -> {
                 contentView.root.isVisible = false
                 errorView.root.isVisible = true
                 progressIndicator.hide()
@@ -76,7 +82,7 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    private fun renderContent(viewState: ViewState.Content) = with(binding.contentView) {
+    private fun renderContent(viewState: WeatherViewState.Content) = with(binding.contentView) {
         if (swipeToRefreshLayout.isRefreshing != viewState.isRefreshing) {
             swipeToRefreshLayout.isRefreshing = viewState.isRefreshing
         }
