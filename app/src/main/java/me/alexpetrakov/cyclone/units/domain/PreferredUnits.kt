@@ -1,0 +1,24 @@
+package me.alexpetrakov.cyclone.units.domain
+
+import me.alexpetrakov.cyclone.weather.domain.units.LengthUnit
+import me.alexpetrakov.cyclone.weather.domain.units.PressureUnit
+import me.alexpetrakov.cyclone.weather.domain.units.SpeedUnit
+import me.alexpetrakov.cyclone.weather.domain.units.TemperatureUnit
+
+data class PreferredUnits(
+    val temperatureUnit: TemperatureUnit,
+    val lengthUnit: LengthUnit,
+    val speedUnit: SpeedUnit,
+    val pressureUnit: PressureUnit
+) {
+    companion object {
+        fun of(unitsLocale: UnitsLocale, pressureUnit: PressureUnit): PreferredUnits {
+            return PreferredUnits(
+                unitsLocale.temperatureUnit,
+                unitsLocale.lengthUnit,
+                unitsLocale.speedUnit,
+                pressureUnit
+            )
+        }
+    }
+}

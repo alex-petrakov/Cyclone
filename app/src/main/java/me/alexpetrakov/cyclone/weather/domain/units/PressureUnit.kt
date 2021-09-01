@@ -11,6 +11,16 @@ class PressureUnit(override val converter: Converter) : UnitDimension<PressureUn
     companion object {
 
         val pascal = PressureUnit(NothingConverter)
+
+        val hectopascal = PressureUnit(LinearConverter(100.0))
+
+        val kilopascal = PressureUnit(LinearConverter(1000.0))
+
+        val millibar = PressureUnit(LinearConverter(100.0))
+
+        val millimeterOfMercury = PressureUnit(LinearConverter(133.322368))
+
+        val inchOfMercury = PressureUnit(LinearConverter(3386.389))
     }
 }
 

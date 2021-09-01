@@ -12,6 +12,18 @@ class SpeedUnit(override val converter: Converter) : UnitDimension<SpeedUnit> {
     companion object {
 
         val meterPerSecond = SpeedUnit(NothingConverter)
+
+        val kilometerPerHour = SpeedUnit(object : Converter {
+            override fun toBaseUnit(value: Double): Double {
+                return value * 1000 / 3600
+            }
+
+            override fun fromBaseUnit(value: Double): Double {
+                return value * 3600 / 1000
+            }
+        })
+
+        val milePerHour = SpeedUnit(LinearConverter(0.447))
     }
 }
 

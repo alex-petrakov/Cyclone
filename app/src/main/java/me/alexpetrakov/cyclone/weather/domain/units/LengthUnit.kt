@@ -12,6 +12,10 @@ class LengthUnit(override val converter: Converter) : UnitDimension<LengthUnit> 
     companion object {
 
         val meter = LengthUnit(NothingConverter)
+
+        val kilometer: LengthUnit = LengthUnit(LinearConverter(1000.0))
+
+        val mile = LengthUnit(LinearConverter(1609.344))
     }
 }
 
