@@ -4,6 +4,7 @@ import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 import com.squareup.moshi.Moshi
 import me.alexpetrakov.cyclone.BuildConfig
+import me.alexpetrakov.cyclone.common.data.ApiKeyInjector
 import me.alexpetrakov.cyclone.weather.data.openweathermap.adapters.*
 import okhttp3.OkHttpClient
 import org.koin.dsl.module

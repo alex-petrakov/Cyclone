@@ -2,7 +2,7 @@ package me.alexpetrakov.cyclone.weather.presentation
 
 import androidx.annotation.StringRes
 import me.alexpetrakov.cyclone.R
-import me.alexpetrakov.cyclone.common.TextResource
+import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.units.domain.measurements.Measurement
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.*
 import java.text.NumberFormat

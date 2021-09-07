@@ -3,7 +3,7 @@ package me.alexpetrakov.cyclone.weather.presentation
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import me.alexpetrakov.cyclone.R
-import me.alexpetrakov.cyclone.common.TextResource
+import me.alexpetrakov.cyclone.common.presentation.TextResource
 
 data class ToolbarViewState(val title: TextResource)
 

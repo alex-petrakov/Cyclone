@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.R
-import me.alexpetrakov.cyclone.common.asString
+import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.ItemCurrentConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemDayConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemHeaderBinding

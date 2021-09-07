@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.R
-import me.alexpetrakov.cyclone.common.TextResource
-import me.alexpetrakov.cyclone.common.asTextResource
+import me.alexpetrakov.cyclone.common.presentation.TextResource
+import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
 import me.alexpetrakov.cyclone.units.domain.PreferredUnits

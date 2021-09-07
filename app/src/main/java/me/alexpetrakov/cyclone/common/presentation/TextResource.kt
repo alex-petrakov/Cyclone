@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.common
+package me.alexpetrakov.cyclone.common.presentation
 
 import android.content.res.Resources
 import androidx.annotation.PluralsRes
