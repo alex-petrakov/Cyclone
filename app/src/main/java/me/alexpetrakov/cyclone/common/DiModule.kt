@@ -4,8 +4,7 @@ import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 import com.squareup.moshi.Moshi
 import me.alexpetrakov.cyclone.BuildConfig
-import me.alexpetrakov.cyclone.weather.data.openweathermap.IconAdapter
-import me.alexpetrakov.cyclone.weather.data.openweathermap.InstantAdapter
+import me.alexpetrakov.cyclone.weather.data.openweathermap.adapters.*
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -23,6 +22,10 @@ val commonModule = module {
     val moshi = Moshi.Builder()
         .add(InstantAdapter())
         .add(IconAdapter())
+        .add(TemperatureAdapter())
+        .add(DistanceAdapter())
+        .add(PressureAdapter())
+        .add(SpeedAdapter())
         .build()
 
     single {

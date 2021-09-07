@@ -2,7 +2,10 @@ package me.alexpetrakov.cyclone.weather.data.openweathermap
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.*
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Distance
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Pressure
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Speed
+import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Temperature
 import me.alexpetrakov.cyclone.weather.domain.*
 import java.time.Instant
 import java.time.ZoneOffset
@@ -21,16 +24,16 @@ data class CurrentJson(
     @Json(name = "dt") val currentTimestamp: Instant,
     @Json(name = "sunrise") val sunriseTimestamp: Instant,
     @Json(name = "sunset") val sunsetTimestamp: Instant,
-    @Json(name = "temp") val temperature: Double,
-    @Json(name = "feels_like") val feelsLike: Double,
-    @Json(name = "pressure") val pressure: Double,
+    @Json(name = "temp") val temperature: Temperature,
+    @Json(name = "feels_like") val feelsLike: Temperature,
+    @Json(name = "pressure") val pressure: Pressure,
     @Json(name = "humidity") val humidity: Double,
-    @Json(name = "dew_point") val dewPoint: Double,
+    @Json(name = "dew_point") val dewPoint: Temperature,
     @Json(name = "uvi") val uvIndex: Double,
-    @Json(name = "visibility") val visibility: Double,
-    @Json(name = "wind_speed") val windSpeed: Double,
+    @Json(name = "visibility") val visibility: Distance,
+    @Json(name = "wind_speed") val windSpeed: Speed,
     @Json(name = "wind_deg") val windDirectionInDeg: Double,
-    @Json(name = "wind_gust") val windGust: Double,
+    @Json(name = "wind_gust") val windGust: Speed,
     @Json(name = "weather") val overallConditions: List<OverallConditionsJson>
 )
 
@@ -74,7 +77,7 @@ enum class IconJson(val label: String) {
 @JsonClass(generateAdapter = true)
 data class HourConditionsJson(
     @Json(name = "dt") val timestamp: Instant,
-    @Json(name = "temp") val temperature: Double,
+    @Json(name = "temp") val temperature: Temperature,
     @Json(name = "weather") val overallConditions: List<OverallConditionsJson>,
     @Json(name = "pop") val precipitationChance: Double
 )
@@ -82,15 +85,15 @@ data class HourConditionsJson(
 @JsonClass(generateAdapter = true)
 data class DayConditionsJson(
     @Json(name = "dt") val timestamp: Instant,
-    @Json(name = "temp") val temperature: TemperatureJson,
+    @Json(name = "temp") val temperature: TemperatureRangeJson,
     @Json(name = "weather") val overallConditions: List<OverallConditionsJson>,
     @Json(name = "pop") val precipitationChance: Double
 )
 
 @JsonClass(generateAdapter = true)
-data class TemperatureJson(
-    @Json(name = "min") val min: Double,
-    @Json(name = "max") val max: Double
+data class TemperatureRangeJson(
+    @Json(name = "min") val min: Temperature,
+    @Json(name = "max") val max: Temperature
 )
 
 fun WeatherJson.unwrap(): Weather {
@@ -113,8 +116,8 @@ fun WeatherJson.unwrap(): Weather {
 private fun DayConditionsJson.unwrap(zoneOffset: ZoneOffset): DayConditions {
     return DayConditions(
         timestamp.atOffset(zoneOffset),
-        Temperature(temperature.max, TemperatureUnit.kelvin),
-        Temperature(temperature.min, TemperatureUnit.kelvin),
+        temperature.max,
+        temperature.min,
         overallConditions.map { it.unwrap() },
         precipitationChance
     )
@@ -123,7 +126,7 @@ private fun DayConditionsJson.unwrap(zoneOffset: ZoneOffset): DayConditions {
 private fun HourConditionsJson.unwrap(zoneOffset: ZoneOffset): HourConditions {
     return HourConditions(
         timestamp.atOffset(zoneOffset),
-        Temperature(temperature, TemperatureUnit.kelvin),
+        temperature,
         overallConditions.map { it.unwrap() },
         precipitationChance
     )
@@ -131,17 +134,17 @@ private fun HourConditionsJson.unwrap(zoneOffset: ZoneOffset): HourConditions {
 
 private fun CurrentJson.unwrap(): CurrentConditions {
     return CurrentConditions(
-        Temperature(temperature, TemperatureUnit.kelvin),
-        Temperature(feelsLike, TemperatureUnit.kelvin),
+        temperature,
+        feelsLike,
         overallConditions.map { it.unwrap() },
-        Pressure(pressure, PressureUnit.hectopascal),
+        pressure,
         humidity / 100.0,
-        Temperature(dewPoint, TemperatureUnit.kelvin),
+        dewPoint,
         uvIndex.roundToInt(),
-        Distance(visibility, LengthUnit.meter),
+        visibility,
         Wind(
-            Speed(windSpeed, SpeedUnit.meterPerSecond),
-            Speed(windGust, SpeedUnit.meterPerSecond),
+            windSpeed,
+            windGust,
             windDirectionInDeg
         )
     )
