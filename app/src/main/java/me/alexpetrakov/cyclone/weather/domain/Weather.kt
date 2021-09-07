@@ -4,10 +4,9 @@ import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Distance
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Pressure
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Speed
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Temperature
-import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneId
+import java.time.OffsetDateTime
 
 data class Weather(
     val currentConditions: CurrentConditions,
@@ -53,22 +52,22 @@ data class Wind(
 )
 
 data class HourConditions(
-    val timestamp: Instant,
+    val timestamp: OffsetDateTime,
     val temperature: Temperature,
     val overallConditions: List<OverallConditions>,
     val precipitationChance: Double
 ) {
     val localTime: LocalTime
-        get() = timestamp.atZone(ZoneId.systemDefault()).toLocalTime()
+        get() = timestamp.toLocalTime()
 }
 
 data class DayConditions(
-    val timestamp: Instant,
+    val timestamp: OffsetDateTime,
     val tempHigh: Temperature,
     val tempLow: Temperature,
     val overallConditions: List<OverallConditions>,
     val precipitationChance: Double
 ) {
     val localDate: LocalDate
-        get() = timestamp.atZone(ZoneId.systemDefault()).toLocalDate()
+        get() = timestamp.toLocalDate()
 }

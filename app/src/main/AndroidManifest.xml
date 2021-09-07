@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.alexpetrakov.cyclone">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".CycloneApp"
         android:allowBackup="true"
