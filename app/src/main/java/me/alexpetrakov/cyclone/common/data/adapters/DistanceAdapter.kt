@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.weather.data.openweathermap.adapters
+package me.alexpetrakov.cyclone.common.data.adapters
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
