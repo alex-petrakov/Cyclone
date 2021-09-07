@@ -96,47 +96,47 @@ data class TemperatureRangeJson(
     @Json(name = "max") val max: Temperature
 )
 
-fun WeatherJson.unwrap(): Weather {
+fun WeatherJson.toDomain(): Weather {
     return Weather(
-        currentConditions.unwrap(),
+        currentConditions.toDomain(),
         hourlyForecast.asSequence()
             .sortedBy { it.timestamp }
             .drop(1) // The first item is always the current hour, and we don't need it
             .take(12) // We only display 12 hour forecast
-            .map { it.unwrap(ZoneOffset.ofTotalSeconds(timeZoneOffset)) }
+            .map { it.toDomain(ZoneOffset.ofTotalSeconds(timeZoneOffset)) }
             .toList(),
         dailyForecast.asSequence()
             .sortedBy { it.timestamp }
             .drop(1) // The first item is always the current day, and we don't need it
-            .map { it.unwrap(ZoneOffset.ofTotalSeconds(timeZoneOffset)) }
+            .map { it.toDomain(ZoneOffset.ofTotalSeconds(timeZoneOffset)) }
             .toList()
     )
 }
 
-private fun DayConditionsJson.unwrap(zoneOffset: ZoneOffset): DayConditions {
+private fun DayConditionsJson.toDomain(zoneOffset: ZoneOffset): DayConditions {
     return DayConditions(
         timestamp.atOffset(zoneOffset),
         temperature.max,
         temperature.min,
-        overallConditions.map { it.unwrap() },
+        overallConditions.map { it.toDomain() },
         precipitationChance
     )
 }
 
-private fun HourConditionsJson.unwrap(zoneOffset: ZoneOffset): HourConditions {
+private fun HourConditionsJson.toDomain(zoneOffset: ZoneOffset): HourConditions {
     return HourConditions(
         timestamp.atOffset(zoneOffset),
         temperature,
-        overallConditions.map { it.unwrap() },
+        overallConditions.map { it.toDomain() },
         precipitationChance
     )
 }
 
-private fun CurrentJson.unwrap(): CurrentConditions {
+private fun CurrentJson.toDomain(): CurrentConditions {
     return CurrentConditions(
         temperature,
         feelsLike,
-        overallConditions.map { it.unwrap() },
+        overallConditions.map { it.toDomain() },
         pressure,
         humidity / 100.0,
         dewPoint,
@@ -150,11 +150,11 @@ private fun CurrentJson.unwrap(): CurrentConditions {
     )
 }
 
-private fun OverallConditionsJson.unwrap(): OverallConditions {
-    return OverallConditions(id, title, description, icon.unwrap())
+private fun OverallConditionsJson.toDomain(): OverallConditions {
+    return OverallConditions(id, title, description, icon.toDomain())
 }
 
-private fun IconJson.unwrap(): Icon {
+private fun IconJson.toDomain(): Icon {
     return when (this) {
         IconJson.CLEAR -> Icon.CLEAR
         IconJson.FEW_CLOUDS -> Icon.FEW_CLOUDS
