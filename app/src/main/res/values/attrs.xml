@@ -2,4 +2,6 @@
 <resources>
     <attr name="colorCloudy" format="color|reference" />
     <attr name="colorPrecipitation" format="color|reference" />
+    <attr name="colorDestructive" format="color|reference" />
+    <attr name="colorDestructiveRipple" format="color|reference" />
 </resources>

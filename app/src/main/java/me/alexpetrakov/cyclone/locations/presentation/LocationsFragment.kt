@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,6 +17,8 @@ class LocationsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private val locationsAdapter = LocationsAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +29,23 @@ class LocationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO: Use the ViewModel
+        prepareView()
+        observeViewModel()
+    }
+
+    private fun prepareView(): Unit = with(binding) {
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = locationsAdapter
+        }
+    }
+
+    private fun observeViewModel(): Unit = with(viewModel) {
+        viewState.observe(viewLifecycleOwner) { render(it) }
+    }
+
+    private fun render(viewState: ViewState): Unit = with(binding) {
+        locationsAdapter.submitList(viewState.locations)
     }
 
     override fun onDestroyView() {

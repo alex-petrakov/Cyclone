@@ -30,4 +30,5 @@
     <string name="template_pressure_inhg">%s inHg</string>
 
     <string name="locations_title">Locations</string>
+    <string name="locations_action_remove_location">Remove location</string>
 </resources>

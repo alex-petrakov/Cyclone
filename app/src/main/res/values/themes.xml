@@ -12,5 +12,7 @@
         <!-- Custom attributes -->
         <item name="colorCloudy">#C0C0C0</item>
         <item name="colorPrecipitation">#1B9AD0</item>
+        <item name="colorDestructive">#D75F5F</item>
+        <item name="colorDestructiveRipple">#33D75F5F</item>
     </style>
 </resources>
