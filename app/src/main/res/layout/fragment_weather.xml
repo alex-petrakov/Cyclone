@@ -20,6 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="@dimen/toolbar_default_elevation"
+            app:navigationContentDescription="@string/weather_change_location"
+            app:navigationIcon="@drawable/ic_action_select_location"
             tools:subtitle="Updated just now"
             tools:title="Moscow" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -35,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            app:showAnimationBehavior="outward"
-            app:hideAnimationBehavior="outward" />
+            app:hideAnimationBehavior="outward"
+            app:showAnimationBehavior="outward" />
 
         <include
             android:id="@+id/content_view"

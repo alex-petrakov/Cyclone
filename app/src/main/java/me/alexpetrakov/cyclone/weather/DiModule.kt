@@ -19,7 +19,8 @@ val weatherModule = module {
         WeatherViewModel(
             weatherRepository = get(),
             locationsRepository = get(),
-            unitsRepository = get()
+            unitsRepository = get(),
+            router = get()
         )
     }
 }

@@ -3,12 +3,14 @@ package me.alexpetrakov.cyclone.weather.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.alexpetrakov.cyclone.AppScreens
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
@@ -25,7 +27,8 @@ import java.util.*
 class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
     private val locationsRepository: LocationsRepository,
-    private val unitsRepository: UnitsRepository
+    private val unitsRepository: UnitsRepository,
+    private val router: Router
 ) : ViewModel() {
 
     private val _weatherViewState = MutableLiveData<WeatherViewState>().apply {
@@ -81,6 +84,10 @@ class WeatherViewModel(
         }
         _weatherViewState.value = currentViewState.copy(isRefreshing = true)
         loadForecast()
+    }
+
+    fun onOpenLocationPicker() {
+        router.navigateTo(AppScreens.locations())
     }
 
     private fun loadForecast() {

@@ -47,7 +47,8 @@ class WeatherFragment : Fragment() {
                 setOnRefreshListener { viewModel.onRefresh() }
             }
         }
-
+        // TODO: Make the toolbar title clickable instead
+        toolbar.setNavigationOnClickListener { viewModel.onOpenLocationPicker() }
         errorView.retryButton.setOnClickListener { viewModel.onRetryAfterFailure() }
     }
 
