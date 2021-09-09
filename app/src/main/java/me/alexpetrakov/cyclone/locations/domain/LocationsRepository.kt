@@ -6,6 +6,8 @@ interface LocationsRepository {
 
     fun getLocationsStream(): Flow<List<Location>>
 
+    suspend fun createLocation(location: Location.StoredLocation)
+
     suspend fun getSelectedLocation(): Location
 
     fun observeSelectedLocation(): Flow<Location>

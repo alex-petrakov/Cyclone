@@ -2,21 +2,39 @@ package me.alexpetrakov.cyclone.locations.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
+import me.alexpetrakov.cyclone.locations.domain.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import kotlin.random.Random
 
 class LocationsViewModel(
     private val router: Router,
-    locationsRepository: LocationsRepository
+    private val locationsRepository: LocationsRepository
 ) : ViewModel() {
 
     val viewState = locationsRepository.getLocationsStream()
         .map { list -> ViewState(list.map { it.toUiModel() }) }
         .asLiveData()
 
+    private val random = Random(System.currentTimeMillis())
+
+
+    fun onAddLocation() {
+        viewModelScope.launch {
+            locationsRepository.createLocation(
+                Location.StoredLocation(
+                    0,
+                    "Moscow ${random.nextInt(100)}",
+                    Coordinates(55.751244, 37.618423)
+                )
+            )
+        }
+    }
 
     fun onNavigateBack() {
         router.exit()

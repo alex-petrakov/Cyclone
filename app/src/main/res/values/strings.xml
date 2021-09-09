@@ -3,6 +3,7 @@
     <string name="app_action_try_again">Try again</string>
     <string name="app_current_location">Current location</string>
     <string name="app_action_navigate_up">Navigate up</string>
+    <string name="app_action_add">Add</string>
 
     <string name="weather_now_title">Now</string>
     <string name="weather_wind">Wind</string>

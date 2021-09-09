@@ -35,6 +35,7 @@ class LocationsFragment : Fragment() {
 
     private fun prepareView(): Unit = with(binding) {
         toolbar.setOnClickListener { viewModel.onNavigateBack() }
+        addFloatingButton.setOnClickListener { viewModel.onAddLocation() }
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = locationsAdapter

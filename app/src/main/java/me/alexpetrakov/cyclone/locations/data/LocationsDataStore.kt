@@ -27,6 +27,11 @@ class LocationsDataStore(private val database: AppDatabase) : LocationsRepositor
             }
     }
 
+    override suspend fun createLocation(location: Location.StoredLocation) {
+        val locationCount = locationDao.getLocationCount()
+        locationDao.createLocation(location.toLocationEntity(locationCount))
+    }
+
     override suspend fun getSelectedLocation(): Location {
         return moscow
     }
@@ -40,6 +45,16 @@ class LocationsDataStore(private val database: AppDatabase) : LocationsRepositor
             id,
             name,
             Coordinates(latitude, longitude)
+        )
+    }
+
+    private fun Location.StoredLocation.toLocationEntity(position: Int): LocationEntity {
+        return LocationEntity(
+            0,
+            name,
+            coordinates.lat,
+            coordinates.lon,
+            position
         )
     }
 }
