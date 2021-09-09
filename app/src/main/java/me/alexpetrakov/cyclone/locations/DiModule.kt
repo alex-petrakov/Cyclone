@@ -12,7 +12,8 @@ val locationModule = module {
 
     viewModel {
         LocationsViewModel(
-            router = get()
+            router = get(),
+            locationsRepository = get()
         )
     }
 }
