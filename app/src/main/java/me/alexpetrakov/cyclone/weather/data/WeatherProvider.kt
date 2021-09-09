@@ -19,7 +19,7 @@ class WeatherProvider(
     override suspend fun getWeather(location: Location): Result<Weather, Throwable> {
         val (lat, lon) = when (location) {
             Location.CurrentLocation -> TODO("Not implemented")
-            is Location.SavedLocation -> location.coordinates
+            is Location.StoredLocation -> location.coordinates
         }
         return Result.fromNetworkRequest { forecastApi.getWeather(lat, lon) }
             .map { toDomainModel(it) }

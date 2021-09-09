@@ -8,7 +8,7 @@ sealed class Location() {
         override val id get() = 0
     }
 
-    class SavedLocation(
+    class StoredLocation(
         override val id: Int,
         val name: String,
         val coordinates: Coordinates

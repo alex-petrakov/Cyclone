@@ -25,7 +25,7 @@ class LocationsViewModel(
     private fun Location.toUiModel(): LocationUiItem {
         return when (this) {
             Location.CurrentLocation -> LocationUiItem.fromCurrentLocation(this.id)
-            is Location.SavedLocation -> LocationUiItem.fromSavedLocation(
+            is Location.StoredLocation -> LocationUiItem.fromSavedLocation(
                 id,
                 name.asTextResource(),
                 true

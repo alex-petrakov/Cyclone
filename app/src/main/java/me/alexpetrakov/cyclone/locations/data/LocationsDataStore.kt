@@ -13,7 +13,7 @@ class LocationsDataStore(private val database: AppDatabase) : LocationsRepositor
 
     private val locationDao get() = database.locationDao()
 
-    private val moscow = Location.SavedLocation(
+    private val moscow = Location.StoredLocation(
         1,
         "Moscow",
         Coordinates(55.751244, 37.618423)
@@ -36,7 +36,7 @@ class LocationsDataStore(private val database: AppDatabase) : LocationsRepositor
     }
 
     private fun LocationEntity.toDomainModel(): Location {
-        return Location.SavedLocation(
+        return Location.StoredLocation(
             id,
             name,
             Coordinates(latitude, longitude)

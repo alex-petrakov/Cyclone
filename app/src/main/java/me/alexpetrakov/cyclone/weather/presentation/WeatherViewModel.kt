@@ -181,7 +181,7 @@ class WeatherViewModel(
     private fun Location.toUiModel(): TextResource {
         return when (this) {
             Location.CurrentLocation -> TextResource.from(R.string.app_current_location)
-            is Location.SavedLocation -> TextResource.from(name)
+            is Location.StoredLocation -> TextResource.from(name)
         }
     }
 }
