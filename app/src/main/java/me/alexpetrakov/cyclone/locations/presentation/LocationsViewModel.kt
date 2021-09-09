@@ -2,9 +2,10 @@ package me.alexpetrakov.cyclone.locations.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.github.terrakok.cicerone.Router
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 
-class LocationsViewModel : ViewModel() {
+class LocationsViewModel(private val router: Router) : ViewModel() {
 
     val viewState = liveData {
         emit(
@@ -17,5 +18,9 @@ class LocationsViewModel : ViewModel() {
                 )
             )
         )
+    }
+
+    fun onNavigateBack() {
+        router.exit()
     }
 }

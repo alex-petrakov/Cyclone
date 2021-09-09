@@ -10,5 +10,9 @@ val locationModule = module {
 
     single<LocationsRepository> { LocationsDataStore() }
 
-    viewModel { LocationsViewModel() }
+    viewModel {
+        LocationsViewModel(
+            router = get()
+        )
+    }
 }

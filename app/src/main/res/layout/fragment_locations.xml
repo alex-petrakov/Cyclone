@@ -17,6 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="@dimen/toolbar_default_elevation"
+            app:navigationContentDescription="@string/app_action_navigate_up"
+            app:navigationIcon="@drawable/ic_action_close"
             app:title="@string/locations_title" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,7 +32,7 @@
         android:id="@+id/add_floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_add"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_action_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -34,6 +34,7 @@ class LocationsFragment : Fragment() {
     }
 
     private fun prepareView(): Unit = with(binding) {
+        toolbar.setOnClickListener { viewModel.onNavigateBack() }
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = locationsAdapter
