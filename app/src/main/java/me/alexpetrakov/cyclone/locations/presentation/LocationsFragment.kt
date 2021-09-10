@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
+import me.alexpetrakov.cyclone.locations.presentation.list.LocationsAdapter
+import me.alexpetrakov.cyclone.locations.presentation.list.OnMoveItemCallback
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LocationsFragment : Fragment() {
@@ -17,7 +20,17 @@ class LocationsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val locationsAdapter = LocationsAdapter()
+    private val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(
+        OnMoveItemCallback().apply {
+            onMoveItem = { from, to ->
+                locationsAdapter.onMoveItem(from, to)
+                true
+            }
+            onDropItem = { viewModel.onUpdateLocationsOrder(locationsAdapter.currentList) }
+        }
+    )
+
+    private val locationsAdapter = LocationsAdapter(itemTouchHelper)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +53,7 @@ class LocationsFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = locationsAdapter
         }
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun observeViewModel(): Unit = with(viewModel) {

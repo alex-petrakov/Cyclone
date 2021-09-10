@@ -8,6 +8,8 @@ interface LocationsRepository {
 
     suspend fun createLocation(location: Location.StoredLocation)
 
+    suspend fun updateLocationsOrder(ids: List<Int>)
+
     suspend fun getSelectedLocation(): Location
 
     fun observeSelectedLocation(): Flow<Location>

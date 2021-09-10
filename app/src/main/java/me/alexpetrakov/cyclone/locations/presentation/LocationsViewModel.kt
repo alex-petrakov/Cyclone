@@ -36,6 +36,13 @@ class LocationsViewModel(
         }
     }
 
+    fun onUpdateLocationsOrder(currentList: List<LocationUiItem>) {
+        viewModelScope.launch {
+            val ids = currentList.drop(1).map { it.id }
+            locationsRepository.updateLocationsOrder(ids)
+        }
+    }
+
     fun onNavigateBack() {
         router.exit()
     }

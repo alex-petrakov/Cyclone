@@ -32,6 +32,10 @@ class LocationsDataStore(private val database: AppDatabase) : LocationsRepositor
         locationDao.createLocation(location.toLocationEntity(locationCount))
     }
 
+    override suspend fun updateLocationsOrder(ids: List<Int>) {
+        locationDao.updateOrder(ids)
+    }
+
     override suspend fun getSelectedLocation(): Location {
         return moscow
     }
