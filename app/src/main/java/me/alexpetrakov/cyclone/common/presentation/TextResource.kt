@@ -32,13 +32,24 @@ private data class PluralTextResource(
 fun TextResource.asString(resources: Resources): String {
     return when (this) {
         is StringTextResource -> string
-        is SimpleTextResource -> resources.getString(resId, *formatArgs.toTypedArray())
+        is SimpleTextResource -> {
+            resources.getString(resId, *resolveArguments(formatArgs, resources).toTypedArray())
+        }
         is PluralTextResource -> resources.getQuantityString(
             resId,
             quantity,
-            *formatArgs.toTypedArray()
+            *resolveArguments(formatArgs, resources).toTypedArray()
         )
     }
 }
 
 fun String.asTextResource(): TextResource = TextResource.from(this)
+
+private fun resolveArguments(formatArguments: List<Any>, resources: Resources): List<Any> {
+    return formatArguments.map { arg ->
+        when (arg) {
+            is TextResource -> arg.asString(resources)
+            else -> arg
+        }
+    }
+}

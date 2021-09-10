@@ -26,5 +26,8 @@ interface LocationDao {
     }
 
     @Query("UPDATE location SET position = :position WHERE id = :id")
-    fun updateOrder(id: Int, position: Int)
+    suspend fun updateOrder(id: Int, position: Int)
+
+    @Query("DELETE FROM location WHERE id = :id")
+    suspend fun removeById(id: Int)
 }

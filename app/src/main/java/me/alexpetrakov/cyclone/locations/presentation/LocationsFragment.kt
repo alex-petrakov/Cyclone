@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import me.alexpetrakov.cyclone.R
+import me.alexpetrakov.cyclone.common.presentation.TextResource
+import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
 import me.alexpetrakov.cyclone.locations.presentation.list.LocationsAdapter
 import me.alexpetrakov.cyclone.locations.presentation.list.OnMoveItemCallback
@@ -30,7 +34,9 @@ class LocationsFragment : Fragment() {
         }
     )
 
-    private val locationsAdapter = LocationsAdapter(itemTouchHelper)
+    private val locationsAdapter = LocationsAdapter(itemTouchHelper).apply {
+        onRemoveItem = { item -> viewModel.onTryToRemoveItem(item) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,10 +64,30 @@ class LocationsFragment : Fragment() {
 
     private fun observeViewModel(): Unit = with(viewModel) {
         viewState.observe(viewLifecycleOwner) { render(it) }
+        viewEffect.observe(viewLifecycleOwner) { handle(it) }
     }
 
-    private fun render(viewState: ViewState): Unit = with(binding) {
+    private fun render(viewState: ViewState) {
         locationsAdapter.submitList(viewState.locations)
+    }
+
+    private fun handle(viewEffect: ViewEffect) {
+        when (viewEffect) {
+            is ViewEffect.DisplayRemovalConfirmation -> {
+                showRemovalConfirmation(viewEffect.confirmationText, viewEffect.idOfItemToBeRemoved)
+            }
+        }
+    }
+
+    private fun showRemovalConfirmation(confirmationText: TextResource, idOfItemToRemove: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(confirmationText.asString(resources))
+            .setPositiveButton(R.string.app_action_remove) { _, _ ->
+                viewModel.onConfirmItemRemoval(idOfItemToRemove)
+            }
+            .setNegativeButton(R.string.app_action_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }.show()
     }
 
     override fun onDestroyView() {

@@ -15,6 +15,8 @@ import me.alexpetrakov.cyclone.locations.presentation.LocationUiItem
 class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
     ListAdapter<LocationUiItem, LocationsAdapter.ViewHolder>(LocationUiItem.ItemCallback) {
 
+    var onRemoveItem: ((LocationUiItem) -> Unit)? = null
+
     private val onStartDragListener = { viewHolder: ViewHolder ->
         itemTouchHelper.startDrag(viewHolder)
     }
@@ -22,7 +24,11 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemLocationBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(binding, onStartDragListener)
+        return ViewHolder(
+            binding,
+            { adapterPosition -> onRemoveItem?.invoke(getItem(adapterPosition)) },
+            onStartDragListener
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -38,10 +44,17 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
 
     class ViewHolder(
         private val binding: ItemLocationBinding,
+        private val onClickRemove: (Int) -> Unit,
         private val onStartDrag: (ViewHolder) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val resources get() = binding.root.context.resources
+
+        init {
+            binding.removeButton.setOnClickListener {
+                onClickRemove(adapterPosition)
+            }
+        }
 
         fun bind(item: LocationUiItem): Unit = with(binding) {
             dragHandle.setImageResource(item.iconResId)

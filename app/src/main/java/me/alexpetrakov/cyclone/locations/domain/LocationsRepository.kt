@@ -10,6 +10,8 @@ interface LocationsRepository {
 
     suspend fun updateLocationsOrder(ids: List<Int>)
 
+    suspend fun removeLocationById(id: Int)
+
     suspend fun getSelectedLocation(): Location
 
     fun observeSelectedLocation(): Flow<Location>

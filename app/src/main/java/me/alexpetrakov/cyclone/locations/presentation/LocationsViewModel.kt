@@ -1,11 +1,15 @@
 package me.alexpetrakov.cyclone.locations.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import me.alexpetrakov.cyclone.R
+import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
+import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.Location
@@ -22,6 +26,10 @@ class LocationsViewModel(
         .asLiveData()
 
     private val random = Random(System.currentTimeMillis())
+
+    private val _viewEffect = SingleLiveEvent<ViewEffect>()
+
+    val viewEffect: LiveData<ViewEffect> get() = _viewEffect
 
 
     fun onAddLocation() {
@@ -40,6 +48,19 @@ class LocationsViewModel(
         viewModelScope.launch {
             val ids = currentList.drop(1).map { it.id }
             locationsRepository.updateLocationsOrder(ids)
+        }
+    }
+
+    fun onTryToRemoveItem(item: LocationUiItem) {
+        _viewEffect.value = ViewEffect.DisplayRemovalConfirmation(
+            TextResource.from(R.string.locations_removal_confirmation_template, item.name),
+            item.id
+        )
+    }
+
+    fun onConfirmItemRemoval(itemId: Int) {
+        viewModelScope.launch {
+            locationsRepository.removeLocationById(itemId)
         }
     }
 

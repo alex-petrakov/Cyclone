@@ -36,6 +36,10 @@ class LocationsDataStore(private val database: AppDatabase) : LocationsRepositor
         locationDao.updateOrder(ids)
     }
 
+    override suspend fun removeLocationById(id: Int) {
+        locationDao.removeById(id)
+    }
+
     override suspend fun getSelectedLocation(): Location {
         return moscow
     }
