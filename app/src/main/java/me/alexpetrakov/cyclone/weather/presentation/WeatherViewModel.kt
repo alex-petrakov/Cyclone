@@ -62,7 +62,7 @@ class WeatherViewModel(
 
     init {
         viewModelScope.launch {
-            locationsRepository.observeSelectedLocation()
+            locationsRepository.getSelectedLocationStream()
                 .combine(unitsRepository.observePreferredUnits()) { location, _ -> location }
                 .onEach { location ->
                     _toolbarViewState.value = ToolbarViewState(location.toUiModel())

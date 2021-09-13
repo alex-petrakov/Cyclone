@@ -12,7 +12,9 @@ interface LocationsRepository {
 
     suspend fun removeLocationById(id: Int)
 
+    suspend fun selectLocation(id: Int)
+
     suspend fun getSelectedLocation(): Location
 
-    fun observeSelectedLocation(): Flow<Location>
+    fun getSelectedLocationStream(): Flow<Location>
 }

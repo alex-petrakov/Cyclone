@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import me.alexpetrakov.cyclone.AppScreens
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.common.presentation.TextResource
@@ -76,6 +77,13 @@ class LocationsViewModel(
                 name.asTextResource(),
                 true
             )
+        }
+    }
+
+    fun onSelectLocation(item: LocationUiItem) {
+        viewModelScope.launch {
+            locationsRepository.selectLocation(item.id)
+            router.newRootScreen(AppScreens.weather())
         }
     }
 }

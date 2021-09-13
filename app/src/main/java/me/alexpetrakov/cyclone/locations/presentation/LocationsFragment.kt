@@ -35,6 +35,7 @@ class LocationsFragment : Fragment() {
     )
 
     private val locationsAdapter = LocationsAdapter(itemTouchHelper).apply {
+        onClickItem = { item -> viewModel.onSelectLocation(item) }
         onRemoveItem = { item -> viewModel.onTryToRemoveItem(item) }
     }
 

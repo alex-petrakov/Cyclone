@@ -15,6 +15,8 @@ import me.alexpetrakov.cyclone.locations.presentation.LocationUiItem
 class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
     ListAdapter<LocationUiItem, LocationsAdapter.ViewHolder>(LocationUiItem.ItemCallback) {
 
+    var onClickItem: ((LocationUiItem) -> Unit)? = null
+
     var onRemoveItem: ((LocationUiItem) -> Unit)? = null
 
     private val onStartDragListener = { viewHolder: ViewHolder ->
@@ -26,6 +28,7 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
         val binding = ItemLocationBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(
             binding,
+            { adapterPosition -> onClickItem?.invoke(getItem(adapterPosition)) },
             { adapterPosition -> onRemoveItem?.invoke(getItem(adapterPosition)) },
             onStartDragListener
         )
@@ -44,6 +47,7 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
 
     class ViewHolder(
         private val binding: ItemLocationBinding,
+        private val onClick: (Int) -> Unit,
         private val onClickRemove: (Int) -> Unit,
         private val onStartDrag: (ViewHolder) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -51,8 +55,9 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
         private val resources get() = binding.root.context.resources
 
         init {
-            binding.removeButton.setOnClickListener {
-                onClickRemove(adapterPosition)
+            binding.apply {
+                removeButton.setOnClickListener { onClickRemove(adapterPosition) }
+                root.setOnClickListener { onClick(adapterPosition) }
             }
         }
 

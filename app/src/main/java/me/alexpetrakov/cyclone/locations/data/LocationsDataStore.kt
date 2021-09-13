@@ -1,22 +1,31 @@
 package me.alexpetrakov.cyclone.locations.data
 
+import android.content.SharedPreferences
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.locations.data.db.AppDatabase
 import me.alexpetrakov.cyclone.locations.data.db.LocationEntity
 import me.alexpetrakov.cyclone.locations.domain.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
 
-class LocationsDataStore(private val database: AppDatabase) : LocationsRepository {
+@OptIn(ExperimentalCoroutinesApi::class)
+class LocationsDataStore(
+    private val database: AppDatabase,
+    prefs: SharedPreferences
+) : LocationsRepository {
 
     private val locationDao get() = database.locationDao()
 
-    private val moscow = Location.StoredLocation(
-        1,
-        "Moscow",
-        Coordinates(55.751244, 37.618423)
+    private val flowPrefs = FlowSharedPreferences(prefs)
+
+    private val selectedLocationId = flowPrefs.getInt(
+        "selectedLocation",
+        defaultValue = Location.CurrentLocation.id
     )
 
     override fun getLocationsStream(): Flow<List<Location>> {
@@ -40,12 +49,18 @@ class LocationsDataStore(private val database: AppDatabase) : LocationsRepositor
         locationDao.removeById(id)
     }
 
-    override suspend fun getSelectedLocation(): Location {
-        return moscow
+    override suspend fun selectLocation(id: Int) {
+        selectedLocationId.set(id)
     }
 
-    override fun observeSelectedLocation(): Flow<Location> {
-        return flowOf(moscow)
+    override suspend fun getSelectedLocation(): Location {
+        val selectedId = withContext(Dispatchers.IO) { selectedLocationId.get() }
+        return locationDao.getById(selectedId)?.toDomainModel() ?: Location.CurrentLocation
+    }
+
+    override fun getSelectedLocationStream(): Flow<Location> {
+        return selectedLocationId.asFlow()
+            .map { id -> locationDao.getById(id)?.toDomainModel() ?: Location.CurrentLocation }
     }
 
     private fun LocationEntity.toDomainModel(): Location {

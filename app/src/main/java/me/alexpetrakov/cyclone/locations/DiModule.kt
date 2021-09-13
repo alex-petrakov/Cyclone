@@ -1,6 +1,9 @@
 package me.alexpetrakov.cyclone.locations
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.locations.data.LocationsDataStore
 import me.alexpetrakov.cyclone.locations.data.db.AppDatabase
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
@@ -21,7 +24,8 @@ val locationModule = module {
 
     single<LocationsRepository> {
         LocationsDataStore(
-            database = get()
+            database = get(),
+            prefs = getLocationPrefs(androidContext())
         )
     }
 
@@ -31,4 +35,11 @@ val locationModule = module {
             locationsRepository = get()
         )
     }
+}
+
+private fun getLocationPrefs(context: Context): SharedPreferences {
+    return context.getSharedPreferences(
+        "${BuildConfig.APPLICATION_ID}.LOCATION_PREFS",
+        Context.MODE_PRIVATE
+    )
 }

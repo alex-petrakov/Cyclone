@@ -9,6 +9,9 @@ interface LocationDao {
     @Query("SELECT * FROM location ORDER BY position")
     fun getAllAsStream(): Flow<List<LocationEntity>>
 
+    @Query("SELECT * FROM location WHERE id = :id")
+    suspend fun getById(id: Int): LocationEntity?
+
     @Query("SELECT COUNT(id) FROM location")
     suspend fun getLocationCount(): Int
 
