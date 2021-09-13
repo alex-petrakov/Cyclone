@@ -33,7 +33,7 @@ data class CurrentJson(
     @Json(name = "visibility") val visibility: Distance,
     @Json(name = "wind_speed") val windSpeed: Speed,
     @Json(name = "wind_deg") val windDirectionInDeg: Double,
-    @Json(name = "wind_gust") val windGust: Speed,
+    @Json(name = "wind_gust") val windGust: Speed?,
     @Json(name = "weather") val overallConditions: List<OverallConditionsJson>
 )
 
