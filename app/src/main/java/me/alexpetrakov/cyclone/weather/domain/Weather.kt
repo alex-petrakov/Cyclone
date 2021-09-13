@@ -47,7 +47,7 @@ enum class Icon(val id: Int) {
 
 data class Wind(
     val speed: Speed,
-    val gustsSpeed: Speed,
+    val gustsSpeed: Speed?,
     val direction: Double
 )
 
