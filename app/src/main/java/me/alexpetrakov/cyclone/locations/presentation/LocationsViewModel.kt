@@ -15,7 +15,6 @@ import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
-import kotlin.random.Random
 
 class LocationsViewModel(
     private val router: Router,
@@ -26,7 +25,23 @@ class LocationsViewModel(
         .map { list -> ViewState(list.map { it.toUiModel() }) }
         .asLiveData()
 
-    private val random = Random(System.currentTimeMillis())
+    private val locations = listOf(
+        Location.StoredLocation(
+            0,
+            "Moscow",
+            Coordinates(55.751244, 37.618423)
+        ),
+        Location.StoredLocation(
+            0,
+            "Bordeaux",
+            Coordinates(44.836151, -0.580816)
+        ),
+        Location.StoredLocation(
+            0,
+            "Chicago",
+            Coordinates(41.881832, -87.623177)
+        )
+    )
 
     private val _viewEffect = SingleLiveEvent<ViewEffect>()
 
@@ -35,13 +50,7 @@ class LocationsViewModel(
 
     fun onAddLocation() {
         viewModelScope.launch {
-            locationsRepository.createLocation(
-                Location.StoredLocation(
-                    0,
-                    "Moscow ${random.nextInt(100)}",
-                    Coordinates(55.751244, 37.618423)
-                )
-            )
+            locationsRepository.createLocation(locations.random())
         }
     }
 
