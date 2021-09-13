@@ -35,8 +35,8 @@ class LocationsFragment : Fragment() {
     )
 
     private val locationsAdapter = LocationsAdapter(itemTouchHelper).apply {
-        onClickItem = { item -> viewModel.onSelectLocation(item) }
-        onRemoveItem = { item -> viewModel.onTryToRemoveItem(item) }
+        onClickItem = { location -> viewModel.onSelectLocation(location) }
+        onRemoveItem = { location -> viewModel.onTryToRemoveLocation(location) }
     }
 
     override fun onCreateView(
@@ -80,11 +80,11 @@ class LocationsFragment : Fragment() {
         }
     }
 
-    private fun showRemovalConfirmation(confirmationText: TextResource, idOfItemToRemove: Int) {
+    private fun showRemovalConfirmation(confirmationText: TextResource, idOfLocationToRemove: Int) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(confirmationText.asString(resources))
             .setPositiveButton(R.string.app_action_remove) { _, _ ->
-                viewModel.onConfirmItemRemoval(idOfItemToRemove)
+                viewModel.onConfirmLocationRemoval(idOfLocationToRemove)
             }
             .setNegativeButton(R.string.app_action_cancel) { dialog, _ ->
                 dialog.dismiss()

@@ -52,16 +52,16 @@ class LocationsViewModel(
         }
     }
 
-    fun onTryToRemoveItem(item: LocationUiItem) {
+    fun onTryToRemoveLocation(location: LocationUiItem) {
         _viewEffect.value = ViewEffect.DisplayRemovalConfirmation(
-            TextResource.from(R.string.locations_removal_confirmation_template, item.name),
-            item.id
+            TextResource.from(R.string.locations_removal_confirmation_template, location.name),
+            location.id
         )
     }
 
-    fun onConfirmItemRemoval(itemId: Int) {
+    fun onConfirmLocationRemoval(locationId: Int) {
         viewModelScope.launch {
-            locationsRepository.removeLocationById(itemId)
+            locationsRepository.removeLocationById(locationId)
         }
     }
 
