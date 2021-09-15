@@ -25,7 +25,7 @@ import java.time.format.FormatStyle
 import java.util.*
 
 class WeatherViewModel(
-    private val weatherRepository: WeatherRepository,
+    private val getWeather: GetWeather,
     private val locationsRepository: LocationsRepository,
     private val unitsRepository: UnitsRepository,
     private val router: Router
@@ -93,7 +93,7 @@ class WeatherViewModel(
     private fun loadForecast() {
         viewModelScope.launch {
             val selectedLocation = locationsRepository.getSelectedLocation()
-            _weatherViewState.value = weatherRepository.getWeather(selectedLocation)
+            _weatherViewState.value = getWeather(selectedLocation)
                 .fold({ mapWeatherToViewState(it) }, ::mapFailureToViewState)
         }
     }

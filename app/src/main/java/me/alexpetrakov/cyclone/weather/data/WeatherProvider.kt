@@ -5,7 +5,6 @@ import com.github.kittinunf.result.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.locations.domain.Coordinates
-import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.weather.data.openweathermap.ForecastApi
 import me.alexpetrakov.cyclone.weather.data.openweathermap.WeatherJson
 import me.alexpetrakov.cyclone.weather.data.openweathermap.toDomain
@@ -17,14 +16,10 @@ class WeatherProvider(
     private val forecastApi: ForecastApi
 ) : WeatherRepository {
 
-    override suspend fun getWeather(location: Location): Result<Weather, Throwable> {
-        val (lat, lon) = when (location) {
-            // TODO: Obtain actual device coordinates from Location Provider
-            Location.CurrentLocation -> Coordinates(55.751244, 37.618423)
-            is Location.StoredLocation -> location.coordinates
-        }
-        return Result.fromNetworkRequest { forecastApi.getWeather(lat, lon) }
-            .map { toDomainModel(it) }
+    override suspend fun getWeather(coordinates: Coordinates): Result<Weather, Throwable> {
+        return Result.fromNetworkRequest {
+            forecastApi.getWeather(coordinates.lat, coordinates.lon)
+        }.map { toDomainModel(it) }
     }
 
     private suspend fun toDomainModel(weatherJson: WeatherJson): Weather {

@@ -3,7 +3,7 @@ package me.alexpetrakov.cyclone.weather.domain
 import com.github.kittinunf.result.Result
 import me.alexpetrakov.cyclone.locations.domain.Coordinates
 
-interface WeatherRepository {
+interface DeviceLocator {
 
-    suspend fun getWeather(coordinates: Coordinates): Result<Weather, Throwable>
+    suspend fun getDeviceLocation(): Result<Coordinates, Fail>
 }
