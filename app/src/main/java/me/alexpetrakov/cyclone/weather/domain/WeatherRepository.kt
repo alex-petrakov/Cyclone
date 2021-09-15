@@ -5,5 +5,5 @@ import me.alexpetrakov.cyclone.locations.domain.Coordinates
 
 interface WeatherRepository {
 
-    suspend fun getWeather(coordinates: Coordinates): Result<Weather, Throwable>
+    suspend fun getWeather(coordinates: Coordinates): Result<Weather, Fail>
 }

@@ -10,13 +10,13 @@ class GetWeather(
     private val locationRepo: DeviceLocator
 ) {
 
-    suspend operator fun invoke(location: Location): Result<Weather, Throwable> {
+    suspend operator fun invoke(location: Location): Result<Weather, Fail> {
         return location.loadCoordinates().flatMap { coordinates ->
             weatherRepo.getWeather(coordinates)
         }
     }
 
-    private suspend fun Location.loadCoordinates(): Result<Coordinates, Throwable> {
+    private suspend fun Location.loadCoordinates(): Result<Coordinates, Fail> {
         return when (this) {
             Location.CurrentLocation -> locationRepo.getDeviceLocation()
             is Location.StoredLocation -> Result.success(this.coordinates)
