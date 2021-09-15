@@ -4,4 +4,12 @@
     <attr name="colorPrecipitation" format="color|reference" />
     <attr name="colorDestructive" format="color|reference" />
     <attr name="colorDestructiveRipple" format="color|reference" />
+
+    <declare-styleable name="ErrorView">
+        <attr name="evMessageText" format="string|reference" />
+        <attr name="evPrimaryActionText" format="string|reference" />
+        <attr name="evSecondaryActionText" format="string|reference" />
+        <attr name="evIcon" format="reference" />
+        <attr name="evSecondaryActionIsVisible" format="boolean" />
+    </declare-styleable>
 </resources>

@@ -6,6 +6,7 @@
     <string name="app_action_add">Add</string>
     <string name="app_action_remove">Remove</string>
     <string name="app_action_cancel">Cancel</string>
+    <string name="app_action_open_settings">Open settings</string>
 
     <string name="weather_now_title">Now</string>
     <string name="weather_wind">Wind</string>

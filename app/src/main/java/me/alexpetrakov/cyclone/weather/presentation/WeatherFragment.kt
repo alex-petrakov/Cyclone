@@ -49,7 +49,7 @@ class WeatherFragment : Fragment() {
         }
         // TODO: Make the toolbar title clickable instead
         toolbar.setNavigationOnClickListener { viewModel.onOpenLocationPicker() }
-        errorView.retryButton.setOnClickListener { viewModel.onRetryAfterFailure() }
+        errorView.setPrimaryAction { viewModel.onRetryAfterFailure() }
     }
 
     private fun observeViewModel(): Unit = with(viewModel) {
@@ -65,18 +65,18 @@ class WeatherFragment : Fragment() {
         when (viewState) {
             WeatherViewState.Loading -> {
                 contentView.root.isVisible = false
-                errorView.root.isVisible = false
+                errorView.isVisible = false
                 progressIndicator.show()
             }
             is WeatherViewState.Content -> {
                 contentView.root.isVisible = true
-                errorView.root.isVisible = false
+                errorView.isVisible = false
                 progressIndicator.hide()
                 renderContent(viewState)
             }
             is WeatherViewState.Error -> {
                 contentView.root.isVisible = false
-                errorView.root.isVisible = true
+                errorView.isVisible = true
                 progressIndicator.hide()
             }
 

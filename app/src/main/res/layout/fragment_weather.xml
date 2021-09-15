@@ -46,10 +46,15 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <include
+        <me.alexpetrakov.cyclone.weather.presentation.ErrorView
             android:id="@+id/error_view"
-            layout="@layout/layout_weather_error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
+            app:evIcon="@drawable/ic_no_connection"
+            app:evMessageText="@string/weather_error_cant_connect"
+            app:evPrimaryActionText="@string/app_action_try_again"
+            app:evSecondaryActionText="@string/app_action_open_settings"
             tools:visibility="visible" />
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
