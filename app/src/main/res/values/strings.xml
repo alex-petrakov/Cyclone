@@ -5,6 +5,7 @@
     <string name="app_action_navigate_up">Navigate up</string>
     <string name="app_action_add">Add</string>
     <string name="app_action_remove">Remove</string>
+    <string name="app_action_continue">Continue</string>
     <string name="app_action_cancel">Cancel</string>
     <string name="app_action_open_settings">Open settings</string>
 
@@ -21,6 +22,8 @@
     <string name="weather_error_no_location_access">To get weather conditions in your area, the app needs permission to access your location.</string>
     <string name="weather_error_no_available_location">Location is not available. Make sure that device location is enabled.</string>
     <string name="weather_error_activity_not_found">Unable to find an Activity for this action</string>
+    <string name="weather_allow_access_to_your_location">Allow access to your location</string>
+    <string name="weather_location_permission_rationale_message">To get weather in your area, the app needs access to your location.\nYour location info is never used for anything other than showing you a forecast.</string>
     <string name="weather_change_location">Change location</string>
     <string name="template_temperature_degree">%s°</string>
     <string name="template_temperature_kelvin">%s K</string>

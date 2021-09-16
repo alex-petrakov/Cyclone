@@ -72,15 +72,13 @@ class WeatherViewModel(
                 .combine(unitsRepository.observePreferredUnits()) { location, _ -> location }
                 .onEach { location ->
                     _toolbarViewState.value = ToolbarViewState(location.toUiModel())
-                    _weatherViewState.value = WeatherViewState.Loading
-                    loadForecast()
+                    showLoadingAndLoadForecast()
                 }.collect()
         }
     }
 
     fun onRetryAfterFailure() {
-        _weatherViewState.value = WeatherViewState.Loading
-        loadForecast()
+        showLoadingAndLoadForecast()
     }
 
     fun onRefresh() {
@@ -88,8 +86,7 @@ class WeatherViewModel(
         check(currentViewState is WeatherViewState.Content) {
             "Refresh can be triggered only from ViewState.Content state"
         }
-        _weatherViewState.value = currentViewState.copy(isRefreshing = true)
-        loadForecast()
+        showRefreshingAndLoadForecast(currentViewState)
     }
 
     fun onOpenLocationPicker() {
@@ -104,11 +101,32 @@ class WeatherViewModel(
         _viewEffect.value = ViewEffect.OpenLocationSettings
     }
 
+    fun onLocationAccessGranted() {
+        showLoadingAndLoadForecast()
+    }
+
+    fun onLocationAccessDenied() {
+        _weatherViewState.value = WeatherViewState.Error.NoLocationAccess
+    }
+
+    private fun showLoadingAndLoadForecast() {
+        _weatherViewState.value = WeatherViewState.Loading
+        loadForecast()
+    }
+
+    private fun showRefreshingAndLoadForecast(viewState: WeatherViewState.Content) {
+        _weatherViewState.value = viewState.copy(isRefreshing = true)
+        loadForecast()
+    }
+
     private fun loadForecast() {
         viewModelScope.launch {
-            val selectedLocation = locationsRepository.getSelectedLocation()
-            _weatherViewState.value = getWeather(selectedLocation)
-                .fold({ mapWeatherToViewState(it) }, ::mapFailureToViewState)
+            val weather = getWeather(locationsRepository.getSelectedLocation())
+            _weatherViewState.value = weather.fold(
+                { mapWeatherToViewState(it) },
+                ::mapFailureToViewState
+            )
+            _viewEffect.value = weather.fold(::mapWeatherToViewEffect, ::mapFailureToViewEffect)
         }
     }
 
@@ -121,10 +139,18 @@ class WeatherViewModel(
 
     private fun mapFailureToViewState(fail: Fail): WeatherViewState {
         return when (fail) {
-            is Fail.NoLocationAccess -> WeatherViewState.Error.NoLocationAccess
+            is Fail.NoLocationAccess -> WeatherViewState.Loading
             is Fail.NoAvailableLocation -> WeatherViewState.Error.NoAvailableLocation
             is Fail.NoConnection -> WeatherViewState.Error.NoConnection
         }
+    }
+
+    private fun mapWeatherToViewEffect(weather: Weather): ViewEffect {
+        return ViewEffect.None
+    }
+
+    private fun mapFailureToViewEffect(fail: Fail): ViewEffect {
+        return if (fail is Fail.NoLocationAccess) ViewEffect.RequestLocationAccess else ViewEffect.None
     }
 
     private fun Weather.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem> {
