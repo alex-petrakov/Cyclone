@@ -109,6 +109,14 @@ class WeatherViewModel(
         _weatherViewState.value = WeatherViewState.Error.NoLocationAccess
     }
 
+    fun onLocationRetrievalErrorResolved() {
+        showLoadingAndLoadForecast()
+    }
+
+    fun onLocationRetrievalErrorNotResolved() {
+        _weatherViewState.value = WeatherViewState.Error.NoAvailableLocation
+    }
+
     private fun showLoadingAndLoadForecast() {
         _weatherViewState.value = WeatherViewState.Loading
         loadForecast()
@@ -139,8 +147,9 @@ class WeatherViewModel(
 
     private fun mapFailureToViewState(fail: Fail): WeatherViewState {
         return when (fail) {
-            is Fail.NoLocationAccess -> WeatherViewState.Loading
-            is Fail.NoAvailableLocation -> WeatherViewState.Error.NoAvailableLocation
+            is Fail.LocationAccessDenied -> WeatherViewState.Loading
+            is Fail.LocationIsDisabled -> WeatherViewState.Loading
+            is Fail.LocationIsNotAvailable -> WeatherViewState.Error.NoAvailableLocation
             is Fail.NoConnection -> WeatherViewState.Error.NoConnection
         }
     }
@@ -150,7 +159,11 @@ class WeatherViewModel(
     }
 
     private fun mapFailureToViewEffect(fail: Fail): ViewEffect {
-        return if (fail is Fail.NoLocationAccess) ViewEffect.RequestLocationAccess else ViewEffect.None
+        return when (fail) {
+            is Fail.LocationAccessDenied -> ViewEffect.RequestLocationAccess
+            is Fail.LocationIsDisabled -> ViewEffect.ResolveException(fail.cause)
+            else -> ViewEffect.None
+        }
     }
 
     private fun Weather.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem> {

@@ -5,10 +5,13 @@ sealed class Fail(
     cause: Throwable?
 ) : RuntimeException(message, cause) {
 
-    class NoLocationAccess(cause: Throwable? = null) :
+    class LocationAccessDenied(cause: Throwable? = null) :
         Fail("Location permission is missing", cause)
 
-    class NoAvailableLocation(cause: Throwable? = null) :
+    class LocationIsDisabled(cause: Throwable?) :
+        Fail("Can't obtain device location. User action is required", cause)
+
+    class LocationIsNotAvailable(cause: Throwable? = null) :
         Fail("Can't obtain device location", cause)
 
     class NoConnection(cause: Throwable? = null) :

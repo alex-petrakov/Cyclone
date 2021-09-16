@@ -1,8 +1,9 @@
 package me.alexpetrakov.cyclone.weather.presentation
 
-enum class ViewEffect {
-    OpenAppSettings,
-    OpenLocationSettings,
-    RequestLocationAccess,
-    None
+sealed class ViewEffect {
+    object OpenAppSettings : ViewEffect()
+    object OpenLocationSettings : ViewEffect()
+    object RequestLocationAccess : ViewEffect()
+    data class ResolveException(val throwable: Throwable?) : ViewEffect()
+    object None : ViewEffect()
 }

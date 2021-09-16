@@ -1,6 +1,7 @@
 package me.alexpetrakov.cyclone.weather.presentation
 
 import android.Manifest
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,11 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.R
@@ -39,6 +43,14 @@ class WeatherFragment : Fragment() {
                 viewModel.onLocationAccessGranted()
             } else {
                 viewModel.onLocationAccessDenied()
+            }
+        }
+
+    private val failureResolutionRequest =
+        registerForActivityResult(StartIntentSenderForResult()) { result ->
+            when (result.resultCode) {
+                Activity.RESULT_OK -> viewModel.onLocationRetrievalErrorResolved()
+                else -> viewModel.onLocationRetrievalErrorNotResolved()
             }
         }
 
@@ -149,6 +161,7 @@ class WeatherFragment : Fragment() {
             ViewEffect.OpenAppSettings -> openAppSettings()
             ViewEffect.OpenLocationSettings -> openLocationSettings()
             ViewEffect.RequestLocationAccess -> requestLocationAccess()
+            is ViewEffect.ResolveException -> tryToResolveException(viewEffect.throwable)
             ViewEffect.None -> {
             }
         }
@@ -187,6 +200,12 @@ class WeatherFragment : Fragment() {
             locationPermissionIsGranted -> viewModel.onLocationAccessGranted()
             shouldShowPermissionRationale -> showLocationPermissionRationale()
             else -> showSystemLocationPermissionRequest()
+        }
+    }
+
+    private fun tryToResolveException(cause: Throwable?) {
+        if (cause != null && cause is ResolvableApiException) {
+            failureResolutionRequest.launch(IntentSenderRequest.Builder(cause.resolution).build())
         }
     }
 

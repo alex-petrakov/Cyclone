@@ -6,8 +6,12 @@ import android.os.SystemClock
 import com.github.kittinunf.result.Result
 import com.github.kittinunf.result.flatMapError
 import com.github.kittinunf.result.map
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.SettingsClient
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,21 +22,35 @@ import me.alexpetrakov.cyclone.weather.domain.Fail
 import java.util.concurrent.TimeUnit.MINUTES
 
 class DeviceLocationProvider(
-    private val fusedLocationProvider: FusedLocationProviderClient
+    private val fusedLocationProvider: FusedLocationProviderClient,
+    private val settingsClient: SettingsClient
 ) : DeviceLocator {
 
     override suspend fun getDeviceLocation(): Result<Coordinates, Fail> {
         return try {
+            requireLocationSettings()
             getLastKnownLocation()
                 .flatMapError { getCurrentLocation() }
                 .map { Coordinates(it.latitude, it.longitude) }
         } catch (e: CancellationException) {
             throw e
         } catch (e: SecurityException) {
-            Result.failure(Fail.NoLocationAccess(e))
+            Result.failure(Fail.LocationAccessDenied(e))
+        } catch (e: ResolvableApiException) {
+            Result.failure(Fail.LocationIsDisabled(e))
         } catch (e: Exception) {
-            Result.failure(Fail.NoAvailableLocation(e))
+            Result.failure(Fail.LocationIsNotAvailable(e))
         }
+    }
+
+    private suspend fun requireLocationSettings() {
+        val locationRequest = LocationRequest.create().apply {
+            priority = PRIORITY_HIGH_ACCURACY
+        }
+        val settingsRequest = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+            .build()
+        settingsClient.checkLocationSettings(settingsRequest).await()
     }
 
     @SuppressLint("MissingPermission")
@@ -41,7 +59,7 @@ class DeviceLocationProvider(
         return if (location != null && location.isFresh && location.isAccurate) {
             Result.success(location)
         } else {
-            Result.failure(Fail.NoAvailableLocation(null))
+            Result.failure(Fail.LocationIsNotAvailable(null))
         }
     }
 
@@ -66,7 +84,7 @@ class DeviceLocationProvider(
         return if (location != null) {
             Result.success(location)
         } else {
-            Result.failure(Fail.NoAvailableLocation())
+            Result.failure(Fail.LocationIsNotAvailable())
         }
     }
 }

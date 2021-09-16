@@ -21,7 +21,10 @@ val weatherModule = module {
     }
 
     single<DeviceLocator> {
-        DeviceLocationProvider(LocationServices.getFusedLocationProviderClient(androidContext()))
+        DeviceLocationProvider(
+            LocationServices.getFusedLocationProviderClient(androidContext()),
+            LocationServices.getSettingsClient(androidContext())
+        )
     }
 
     factory {
