@@ -20,11 +20,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
+import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.ACTION_CANCEL
+import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.ACTION_CONTINUE
+import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.KEY_ACTION
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WeatherFragment : Fragment() {
@@ -53,6 +55,20 @@ class WeatherFragment : Fragment() {
                 else -> viewModel.onLocationRetrievalErrorNotResolved()
             }
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        childFragmentManager.setFragmentResultListener(
+            LocationRationaleDialog.TAG,
+            this
+        ) { _, result ->
+            val action = result.getString(KEY_ACTION) ?: return@setFragmentResultListener
+            when (action) {
+                ACTION_CONTINUE -> showSystemLocationPermissionRequest()
+                ACTION_CANCEL -> viewModel.onLocationAccessDenied()
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -223,18 +239,7 @@ class WeatherFragment : Fragment() {
         }
 
     private fun showLocationPermissionRationale() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.weather_allow_access_to_your_location)
-            .setMessage(R.string.weather_location_permission_rationale_message)
-            .setPositiveButton(R.string.app_action_continue) { _, _ ->
-                showSystemLocationPermissionRequest()
-            }
-            .setNegativeButton(R.string.app_action_cancel) { _, _ ->
-                viewModel.onLocationAccessDenied()
-            }
-            .setOnCancelListener {
-                viewModel.onLocationAccessDenied()
-            }.create().show()
+        LocationRationaleDialog().show(childFragmentManager, LocationRationaleDialog.TAG)
     }
 
     private fun showSystemLocationPermissionRequest() {
