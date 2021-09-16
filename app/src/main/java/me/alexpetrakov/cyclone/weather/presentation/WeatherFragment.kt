@@ -27,6 +27,7 @@ import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
 import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.ACTION_CANCEL
 import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.ACTION_CONTINUE
 import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.KEY_ACTION
+import me.alexpetrakov.cyclone.weather.presentation.list.WeatherAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WeatherFragment : Fragment() {

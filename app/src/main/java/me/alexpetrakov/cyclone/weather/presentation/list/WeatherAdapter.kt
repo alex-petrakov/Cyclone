@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.weather.presentation
+package me.alexpetrakov.cyclone.weather.presentation.list
 
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -13,6 +13,7 @@ import me.alexpetrakov.cyclone.databinding.ItemCurrentConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemDayConditionsBinding
 import me.alexpetrakov.cyclone.databinding.ItemHeaderBinding
 import me.alexpetrakov.cyclone.databinding.ItemHourlyForecastBinding
+import me.alexpetrakov.cyclone.weather.presentation.DisplayableItem
 
 class WeatherAdapter :
     ListAdapter<DisplayableItem, RecyclerView.ViewHolder>(DisplayableItem.DiffCallback) {

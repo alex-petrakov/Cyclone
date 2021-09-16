@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.weather.presentation
+package me.alexpetrakov.cyclone.weather.presentation.list
 
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.ItemHourConditionsBinding
+import me.alexpetrakov.cyclone.weather.presentation.HourConditionsUi
 
 class HourlyForecastAdapter :
     ListAdapter<HourConditionsUi, HourlyForecastAdapter.ViewHolder>(HourConditionsUi.DiffCallback) {
