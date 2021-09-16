@@ -11,7 +11,11 @@ sealed class WeatherViewState {
 
     object Loading : WeatherViewState()
 
-    object Error : WeatherViewState()
+    sealed class Error : WeatherViewState() {
+        object NoLocationAccess : Error()
+        object NoAvailableLocation : Error()
+        object NoConnection : Error()
+    }
 
     data class Content(
         val isRefreshing: Boolean,

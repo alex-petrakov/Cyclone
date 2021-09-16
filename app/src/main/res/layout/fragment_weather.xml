@@ -47,14 +47,37 @@
             tools:visibility="visible" />
 
         <me.alexpetrakov.cyclone.weather.presentation.ErrorView
-            android:id="@+id/error_view"
+            android:id="@+id/no_connection_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             app:evIcon="@drawable/ic_no_connection"
             app:evMessageText="@string/weather_error_cant_connect"
             app:evPrimaryActionText="@string/app_action_try_again"
+            app:evSecondaryActionIsVisible="false"
             app:evSecondaryActionText="@string/app_action_open_settings"
             tools:visibility="visible" />
+
+        <me.alexpetrakov.cyclone.weather.presentation.ErrorView
+            android:id="@+id/no_location_access_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:evIcon="@drawable/ic_no_location"
+            app:evMessageText="@string/weather_error_no_location_access"
+            app:evPrimaryActionText="@string/app_action_try_again"
+            app:evSecondaryActionIsVisible="true"
+            app:evSecondaryActionText="@string/app_action_open_settings" />
+
+        <me.alexpetrakov.cyclone.weather.presentation.ErrorView
+            android:id="@+id/no_available_location_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:evIcon="@drawable/ic_no_location"
+            app:evMessageText="@string/weather_error_no_available_location"
+            app:evPrimaryActionText="@string/app_action_try_again"
+            app:evSecondaryActionIsVisible="true"
+            app:evSecondaryActionText="@string/app_action_open_settings" />
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

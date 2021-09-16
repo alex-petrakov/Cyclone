@@ -17,7 +17,10 @@
     <string name="weather_uv_index">UV index</string>
     <string name="weather_today_title">Today</string>
     <string name="weather_this_week_title">This week</string>
-    <string name="weather_error_cant_connect">Can\'t connect to the server</string>
+    <string name="weather_error_cant_connect">Can\'t connect to the server.</string>
+    <string name="weather_error_no_location_access">To get weather conditions in your area, the app needs permission to access your location.</string>
+    <string name="weather_error_no_available_location">Location is not available. Make sure that device location is enabled.</string>
+    <string name="weather_error_activity_not_found">Unable to find an Activity for this action</string>
     <string name="weather_change_location">Change location</string>
     <string name="template_temperature_degree">%s°</string>
     <string name="template_temperature_kelvin">%s K</string>

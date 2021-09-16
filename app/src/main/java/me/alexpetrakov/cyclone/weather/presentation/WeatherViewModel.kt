@@ -1,5 +1,6 @@
 package me.alexpetrakov.cyclone.weather.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.AppScreens
 import me.alexpetrakov.cyclone.R
+import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.Location
@@ -42,6 +44,10 @@ class WeatherViewModel(
     }
 
     val toolbarViewState get() = _toolbarViewState
+
+    private val _viewEffect = SingleLiveEvent<ViewEffect>()
+
+    val viewEffect: LiveData<ViewEffect> get() = _viewEffect
 
     private val dateFormatter = DateTimeFormatter.ofPattern("EEEE d")
 
@@ -90,6 +96,14 @@ class WeatherViewModel(
         router.navigateTo(AppScreens.locations())
     }
 
+    fun onOpenAppSettings() {
+        _viewEffect.value = ViewEffect.OpenAppSettings
+    }
+
+    fun onOpenLocationSettings() {
+        _viewEffect.value = ViewEffect.OpenLocationSettings
+    }
+
     private fun loadForecast() {
         viewModelScope.launch {
             val selectedLocation = locationsRepository.getSelectedLocation()
@@ -105,8 +119,12 @@ class WeatherViewModel(
         }
     }
 
-    private fun mapFailureToViewState(throwable: Throwable): WeatherViewState {
-        return WeatherViewState.Error
+    private fun mapFailureToViewState(fail: Fail): WeatherViewState {
+        return when (fail) {
+            is Fail.NoLocationAccess -> WeatherViewState.Error.NoLocationAccess
+            is Fail.NoAvailableLocation -> WeatherViewState.Error.NoAvailableLocation
+            is Fail.NoConnection -> WeatherViewState.Error.NoConnection
+        }
     }
 
     private fun Weather.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem> {
