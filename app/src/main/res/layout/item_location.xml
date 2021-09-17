@@ -28,10 +28,10 @@
 
     <ImageButton
         android:id="@+id/remove_button"
-        android:contentDescription="@string/locations_action_remove_location"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="4dp"
         android:background="@drawable/bg_clickable_icon_destructive"
+        android:contentDescription="@string/locations_action_remove_location"
         android:src="@drawable/ic_action_remove" />
 </LinearLayout>
