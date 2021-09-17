@@ -1,5 +1,6 @@
 package me.alexpetrakov.cyclone.locations.presentation.list
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -68,6 +69,7 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
             removeButton.isVisible = item.removeActionIsVisible
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         private fun setUpDragHandle(item: LocationUiItem, handle: View) {
             if (item.isDraggable) {
                 handle.setOnTouchListener { _, event ->
