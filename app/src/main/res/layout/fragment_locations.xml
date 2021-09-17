@@ -8,18 +8,29 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true">
+        android:layout_height="@dimen/collapsing_toolbar_default_height">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="@dimen/toolbar_default_elevation"
-            app:navigationContentDescription="@string/app_action_navigate_up"
-            app:navigationIcon="@drawable/ic_action_close"
-            app:title="@string/locations_title" />
+            android:layout_height="match_parent"
+            android:background="?colorSurface"
+            app:collapsedTitleTextAppearance="?textAppearanceHeadline6"
+            app:expandedTitleMarginBottom="28dp"
+            app:expandedTitleMarginStart="72dp"
+            app:expandedTitleTextAppearance="?textAppearanceHeadline5"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:title="@string/locations_title">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:elevation="0dp"
+                app:layout_collapseMode="pin"
+                app:navigationContentDescription="@string/app_action_navigate_up"
+                app:navigationIcon="@drawable/ic_action_close" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
