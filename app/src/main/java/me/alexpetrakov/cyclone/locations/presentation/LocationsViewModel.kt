@@ -63,8 +63,8 @@ class LocationsViewModel(
 
     fun onTryToRemoveLocation(location: LocationUiItem) {
         _viewEffect.value = ViewEffect.DisplayRemovalConfirmation(
-            TextResource.from(R.string.locations_removal_confirmation_template, location.name),
-            location.id
+            location.id,
+            TextResource.from(R.string.locations_removal_confirmation_template, location.name)
         )
     }
 

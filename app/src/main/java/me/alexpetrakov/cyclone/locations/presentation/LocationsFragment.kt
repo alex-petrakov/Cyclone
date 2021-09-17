@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
@@ -37,6 +35,20 @@ class LocationsFragment : Fragment() {
     private val locationsAdapter = LocationsAdapter(itemTouchHelper).apply {
         onClickItem = { location -> viewModel.onSelectLocation(location) }
         onRemoveItem = { location -> viewModel.onTryToRemoveLocation(location) }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        childFragmentManager.setFragmentResultListener(
+            RemovalConfirmationDialog.TAG,
+            this
+        ) { _, bundle ->
+            val action = bundle.getString(RemovalConfirmationDialog.RESULT_ACTION)
+            if (action == RemovalConfirmationDialog.ACTION_REMOVE) {
+                val locationId = bundle.getInt(RemovalConfirmationDialog.RESULT_LOCATION_ID)
+                viewModel.onConfirmLocationRemoval(locationId)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -75,20 +87,14 @@ class LocationsFragment : Fragment() {
     private fun handle(viewEffect: ViewEffect) {
         when (viewEffect) {
             is ViewEffect.DisplayRemovalConfirmation -> {
-                showRemovalConfirmation(viewEffect.confirmationText, viewEffect.idOfItemToBeRemoved)
+                showRemovalConfirmation(viewEffect.locationId, viewEffect.confirmationText)
             }
         }
     }
 
-    private fun showRemovalConfirmation(confirmationText: TextResource, idOfLocationToRemove: Int) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(confirmationText.asString(resources))
-            .setPositiveButton(R.string.app_action_remove) { _, _ ->
-                viewModel.onConfirmLocationRemoval(idOfLocationToRemove)
-            }
-            .setNegativeButton(R.string.app_action_cancel) { dialog, _ ->
-                dialog.dismiss()
-            }.show()
+    private fun showRemovalConfirmation(locationId: Int, confirmationText: TextResource) {
+        RemovalConfirmationDialog.newInstance(locationId, confirmationText.asString(resources))
+            .show(childFragmentManager, RemovalConfirmationDialog.TAG)
     }
 
     override fun onDestroyView() {
