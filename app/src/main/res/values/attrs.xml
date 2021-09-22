@@ -10,6 +10,7 @@
         <attr name="evPrimaryActionText" format="string|reference" />
         <attr name="evSecondaryActionText" format="string|reference" />
         <attr name="evIcon" format="reference" />
+        <attr name="evPrimaryActionIsVisible" format="boolean" />
         <attr name="evSecondaryActionIsVisible" format="boolean" />
     </declare-styleable>
 </resources>

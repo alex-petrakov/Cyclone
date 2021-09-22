@@ -51,6 +51,12 @@ class ErrorView @JvmOverloads constructor(
             secondaryButton.isVisible = value
         }
 
+    var primaryActionIsVisible: Boolean
+        get() = primaryButton.isVisible
+        set(value) {
+            primaryButton.isVisible = value
+        }
+
     init {
         inflate(context, R.layout.layout_error_view, this)
         setPadding(16.dp, 16.dp, 16.dp, 16.dp)
@@ -62,12 +68,18 @@ class ErrorView @JvmOverloads constructor(
 
         context.obtainStyledAttributes(attrs, R.styleable.ErrorView, 0, 0).use { a ->
             messageTextView.text = a.getText(R.styleable.ErrorView_evMessageText) ?: ""
-            primaryButton.text = a.getText(R.styleable.ErrorView_evPrimaryActionText) ?: ""
+            primaryButton.apply {
+                text = a.getText(R.styleable.ErrorView_evPrimaryActionText) ?: ""
+                isVisible = a.getBoolean(
+                    R.styleable.ErrorView_evPrimaryActionIsVisible,
+                    true
+                )
+            }
             secondaryButton.apply {
                 text = a.getText(R.styleable.ErrorView_evSecondaryActionText) ?: ""
                 isVisible = a.getBoolean(
                     R.styleable.ErrorView_evSecondaryActionIsVisible,
-                    false
+                    true
                 )
             }
             val iconDrawable = a.getDrawable(R.styleable.ErrorView_evIcon)
