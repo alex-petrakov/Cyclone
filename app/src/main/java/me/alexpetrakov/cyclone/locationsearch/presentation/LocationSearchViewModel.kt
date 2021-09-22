@@ -21,7 +21,7 @@ class LocationSearchViewModel(
 
     // TODO: Preserve search results across process death
     private val _viewState = MutableLiveData<ViewState>().apply {
-        value = ViewState.Content(emptyList())
+        value = ViewState.Content(isLoading = false, emptyList())
     }
 
     val viewState: LiveData<ViewState> get() = _viewState
@@ -30,8 +30,12 @@ class LocationSearchViewModel(
         if (text.isBlank()) {
             return
         }
+        val currentState = _viewState.value!!
+        _viewState.value = when (currentState) {
+            is ViewState.Empty -> currentState.copy(isLoading = true)
+            is ViewState.Content -> currentState.copy(isLoading = true)
+        }
         viewModelScope.launch {
-            // TODO: Add a progress indicator
             _viewState.value = locationSearchRepository.searchLocations(text)
                 .fold(
                     { results -> mapSearchResultsToViewState(results) },
@@ -52,8 +56,11 @@ class LocationSearchViewModel(
     private suspend fun mapSearchResultsToViewState(searchResults: List<SearchResult>): ViewState {
         return withContext(Dispatchers.Default) {
             when {
-                searchResults.isEmpty() -> ViewState.Empty
-                else -> ViewState.Content(searchResults.map { it.toUiModel() })
+                searchResults.isEmpty() -> ViewState.Empty(isLoading = false)
+                else -> ViewState.Content(
+                    isLoading = false,
+                    searchResults.map { it.toUiModel() }
+                )
             }
         }
     }
@@ -63,7 +70,7 @@ class LocationSearchViewModel(
     }
 
     private fun mapFailureToViewState(throwable: Throwable): ViewState {
-        return ViewState.Empty // TODO: Display an error view and provide Retry action
+        return ViewState.Empty(isLoading = false) // TODO: Display an error view and provide Retry action
     }
 
     fun onNavigateBack() {

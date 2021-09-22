@@ -41,6 +41,7 @@ class LocationSearchFragment : Fragment() {
     private fun prepareView(): Unit = with(binding) {
         // TODO: Show soft keyboard when the user opens the screen for the first time
         toolbar.setNavigationOnClickListener { viewModel.onNavigateBack() }
+        progressIndicator.setVisibilityAfterHide(View.GONE)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = resultsAdapter
@@ -63,11 +64,13 @@ class LocationSearchFragment : Fragment() {
 
     private fun render(viewState: ViewState): Unit = with(binding) {
         when (viewState) {
-            ViewState.Empty -> {
+            is ViewState.Empty -> {
+                if (viewState.isLoading) progressIndicator.show() else progressIndicator.hide()
                 emptyView.isVisible = true
                 recyclerView.isVisible = false
             }
             is ViewState.Content -> {
+                if (viewState.isLoading) progressIndicator.show() else progressIndicator.hide()
                 emptyView.isVisible = false
                 recyclerView.isVisible = true
                 renderContent(viewState)
