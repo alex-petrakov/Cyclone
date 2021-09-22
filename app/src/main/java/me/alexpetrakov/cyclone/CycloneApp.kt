@@ -3,6 +3,7 @@ package me.alexpetrakov.cyclone
 import android.app.Application
 import me.alexpetrakov.cyclone.common.commonModule
 import me.alexpetrakov.cyclone.locations.locationModule
+import me.alexpetrakov.cyclone.locationsearch.locationSearchModule
 import me.alexpetrakov.cyclone.units.unitsModule
 import me.alexpetrakov.cyclone.weather.weatherModule
 import org.koin.android.ext.koin.androidContext
@@ -26,7 +27,7 @@ class CycloneApp : Application() {
                 androidLogger(Level.DEBUG)
             }
             androidContext(this@CycloneApp)
-            modules(commonModule, weatherModule, locationModule, unitsModule)
+            modules(commonModule, weatherModule, locationModule, unitsModule, locationSearchModule)
         }
     }
 }

@@ -12,7 +12,6 @@ import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
-import me.alexpetrakov.cyclone.locations.domain.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
 
@@ -25,33 +24,13 @@ class LocationsViewModel(
         .map { list -> ViewState(list.map { it.toUiModel() }) }
         .asLiveData()
 
-    private val locations = listOf(
-        Location.StoredLocation(
-            0,
-            "Moscow",
-            Coordinates(55.751244, 37.618423)
-        ),
-        Location.StoredLocation(
-            0,
-            "Bordeaux",
-            Coordinates(44.836151, -0.580816)
-        ),
-        Location.StoredLocation(
-            0,
-            "Chicago",
-            Coordinates(41.881832, -87.623177)
-        )
-    )
-
     private val _viewEffect = SingleLiveEvent<ViewEffect>()
 
     val viewEffect: LiveData<ViewEffect> get() = _viewEffect
 
 
     fun onAddLocation() {
-        viewModelScope.launch {
-            locationsRepository.createLocation(locations.random())
-        }
+        router.navigateTo(AppScreens.locationSearch())
     }
 
     fun onUpdateLocationsOrder(currentList: List<LocationUiItem>) {

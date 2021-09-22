@@ -43,4 +43,7 @@
     <string name="locations_title">Locations</string>
     <string name="locations_action_remove_location">Remove location</string>
     <string name="locations_removal_confirmation_template">Remove %s from saved locations?</string>
+
+    <string name="location_search_search_locations">Search locations</string>
+    <string name="location_search_nothing_found">Nothing found</string>
 </resources>
