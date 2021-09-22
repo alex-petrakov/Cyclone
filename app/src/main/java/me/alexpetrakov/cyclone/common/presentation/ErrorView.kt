@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.weather.presentation
+package me.alexpetrakov.cyclone.common.presentation
 
 import android.content.Context
 import android.graphics.drawable.Drawable
