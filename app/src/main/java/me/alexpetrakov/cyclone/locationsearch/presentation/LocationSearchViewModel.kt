@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import me.alexpetrakov.cyclone.locationsearch.domain.Fail
 import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchRepository
 import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
 
@@ -32,8 +33,9 @@ class LocationSearchViewModel(
         }
         val currentState = _viewState.value!!
         _viewState.value = when (currentState) {
-            is ViewState.Empty -> currentState.copy(isLoading = true)
             is ViewState.Content -> currentState.copy(isLoading = true)
+            is ViewState.Empty -> currentState.copy(isLoading = true)
+            is ViewState.Error -> currentState.copy(isLoading = true)
         }
         viewModelScope.launch {
             _viewState.value = locationSearchRepository.searchLocations(text)
@@ -69,8 +71,8 @@ class LocationSearchViewModel(
         return SearchResultUiItem(placeName, countryName, coordinates)
     }
 
-    private fun mapFailureToViewState(throwable: Throwable): ViewState {
-        return ViewState.Empty(isLoading = false) // TODO: Display an error view and provide Retry action
+    private fun mapFailureToViewState(fail: Fail): ViewState {
+        return ViewState.Error(isLoading = false)
     }
 
     fun onNavigateBack() {

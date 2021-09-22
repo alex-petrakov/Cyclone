@@ -10,4 +10,6 @@ sealed class ViewState {
     ) : ViewState()
 
     data class Empty(override val isLoading: Boolean) : ViewState()
+
+    data class Error(override val isLoading: Boolean) : ViewState()
 }

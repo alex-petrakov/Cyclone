@@ -64,5 +64,16 @@
             android:textColor="?android:textColorSecondary"
             android:visibility="gone"
             tools:visibility="visible" />
+
+        <me.alexpetrakov.cyclone.common.presentation.ErrorView
+            android:id="@+id/error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:evIcon="@drawable/ic_no_connection"
+            app:evMessageText="@string/app_error_no_connection"
+            app:evPrimaryActionIsVisible="false"
+            app:evSecondaryActionIsVisible="false"
+            tools:visibility="visible" />
     </FrameLayout>
 </LinearLayout>

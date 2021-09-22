@@ -63,17 +63,23 @@ class LocationSearchFragment : Fragment() {
     }
 
     private fun render(viewState: ViewState): Unit = with(binding) {
+        if (viewState.isLoading) progressIndicator.show() else progressIndicator.hide()
         when (viewState) {
             is ViewState.Empty -> {
-                if (viewState.isLoading) progressIndicator.show() else progressIndicator.hide()
                 emptyView.isVisible = true
+                errorView.isVisible = false
                 recyclerView.isVisible = false
             }
             is ViewState.Content -> {
-                if (viewState.isLoading) progressIndicator.show() else progressIndicator.hide()
                 emptyView.isVisible = false
+                errorView.isVisible = false
                 recyclerView.isVisible = true
                 renderContent(viewState)
+            }
+            is ViewState.Error -> {
+                emptyView.isVisible = false
+                errorView.isVisible = true
+                recyclerView.isVisible = false
             }
         }
     }
