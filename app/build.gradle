@@ -23,7 +23,7 @@ android {
         buildConfigField(
                 "String",
                 "API_BASE_URL",
-                "\"https://api.openweathermap.org/data/2.5/\""
+                "\"https://api.openweathermap.org/\""
         )
         buildConfigField("String", "API_KEY", keyProperties['apiKey'])
     }

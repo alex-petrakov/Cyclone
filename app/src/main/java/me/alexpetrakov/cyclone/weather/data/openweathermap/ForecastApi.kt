@@ -5,7 +5,7 @@ import retrofit2.http.Query
 
 interface ForecastApi {
 
-    @GET("onecall?exclude=minutely,alerts")
+    @GET("data/2.5/onecall?exclude=minutely,alerts")
     suspend fun getWeather(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double
