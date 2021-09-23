@@ -10,8 +10,9 @@ val locationSearchModule = module {
 
     single<LocationSearchRepository> { LocationSearchProvider() }
 
-    viewModel {
+    viewModel { params ->
         LocationSearchViewModel(
+            savedStateHandle = params.get(),
             locationsRepository = get(),
             locationSearchRepository = get(),
             router = get()

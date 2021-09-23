@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
 import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
 import me.alexpetrakov.cyclone.databinding.FragmentLocationSearchBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class LocationSearchFragment : Fragment() {
 
-    private val viewModel by viewModel<LocationSearchViewModel>()
+    private val viewModel by stateViewModel<LocationSearchViewModel>()
 
     private var _binding: FragmentLocationSearchBinding? = null
 
@@ -55,15 +56,18 @@ class LocationSearchFragment : Fragment() {
                 }
             })
         }
-        queryEditText.setOnEditorActionListener { _, actionId, _ ->
-            when (actionId) {
-                EditorInfo.IME_ACTION_SEARCH -> {
-                    hideKeyboard()
-                    viewModel.onQueryChanged(queryEditText.text.toString())
-                    true
+        queryEditText.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                when (actionId) {
+                    EditorInfo.IME_ACTION_SEARCH -> {
+                        hideKeyboard()
+                        viewModel.onPerformSearch()
+                        true
+                    }
+                    else -> false
                 }
-                else -> false
             }
+            doAfterTextChanged { text -> viewModel.onQueryTextChanged(text.toString()) }
         }
         if (savedInstanceState == null) {
             queryEditText.post { queryEditText.focusAndShowKeyboard() }
@@ -71,24 +75,25 @@ class LocationSearchFragment : Fragment() {
     }
 
     private fun observeViewModel(): Unit = with(viewModel) {
-        viewState.observe(viewLifecycleOwner) { render(it) }
+        searchResultsViewState.observe(viewLifecycleOwner) { render(it) }
+        queryViewState.observe(viewLifecycleOwner) { renderQuery(it) }
     }
 
-    private fun render(viewState: ViewState): Unit = with(binding) {
+    private fun render(viewState: SearchResultsViewState): Unit = with(binding) {
         if (viewState.isLoading) progressIndicator.show() else progressIndicator.hide()
         when (viewState) {
-            is ViewState.Empty -> {
+            is SearchResultsViewState.Empty -> {
                 emptyView.isVisible = true
                 errorView.isVisible = false
                 recyclerView.isVisible = false
             }
-            is ViewState.Content -> {
+            is SearchResultsViewState.Content -> {
                 emptyView.isVisible = false
                 errorView.isVisible = false
                 recyclerView.isVisible = true
                 renderContent(viewState)
             }
-            is ViewState.Error -> {
+            is SearchResultsViewState.Error -> {
                 emptyView.isVisible = false
                 errorView.isVisible = true
                 recyclerView.isVisible = false
@@ -96,7 +101,17 @@ class LocationSearchFragment : Fragment() {
         }
     }
 
-    private fun renderContent(viewState: ViewState.Content) {
+    private fun renderQuery(query: String): Unit = with(binding) {
+        if (queryEditText.text.toString() == query) {
+            return
+        }
+        queryEditText.apply {
+            setText(query)
+            setSelection(query.length)
+        }
+    }
+
+    private fun renderContent(viewState: SearchResultsViewState.Content) {
         resultsAdapter.submitList(viewState.searchResults)
     }
 
