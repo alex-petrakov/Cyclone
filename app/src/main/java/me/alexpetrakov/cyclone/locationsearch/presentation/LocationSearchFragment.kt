@@ -8,6 +8,9 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
+import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
 import me.alexpetrakov.cyclone.databinding.FragmentLocationSearchBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,27 +37,36 @@ class LocationSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareView()
+        prepareView(savedInstanceState)
         observeViewModel()
     }
 
-    private fun prepareView(): Unit = with(binding) {
-        // TODO: Show soft keyboard when the user opens the screen for the first time
+    private fun prepareView(savedInstanceState: Bundle?): Unit = with(binding) {
         toolbar.setNavigationOnClickListener { viewModel.onNavigateBack() }
         progressIndicator.setVisibilityAfterHide(View.GONE)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = resultsAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        hideKeyboard()
+                    }
+                }
+            })
         }
         queryEditText.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    // TODO: Hide soft keyboard when the user performs a search
+                    hideKeyboard()
                     viewModel.onQueryChanged(queryEditText.text.toString())
                     true
                 }
                 else -> false
             }
+        }
+        if (savedInstanceState == null) {
+            queryEditText.post { queryEditText.focusAndShowKeyboard() }
         }
     }
 
