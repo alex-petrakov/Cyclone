@@ -24,11 +24,7 @@ class LocationSearchViewModel(
 
     val searchResultsViewState: LiveData<SearchResultsViewState> get() = _searchResultsViewState
 
-    private val _queryViewState = MutableLiveData<String>().apply {
-        value = savedStateHandle[STATE_QUERY] ?: ""
-    }
-
-    val queryViewState: LiveData<String> get() = _queryViewState
+    val queryViewState get() = savedStateHandle.getLiveData(STATE_QUERY, "")
 
     init {
         if (savedStateHandle.contains(STATE_QUERY)) {
@@ -37,10 +33,9 @@ class LocationSearchViewModel(
     }
 
     fun onQueryTextChanged(text: String) {
-        if (_queryViewState.value == text) {
+        if (queryViewState.value == text) {
             return
         }
-        _queryViewState.value = text
         savedStateHandle[STATE_QUERY] = text
     }
 
