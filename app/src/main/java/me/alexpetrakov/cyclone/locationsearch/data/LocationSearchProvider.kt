@@ -11,18 +11,20 @@ import me.alexpetrakov.cyclone.locationsearch.domain.Fail
 import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchRepository
 import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
 import retrofit2.HttpException
+import java.util.*
 
 class LocationSearchProvider(private val geocodingApi: GeocodingApi) : LocationSearchRepository {
 
     override suspend fun searchLocations(query: String): Result<List<SearchResult>, Fail> {
         return Result.fromNetworkRequest { geocodingApi.searchLocationsByName(query, 25) }
-            .map { searchResultsToDomainModel(it) }
+            .map { searchResultsToDomainModel(it, Locale.getDefault()) }
     }
 
     private suspend fun searchResultsToDomainModel(
-        searchResults: List<SearchResultJson>
+        searchResults: List<SearchResultJson>,
+        locale: Locale
     ): List<SearchResult> = withContext(Dispatchers.Default) {
-        searchResults.map { it.toDomain() }
+        searchResults.map { it.toDomain(locale) }
     }
 }
 

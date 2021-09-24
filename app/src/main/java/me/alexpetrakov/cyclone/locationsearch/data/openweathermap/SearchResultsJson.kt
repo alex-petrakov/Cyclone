@@ -1,26 +1,30 @@
 package me.alexpetrakov.cyclone.locationsearch.data.openweathermap
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import me.alexpetrakov.cyclone.locations.domain.Coordinates
 import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class SearchResultJson(
-    val name: String,
-    val lat: Double,
-    val lon: Double,
-    val country: String,
-    val state: String?
+    @Json(name = "name") val internationalName: String,
+    @Json(name = "local_names") val languagesToLocalNames: Map<String, String>,
+    @Json(name = "lat") val lat: Double,
+    @Json(name = "lon") val lon: Double,
+    @Json(name = "country") val country: String,
+    @Json(name = "state") val state: String?
 )
 
-fun SearchResultJson.toDomain(): SearchResult {
+fun SearchResultJson.toDomain(locale: Locale): SearchResult {
+    val placeName = languagesToLocalNames[locale.language] ?: internationalName
     val countryName = if (state != null) {
         "$country, $state"
     } else {
         country
     }
     return SearchResult(
-        name,
+        placeName,
         countryName,
         Coordinates(lat, lon)
     )
