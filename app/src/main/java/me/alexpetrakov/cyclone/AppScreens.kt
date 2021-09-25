@@ -3,6 +3,7 @@ package me.alexpetrakov.cyclone
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import me.alexpetrakov.cyclone.locations.presentation.LocationsFragment
 import me.alexpetrakov.cyclone.locationsearch.presentation.LocationSearchFragment
+import me.alexpetrakov.cyclone.settings.presentation.SettingsFragment
 import me.alexpetrakov.cyclone.weather.presentation.WeatherFragment
 
 object AppScreens {
@@ -12,4 +13,6 @@ object AppScreens {
     fun locations() = FragmentScreen { LocationsFragment.newInstance() }
 
     fun locationSearch() = FragmentScreen { LocationSearchFragment.newInstance() }
+
+    fun settings() = FragmentScreen { SettingsFragment.newInstance() }
 }

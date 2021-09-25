@@ -93,6 +93,10 @@ class WeatherViewModel(
         router.navigateTo(AppScreens.locations())
     }
 
+    fun onOpenSettings() {
+        router.navigateTo(AppScreens.settings())
+    }
+
     fun onOpenAppSettings() {
         _viewEffect.value = ViewEffect.OpenAppSettings
     }

@@ -98,7 +98,19 @@ class WeatherFragment : Fragment() {
             }
         }
         // TODO: Make the toolbar title clickable instead
-        toolbar.setNavigationOnClickListener { viewModel.onOpenLocationPicker() }
+        toolbar.apply {
+            setNavigationOnClickListener { viewModel.onOpenLocationPicker() }
+            inflateMenu(R.menu.menu_weather)
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_open_settings -> {
+                        viewModel.onOpenSettings()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
 
         noConnectionView.setPrimaryAction { viewModel.onRetryAfterFailure() }
 
