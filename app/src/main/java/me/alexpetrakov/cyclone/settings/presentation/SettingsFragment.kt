@@ -28,15 +28,10 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareView()
-        observeViewModel()
     }
 
     private fun prepareView(): Unit = with(binding) {
         toolbar.setNavigationOnClickListener { viewModel.onNavigateBack() }
-    }
-
-    private fun observeViewModel(): Unit = with(viewModel) {
-
     }
 
     override fun onDestroyView() {

@@ -32,81 +32,11 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_view"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/preferences_fragment"
+        android:name="me.alexpetrakov.cyclone.settings.presentation.InternalSettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="bottom"
-                android:paddingStart="72dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                android:text="@string/settings_main_units"
-                android:textAppearance="?textAppearanceHeadline6" />
-
-            <RadioGroup
-                android:id="@+id/main_units_radio_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp">
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="0dp"
-                    android:text="International (SI)\nCelsius, kilometers, m/s"
-                    android:textAppearance="?textAppearanceSubtitle1" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="0dp"
-                    android:text="US\nFahrenheit, miles, mph"
-                    android:textAppearance="?textAppearanceSubtitle1" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="0dp"
-                    android:text="Canada\nCelsius, kilometer, km/h"
-                    android:textAppearance="?textAppearanceSubtitle1" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="0dp"
-                    android:text="UK\nCelsius, miles, mph"
-                    android:textAppearance="?textAppearanceSubtitle1" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:gravity="bottom"
-                android:paddingStart="72dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                android:text="@string/settings_pressure_units"
-                android:textAppearance="?textAppearanceHeadline6" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
