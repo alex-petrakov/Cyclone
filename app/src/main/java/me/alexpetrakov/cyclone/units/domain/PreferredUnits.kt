@@ -12,12 +12,12 @@ data class PreferredUnits(
     val pressureUnit: PressureUnit
 ) {
     companion object {
-        fun of(unitsLocale: UnitsLocale, pressureUnit: PressureUnit): PreferredUnits {
+        fun of(unitsLocale: UnitsLocale): PreferredUnits {
             return PreferredUnits(
                 unitsLocale.temperatureUnit,
                 unitsLocale.lengthUnit,
                 unitsLocale.speedUnit,
-                pressureUnit
+                unitsLocale.pressureUnit
             )
         }
     }
