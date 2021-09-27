@@ -40,10 +40,9 @@ class TemperatureFormatter(numberFormat: NumberFormat = NumberFormat.getIntegerI
     AbstractFormatter<TemperatureUnit>(numberFormat) {
     override fun getTemplate(unit: TemperatureUnit): Int {
         return when (unit) {
-            TemperatureUnit.celsius -> R.string.template_temperature_degree
-            TemperatureUnit.fahrenheit -> R.string.template_temperature_degree
-            TemperatureUnit.kelvin -> R.string.template_temperature_kelvin
-            else -> throw IllegalStateException("Unexpected unit $unit")
+            TemperatureUnit.Celsius -> R.string.template_temperature_degree
+            TemperatureUnit.Fahrenheit -> R.string.template_temperature_degree
+            TemperatureUnit.Kelvin -> R.string.template_temperature_kelvin
         }
     }
 }
@@ -52,10 +51,9 @@ class DistanceFormatter(numberFormat: NumberFormat = NumberFormat.getIntegerInst
     AbstractFormatter<LengthUnit>(numberFormat) {
     override fun getTemplate(unit: LengthUnit): Int {
         return when (unit) {
-            LengthUnit.meter -> R.string.template_length_meter
-            LengthUnit.kilometer -> R.string.template_length_kilometer
-            LengthUnit.mile -> R.string.template_length_mile
-            else -> throw IllegalStateException("Unexpected unit $unit")
+            LengthUnit.Meters -> R.string.template_length_meter
+            LengthUnit.Kilometers -> R.string.template_length_kilometer
+            LengthUnit.Miles -> R.string.template_length_mile
         }
     }
 }
@@ -64,10 +62,9 @@ class SpeedFormatter(numberFormat: NumberFormat = NumberFormat.getIntegerInstanc
     AbstractFormatter<SpeedUnit>(numberFormat) {
     override fun getTemplate(unit: SpeedUnit): Int {
         return when (unit) {
-            SpeedUnit.meterPerSecond -> R.string.template_speed_meter_per_second
-            SpeedUnit.kilometerPerHour -> R.string.template_speed_kilometer_per_hour
-            SpeedUnit.milePerHour -> R.string.template_speed_mile_per_hour
-            else -> throw IllegalStateException("Unexpected unit $unit")
+            SpeedUnit.MetersPerSecond -> R.string.template_speed_meter_per_second
+            SpeedUnit.KilometersPerHour -> R.string.template_speed_kilometer_per_hour
+            SpeedUnit.MilesPerHour -> R.string.template_speed_mile_per_hour
         }
     }
 }
@@ -76,13 +73,12 @@ class PressureFormatter(numberFormat: NumberFormat = NumberFormat.getIntegerInst
     AbstractFormatter<PressureUnit>(numberFormat) {
     override fun getTemplate(unit: PressureUnit): Int {
         return when (unit) {
-            PressureUnit.pascal -> R.string.template_pressure_pascal
-            PressureUnit.hectopascal -> R.string.template_pressure_hectopascal
-            PressureUnit.kilopascal -> R.string.template_pressure_kilopascal
-            PressureUnit.millibar -> R.string.template_pressure_millibar
-            PressureUnit.millimeterOfMercury -> R.string.template_pressure_mmhg
-            PressureUnit.inchOfMercury -> R.string.template_pressure_inhg
-            else -> throw IllegalStateException("Unexpected unit $unit")
+            PressureUnit.Pascals -> R.string.template_pressure_pascal
+            PressureUnit.Hectopascals -> R.string.template_pressure_hectopascal
+            PressureUnit.Kilopascals -> R.string.template_pressure_kilopascal
+            PressureUnit.Millibars -> R.string.template_pressure_millibar
+            PressureUnit.MillimetersOfMercury -> R.string.template_pressure_mmhg
+            PressureUnit.InchesOfMercury -> R.string.template_pressure_inhg
         }
     }
 }

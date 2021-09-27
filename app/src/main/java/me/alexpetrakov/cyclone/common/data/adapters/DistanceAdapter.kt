@@ -8,8 +8,8 @@ import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
 class DistanceAdapter {
 
     @FromJson
-    fun fromJson(value: Double): Distance = Distance(value, LengthUnit.meter)
+    fun fromJson(value: Double): Distance = Distance(value, LengthUnit.Meters)
 
     @ToJson
-    fun toJson(distance: Distance): Double = distance.convertTo(LengthUnit.meter).value
+    fun toJson(distance: Distance): Double = distance.convertTo(LengthUnit.Meters).value
 }

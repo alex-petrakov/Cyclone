@@ -8,8 +8,8 @@ import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
 class SpeedAdapter {
 
     @FromJson
-    fun fromJson(value: Double): Speed = Speed(value, SpeedUnit.meterPerSecond)
+    fun fromJson(value: Double): Speed = Speed(value, SpeedUnit.MetersPerSecond)
 
     @ToJson
-    fun toJson(speed: Speed): Double = speed.convertTo(SpeedUnit.meterPerSecond).value
+    fun toJson(speed: Speed): Double = speed.convertTo(SpeedUnit.MetersPerSecond).value
 }

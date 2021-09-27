@@ -15,33 +15,39 @@ enum class UnitsLocale(
 ) {
     INTERNATIONAL(
         0,
-        TemperatureUnit.celsius,
-        LengthUnit.kilometer,
-        SpeedUnit.meterPerSecond,
-        PressureUnit.millibar
+        TemperatureUnit.Celsius,
+        LengthUnit.Kilometers,
+        SpeedUnit.MetersPerSecond,
+        PressureUnit.Millibars
     ),
     CANADA(
         1,
-        TemperatureUnit.celsius,
-        LengthUnit.kilometer,
-        SpeedUnit.kilometerPerHour,
-        PressureUnit.inchOfMercury
+        TemperatureUnit.Celsius,
+        LengthUnit.Kilometers,
+        SpeedUnit.KilometersPerHour,
+        PressureUnit.InchesOfMercury
     ),
     RUSSIA(
         2,
-        TemperatureUnit.celsius,
-        LengthUnit.kilometer,
-        SpeedUnit.meterPerSecond,
-        PressureUnit.millimeterOfMercury
+        TemperatureUnit.Celsius,
+        LengthUnit.Kilometers,
+        SpeedUnit.MetersPerSecond,
+        PressureUnit.MillimetersOfMercury
     ),
     US(
         3,
-        TemperatureUnit.fahrenheit,
-        LengthUnit.mile,
-        SpeedUnit.milePerHour,
-        PressureUnit.inchOfMercury
+        TemperatureUnit.Fahrenheit,
+        LengthUnit.Miles,
+        SpeedUnit.MilesPerHour,
+        PressureUnit.InchesOfMercury
     ),
-    UK(4, TemperatureUnit.celsius, LengthUnit.mile, SpeedUnit.milePerHour, PressureUnit.millibar);
+    UK(
+        4,
+        TemperatureUnit.Celsius,
+        LengthUnit.Miles,
+        SpeedUnit.MilesPerHour,
+        PressureUnit.Millibars
+    );
 
     companion object {
 

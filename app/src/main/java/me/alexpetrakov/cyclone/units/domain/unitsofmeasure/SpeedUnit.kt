@@ -5,29 +5,34 @@ import me.alexpetrakov.cyclone.units.domain.converters.LinearConverter
 import me.alexpetrakov.cyclone.units.domain.converters.NothingConverter
 import me.alexpetrakov.cyclone.units.domain.measurements.Measurement
 
-class SpeedUnit(
+enum class SpeedUnit(
     override val symbol: String,
     override val converter: Converter
 ) : UnitDimension<SpeedUnit> {
 
+    MetersPerSecond("m/s", NothingConverter),
+
+    KilometersPerHour("km/h", object : Converter {
+        override fun toBaseUnit(value: Double): Double {
+            return value * 1000 / 3600
+        }
+
+        override fun fromBaseUnit(value: Double): Double {
+            return value * 3600 / 1000
+        }
+    }),
+
+    MilesPerHour("mph", LinearConverter(0.447));
+
     override val baseUnit: SpeedUnit
-        get() = meterPerSecond
+        get() = MetersPerSecond
 
     companion object {
 
-        val meterPerSecond = SpeedUnit("m/s", NothingConverter)
-
-        val kilometerPerHour = SpeedUnit("km/h", object : Converter {
-            override fun toBaseUnit(value: Double): Double {
-                return value * 1000 / 3600
-            }
-
-            override fun fromBaseUnit(value: Double): Double {
-                return value * 3600 / 1000
-            }
-        })
-
-        val milePerHour = SpeedUnit("mph", LinearConverter(0.447))
+        fun from(symbol: String): SpeedUnit {
+            return values().find { it.symbol == symbol }
+                ?: throw IllegalArgumentException("Unknown speed unit symbol: $symbol")
+        }
     }
 }
 
