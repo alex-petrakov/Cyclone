@@ -4,16 +4,19 @@ import me.alexpetrakov.cyclone.units.domain.converters.Converter
 import me.alexpetrakov.cyclone.units.domain.converters.NothingConverter
 import me.alexpetrakov.cyclone.units.domain.measurements.Measurement
 
-class TemperatureUnit(override val converter: Converter) : UnitDimension<TemperatureUnit> {
+class TemperatureUnit(
+    override val symbol: String,
+    override val converter: Converter
+) : UnitDimension<TemperatureUnit> {
 
     override val baseUnit: TemperatureUnit
         get() = celsius
 
     companion object {
 
-        val celsius = TemperatureUnit(NothingConverter)
+        val celsius = TemperatureUnit("°C", NothingConverter)
 
-        val fahrenheit = TemperatureUnit(object : Converter {
+        val fahrenheit = TemperatureUnit("°F", object : Converter {
             override fun toBaseUnit(value: Double): Double {
                 return value - 32 * 5 / 9
             }
@@ -23,7 +26,7 @@ class TemperatureUnit(override val converter: Converter) : UnitDimension<Tempera
             }
         })
 
-        val kelvin = TemperatureUnit(object : Converter {
+        val kelvin = TemperatureUnit("K", object : Converter {
             override fun toBaseUnit(value: Double): Double {
                 return value - 273.15
             }
