@@ -11,4 +11,8 @@ data class Measurement<U : UnitDimension<U>>(val value: Double, val unit: U) {
         val valueInTargetUnits = otherUnit.converter.fromBaseUnit(valueInBaseUnits)
         return Measurement(valueInTargetUnits, otherUnit)
     }
+
+    override fun toString(): String {
+        return "$value ${unit.symbol}"
+    }
 }
