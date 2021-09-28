@@ -4,7 +4,6 @@ import android.app.Application
 import me.alexpetrakov.cyclone.common.commonModule
 import me.alexpetrakov.cyclone.locations.locationModule
 import me.alexpetrakov.cyclone.locationsearch.locationSearchModule
-import me.alexpetrakov.cyclone.settings.settingsModule
 import me.alexpetrakov.cyclone.units.unitsModule
 import me.alexpetrakov.cyclone.weather.weatherModule
 import org.koin.android.ext.koin.androidContext
@@ -33,8 +32,7 @@ class CycloneApp : Application() {
                 weatherModule,
                 locationModule,
                 unitsModule,
-                locationSearchModule,
-                settingsModule
+                locationSearchModule
             )
         }
     }

@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.github.terrakok.cicerone.Router
 import me.alexpetrakov.cyclone.databinding.FragmentSettingsBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
 
 class SettingsFragment : Fragment() {
 
-    private val viewModel by viewModel<SettingsViewModel>()
+    private val router by inject<Router>()
 
     private var _binding: FragmentSettingsBinding? = null
 
@@ -31,7 +32,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun prepareView(): Unit = with(binding) {
-        toolbar.setNavigationOnClickListener { viewModel.onNavigateBack() }
+        toolbar.setNavigationOnClickListener { router.exit() }
     }
 
     override fun onDestroyView() {
