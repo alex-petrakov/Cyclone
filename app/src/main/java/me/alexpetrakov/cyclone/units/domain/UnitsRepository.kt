@@ -26,7 +26,7 @@ interface UnitsRepository {
 
     suspend fun getPreferredUnits(): PreferredUnits
 
-    fun observePreferredUnits(): Flow<PreferredUnits>
+    fun getPreferredUnitsStream(): Flow<PreferredUnits>
 
     companion object {
         const val PREF_KEY_TEMPERATURE_UNIT = "temp_unit"

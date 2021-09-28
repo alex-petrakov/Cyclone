@@ -95,7 +95,7 @@ class UnitsDataStore(prefs: SharedPreferences) : UnitsRepository {
         )
     }
 
-    override fun observePreferredUnits(): Flow<PreferredUnits> {
+    override fun getPreferredUnitsStream(): Flow<PreferredUnits> {
         return combine(
             temperatureUnitStream,
             distanceUnitStream,

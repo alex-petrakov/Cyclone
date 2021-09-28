@@ -68,8 +68,10 @@ class WeatherViewModel(
 
     init {
         viewModelScope.launch {
-            locationsRepository.getSelectedLocationStream()
-                .combine(unitsRepository.observePreferredUnits()) { location, _ -> location }
+            combine(
+                locationsRepository.getSelectedLocationStream(),
+                unitsRepository.getPreferredUnitsStream()
+            ) { location, _ -> location }
                 .onEach { location ->
                     _toolbarViewState.value = ToolbarViewState(location.toUiModel())
                     showLoadingAndLoadForecast()
