@@ -29,9 +29,8 @@ enum class SpeedUnit(
 
     companion object {
 
-        fun from(symbol: String): SpeedUnit {
+        fun from(symbol: String): SpeedUnit? {
             return values().find { it.symbol == symbol }
-                ?: throw IllegalArgumentException("Unknown speed unit symbol: $symbol")
         }
     }
 }

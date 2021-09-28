@@ -37,9 +37,8 @@ enum class TemperatureUnit(
 
     companion object {
 
-        fun from(symbol: String): TemperatureUnit {
+        fun from(symbol: String): TemperatureUnit? {
             return values().find { it.symbol == symbol }
-                ?: throw IllegalArgumentException("Unknown temperature unit symbol: $symbol")
         }
     }
 }

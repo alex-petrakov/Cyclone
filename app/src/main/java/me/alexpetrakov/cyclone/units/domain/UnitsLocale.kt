@@ -58,7 +58,7 @@ enum class UnitsLocale(
         fun get(locale: Locale): UnitsLocale {
             return when (locale) {
                 Locale.CANADA -> CANADA
-                Locale("ru") -> RUSSIA
+                Locale("ru", "RU") -> RUSSIA
                 Locale.US -> US
                 Locale.UK -> UK
                 else -> INTERNATIONAL

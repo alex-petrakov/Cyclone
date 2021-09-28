@@ -27,9 +27,8 @@ enum class PressureUnit(
 
     companion object {
 
-        fun from(symbol: String): PressureUnit {
+        fun from(symbol: String): PressureUnit? {
             return values().find { it.symbol == symbol }
-                ?: throw IllegalArgumentException("Unknown length unit symbol: $symbol")
         }
     }
 }

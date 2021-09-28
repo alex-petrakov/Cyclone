@@ -21,9 +21,8 @@ enum class LengthUnit(
 
     companion object {
 
-        fun from(symbol: String): LengthUnit {
+        fun from(symbol: String): LengthUnit? {
             return values().find { it.symbol == symbol }
-                ?: throw IllegalArgumentException("Unknown length unit symbol: $symbol")
         }
     }
 }
