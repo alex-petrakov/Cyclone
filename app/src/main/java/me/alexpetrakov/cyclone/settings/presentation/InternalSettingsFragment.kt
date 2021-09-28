@@ -6,14 +6,16 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import me.alexpetrakov.cyclone.R
-import me.alexpetrakov.cyclone.units.data.UnitsDataStore
-import me.alexpetrakov.cyclone.units.domain.UnitsLocale
+import me.alexpetrakov.cyclone.units.domain.UnitsRepository
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.PressureUnit
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.TemperatureUnit
+import org.koin.android.ext.android.inject
 
 class InternalSettingsFragment : PreferenceFragmentCompat() {
+
+    private val unitsRepository by inject<UnitsRepository>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val context = preferenceManager.context
@@ -33,49 +35,53 @@ class InternalSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun buildTemperatureUnitsPreference(context: Context): Preference {
+        val temperatureUnits = unitsRepository.temperatureUnits
         return ListPreference(context).apply {
-            key = UnitsDataStore.PREF_KEY_TEMPERATURE_UNIT
+            key = UnitsRepository.PREF_KEY_TEMPERATURE_UNIT
             title = getString(R.string.settings_temperature_units)
             dialogTitle = title
-            entries = TemperatureUnit.values().map { it.getLocalizedName(context) }.toTypedArray()
-            entryValues = TemperatureUnit.values().map { it.symbol }.toTypedArray()
-            value = UnitsLocale.getDefault().temperatureUnit.symbol
+            entries = temperatureUnits.map { it.getLocalizedName(context) }.toTypedArray()
+            entryValues = temperatureUnits.map { it.symbol }.toTypedArray()
+            value = unitsRepository.defaultTemperatureUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }
 
     private fun buildDistanceUnitsPreference(context: Context): Preference {
+        val distanceUnits = unitsRepository.distanceUnits
         return ListPreference(context).apply {
-            key = UnitsDataStore.PREF_KEY_DISTANCE_UNIT
+            key = UnitsRepository.PREF_KEY_DISTANCE_UNIT
             title = getString(R.string.settings_distance_units)
             dialogTitle = title
-            entries = LengthUnit.values().map { it.getLocalizedName(context) }.toTypedArray()
-            entryValues = LengthUnit.values().map { it.symbol }.toTypedArray()
-            value = UnitsLocale.getDefault().lengthUnit.symbol
+            entries = distanceUnits.map { it.getLocalizedName(context) }.toTypedArray()
+            entryValues = distanceUnits.map { it.symbol }.toTypedArray()
+            value = unitsRepository.defaultDistanceUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }
 
     private fun buildSpeedUnitsPreference(context: Context): Preference {
+        val speedUnits = unitsRepository.speedUnits
         return ListPreference(context).apply {
-            key = UnitsDataStore.PREF_KEY_SPEED_UNIT
+            key = UnitsRepository.PREF_KEY_SPEED_UNIT
             title = getString(R.string.settings_speed_units)
             dialogTitle = title
-            entries = SpeedUnit.values().map { it.getLocalizedName(context) }.toTypedArray()
-            entryValues = SpeedUnit.values().map { it.symbol }.toTypedArray()
-            value = UnitsLocale.getDefault().speedUnit.symbol
+            entries = speedUnits.map { it.getLocalizedName(context) }.toTypedArray()
+            entryValues = speedUnits.map { it.symbol }.toTypedArray()
+            value = unitsRepository.defaultSpeedUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }
 
     private fun buildPressureUnitsPreference(context: Context): Preference {
+        val pressureUnits = unitsRepository.pressureUnits
         return ListPreference(context).apply {
-            key = UnitsDataStore.PREF_KEY_PRESSURE_UNIT
+            key = UnitsRepository.PREF_KEY_PRESSURE_UNIT
             title = getString(R.string.settings_pressure_units)
             dialogTitle = title
-            entries = PressureUnit.values().map { it.getLocalizedName(context) }.toTypedArray()
-            entryValues = PressureUnit.values().map { it.symbol }.toTypedArray()
-            value = UnitsLocale.getDefault().pressureUnit.symbol
+            entries = pressureUnits.map { it.getLocalizedName(context) }.toTypedArray()
+            entryValues = pressureUnits.map { it.symbol }.toTypedArray()
+            value = unitsRepository.defaultPressureUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }

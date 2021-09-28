@@ -10,6 +10,10 @@ import kotlinx.coroutines.flow.map
 import me.alexpetrakov.cyclone.units.domain.PreferredUnits
 import me.alexpetrakov.cyclone.units.domain.UnitsLocale
 import me.alexpetrakov.cyclone.units.domain.UnitsRepository
+import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_DISTANCE_UNIT
+import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_PRESSURE_UNIT
+import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_SPEED_UNIT
+import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_TEMPERATURE_UNIT
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.PressureUnit
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
@@ -18,44 +22,68 @@ import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.TemperatureUnit
 @OptIn(ExperimentalCoroutinesApi::class)
 class UnitsDataStore(prefs: SharedPreferences) : UnitsRepository {
 
+    override val temperatureUnits: List<TemperatureUnit>
+        get() = TemperatureUnit.values().toList()
+
+    override val defaultTemperatureUnit: TemperatureUnit
+        get() = defaultUnitsLocale.temperatureUnit
+
+    override val distanceUnits: List<LengthUnit>
+        get() = LengthUnit.values().toList()
+
+    override val defaultDistanceUnit: LengthUnit
+        get() = defaultUnitsLocale.lengthUnit
+
+    override val speedUnits: List<SpeedUnit>
+        get() = SpeedUnit.values().toList()
+
+    override val defaultSpeedUnit: SpeedUnit
+        get() = defaultUnitsLocale.speedUnit
+
+    override val pressureUnits: List<PressureUnit>
+        get() = PressureUnit.values().toList()
+
+    override val defaultPressureUnit: PressureUnit
+        get() = defaultUnitsLocale.pressureUnit
+
     private val flowPrefs = FlowSharedPreferences(prefs)
 
-    private val unitsLocale = UnitsLocale.getDefault()
+    private val defaultUnitsLocale = UnitsLocale.getDefault()
 
     private val temperatureUnitPreference = flowPrefs.getString(
         PREF_KEY_TEMPERATURE_UNIT,
-        unitsLocale.temperatureUnit.symbol
+        defaultUnitsLocale.temperatureUnit.symbol
     )
 
     private val distanceUnitPreference = flowPrefs.getString(
         PREF_KEY_DISTANCE_UNIT,
-        unitsLocale.lengthUnit.symbol
+        defaultUnitsLocale.lengthUnit.symbol
     )
 
     private val speedUnitPreference = flowPrefs.getString(
         PREF_KEY_SPEED_UNIT,
-        unitsLocale.speedUnit.symbol
+        defaultUnitsLocale.speedUnit.symbol
     )
 
     private val pressureUnitPreference = flowPrefs.getString(
         PREF_KEY_PRESSURE_UNIT,
-        unitsLocale.pressureUnit.symbol
+        defaultUnitsLocale.pressureUnit.symbol
     )
 
     private val temperatureUnitStream = temperatureUnitPreference.asFlow().map { symbol ->
-        TemperatureUnit.from(symbol) ?: unitsLocale.temperatureUnit
+        TemperatureUnit.from(symbol) ?: defaultTemperatureUnit
     }
 
     private val distanceUnitStream = distanceUnitPreference.asFlow().map { symbol ->
-        LengthUnit.from(symbol) ?: unitsLocale.lengthUnit
+        LengthUnit.from(symbol) ?: defaultDistanceUnit
     }
 
     private val speedUnitStream = speedUnitPreference.asFlow().map { symbol ->
-        SpeedUnit.from(symbol) ?: unitsLocale.speedUnit
+        SpeedUnit.from(symbol) ?: defaultSpeedUnit
     }
 
     private val pressureUnitStream = pressureUnitPreference.asFlow().map { symbol ->
-        PressureUnit.from(symbol) ?: unitsLocale.pressureUnit
+        PressureUnit.from(symbol) ?: defaultPressureUnit
     }
 
     override suspend fun getPreferredUnits(): PreferredUnits {
@@ -76,12 +104,5 @@ class UnitsDataStore(prefs: SharedPreferences) : UnitsRepository {
         ) { temperatureUnit, lengthUnit, speedUnit, pressureUnit ->
             PreferredUnits(temperatureUnit, lengthUnit, speedUnit, pressureUnit)
         }
-    }
-
-    companion object {
-        const val PREF_KEY_TEMPERATURE_UNIT = "temp_unit"
-        const val PREF_KEY_DISTANCE_UNIT = "dist_unit"
-        const val PREF_KEY_SPEED_UNIT = "speed_unit"
-        const val PREF_KEY_PRESSURE_UNIT = "pressure_unit"
     }
 }
