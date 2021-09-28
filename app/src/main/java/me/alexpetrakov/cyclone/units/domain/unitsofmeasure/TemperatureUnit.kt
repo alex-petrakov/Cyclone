@@ -1,6 +1,7 @@
 package me.alexpetrakov.cyclone.units.domain.unitsofmeasure
 
 import me.alexpetrakov.cyclone.units.domain.converters.Converter
+import me.alexpetrakov.cyclone.units.domain.converters.LinearConverter
 import me.alexpetrakov.cyclone.units.domain.converters.NothingConverter
 import me.alexpetrakov.cyclone.units.domain.measurements.Measurement
 
@@ -9,30 +10,14 @@ enum class TemperatureUnit(
     override val converter: Converter
 ) : UnitDimension<TemperatureUnit> {
 
-    Celsius("°C", NothingConverter),
+    Celsius("°C", LinearConverter(1.0, 273.15)),
 
-    Fahrenheit("°F", object : Converter {
-        override fun toBaseUnit(value: Double): Double {
-            return value - 32 * 5 / 9
-        }
+    Fahrenheit("°F", LinearConverter(0.55555555555556, 255.37222222222427)),
 
-        override fun fromBaseUnit(value: Double): Double {
-            return value * 9 / 5 + 32
-        }
-    }),
-
-    Kelvin("K", object : Converter {
-        override fun toBaseUnit(value: Double): Double {
-            return value - 273.15
-        }
-
-        override fun fromBaseUnit(value: Double): Double {
-            return value + 273.15
-        }
-    });
+    Kelvin("K", NothingConverter);
 
     override val baseUnit: TemperatureUnit
-        get() = Celsius
+        get() = Kelvin
 
 
     companion object {

@@ -12,15 +12,7 @@ enum class SpeedUnit(
 
     MetersPerSecond("m/s", NothingConverter),
 
-    KilometersPerHour("km/h", object : Converter {
-        override fun toBaseUnit(value: Double): Double {
-            return value * 1000 / 3600
-        }
-
-        override fun fromBaseUnit(value: Double): Double {
-            return value * 3600 / 1000
-        }
-    }),
+    KilometersPerHour("km/h", LinearConverter(0.277778)),
 
     MilesPerHour("mph", LinearConverter(0.447));
 
