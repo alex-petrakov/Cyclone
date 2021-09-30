@@ -219,7 +219,14 @@ class WeatherViewModel(
     }
 
     private fun List<DayConditions>.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem.DayConditionsUi> {
-        return map { it.toUiModel(preferredUnits) }
+        val todayConditions = take(1).map { todayConditions ->
+            todayConditions.toUiModel(preferredUnits)
+                .copy(date = TextResource.from(R.string.weather_today))
+        }
+        val otherDaysConditions = drop(1).map { dayConditions ->
+            dayConditions.toUiModel(preferredUnits)
+        }
+        return todayConditions + otherDaysConditions
     }
 
     private fun DayConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.DayConditionsUi {

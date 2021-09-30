@@ -107,7 +107,6 @@ fun WeatherJson.toDomain(): Weather {
             .toList(),
         dailyForecast.asSequence()
             .sortedBy { it.timestamp }
-            .drop(1) // The first item is always the current day, and we don't need it
             .map { it.toDomain(ZoneOffset.ofTotalSeconds(timeZoneOffset)) }
             .toList()
     )
