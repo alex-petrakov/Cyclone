@@ -10,13 +10,13 @@
     <string name="app_action_open_settings">Open settings</string>
     <string name="app_error_no_connection">Can\'t connect to the server</string>
 
+    <string name="weather_template_pressure">Pressure %s</string>
+    <string name="weather_template_wind">Wind %s</string>
+    <string name="weather_template_humidity">Humidity %s · Dew point %s</string>
+    <string name="weather_template_visibility">Visibility %s</string>
+    <string name="weather_template_feels_like">Feels like %s</string>
+    <string name="weather_template_uv_index">UV index</string>
     <string name="weather_now_title">Now</string>
-    <string name="weather_wind">Wind</string>
-    <string name="weather_pressure">Pressure</string>
-    <string name="weather_humidity">Humidity</string>
-    <string name="weather_dew_point">Dew point</string>
-    <string name="weather_visibility">Visibility</string>
-    <string name="weather_uv_index">UV index</string>
     <string name="weather_today_title">Today</string>
     <string name="weather_this_week_title">This week</string>
     <string name="weather_error_no_location_access">To get weather conditions in your area, the app needs permission to access your location.</string>

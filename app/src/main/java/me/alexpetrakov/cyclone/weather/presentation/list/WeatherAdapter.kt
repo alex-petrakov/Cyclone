@@ -78,8 +78,7 @@ class WeatherAdapter :
             conditionsImageView.setImageResource(item.icon.resId)
             windValueTextView.text = item.wind.asString(resources)
             pressureValueTextView.text = item.pressure.asString(resources)
-            humidityValueTextView.text = item.humidity.asString(resources)
-            dewPointValueTextView.text = item.dewPoint.asString(resources)
+            humidityValueTextView.text = item.humidityAndDewPoint.asString(resources)
             visibilityValueTextView.text = item.visibility.asString(resources)
             uvIndexTextView.text = item.uvIndex.asString(resources)
         }

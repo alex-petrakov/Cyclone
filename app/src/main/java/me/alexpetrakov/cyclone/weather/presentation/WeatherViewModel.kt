@@ -182,17 +182,24 @@ class WeatherViewModel(
     }
 
     private fun CurrentConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.CurrentConditionsUi {
+        val feelsLikeTemperature =
+            temperatureFormatter.format(feelsLike, preferredUnits.temperatureUnit)
+        val windValue = speedFormatter.format(wind.speed, preferredUnits.speedUnit)
+        val pressureValue = pressureFormatter.format(pressure, preferredUnits.pressureUnit)
+        val humidityValue = percentFormatter.format(humidity)
+        val dewPointValue = temperatureFormatter.format(dewPoint, preferredUnits.temperatureUnit)
+        val visibilityValue = distanceFormatter.format(visibility, preferredUnits.lengthUnit)
+        val uvIndexValue = uvIndex.toString()
         return DisplayableItem.CurrentConditionsUi(
             temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
             overallConditions[0].title.asTextResource(),
-            temperatureFormatter.format(feelsLike, preferredUnits.temperatureUnit),
+            TextResource.from(R.string.weather_template_feels_like, feelsLikeTemperature),
             overallConditions[0].icon.toUiModel(),
-            speedFormatter.format(wind.speed, preferredUnits.speedUnit),
-            pressureFormatter.format(pressure, preferredUnits.pressureUnit),
-            percentFormatter.format(humidity).asTextResource(),
-            temperatureFormatter.format(dewPoint, preferredUnits.temperatureUnit),
-            distanceFormatter.format(visibility, preferredUnits.lengthUnit),
-            uvIndex.toString().asTextResource()
+            TextResource.from(R.string.weather_template_wind, windValue),
+            TextResource.from(R.string.weather_template_pressure, pressureValue),
+            TextResource.from(R.string.weather_template_humidity, humidityValue, dewPointValue),
+            TextResource.from(R.string.weather_template_visibility, visibilityValue),
+            TextResource.from(R.string.weather_template_uv_index, uvIndexValue)
         )
     }
 

@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/title_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/weather_now_title"
@@ -25,7 +26,6 @@
         android:id="@+id/temperature_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:maxLines="1"
         android:textAppearance="?textAppearanceHeadline1"
         android:textColor="?android:textColorPrimary"
@@ -35,190 +35,92 @@
 
     <TextView
         android:id="@+id/feels_like_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?textAppearanceSubtitle1"
         app:layout_constraintBaseline_toBaselineOf="@id/temperature_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/temperature_text_view"
         tools:text="Feels like 18°" />
 
     <TextView
         android:id="@+id/conditions_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?textAppearanceSubtitle1"
         app:layout_constraintBottom_toTopOf="@id/feels_like_text_view"
-        app:layout_constraintStart_toStartOf="@+id/feels_like_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/feels_like_text_view"
         tools:text="Cloudy" />
 
     <ImageView
         android:id="@+id/conditions_image_view"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="16dp"
-        android:alpha="0.42"
         android:importantForAccessibility="no"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/conditions_text_view"
+        app:layout_constraintStart_toStartOf="@id/conditions_text_view"
         tools:src="@drawable/ic_weather_cloudy" />
 
     <TextView
-        android:id="@+id/wind_label"
+        android:id="@+id/humidity_value_text_view"
+        style="@style/Widget.Cyclone.ConditionDetailsLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/weather_wind"
-        android:textAppearance="?textAppearanceSubtitle1"
-        android:textColor="?android:textColorSecondary"
-        app:layout_constraintEnd_toStartOf="@+id/wind_value_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temperature_text_view" />
-
-    <TextView
-        android:id="@+id/wind_value_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:textAppearance="?textAppearanceBody1"
-        app:layout_constraintBaseline_toBaselineOf="@id/wind_label"
+        android:maxLines="2"
+        app:drawableStartCompat="@drawable/ic_conditions_humidity"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="E 1.0 m/s" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temperature_text_view"
+        tools:text="Humidity 68% · Dew point 14°" />
 
     <TextView
         android:id="@+id/pressure_value_text_view"
-        android:layout_width="wrap_content"
+        style="@style/Widget.Cyclone.ConditionDetailsLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:textAppearance="?textAppearanceBody1"
-        app:layout_constraintBaseline_toBaselineOf="@id/pressure_label"
+        app:drawableStartCompat="@drawable/ic_conditions_pressure"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/humidity_value_text_view"
         tools:text="747 mmHg" />
 
     <TextView
-        android:id="@+id/pressure_label"
+        android:id="@+id/wind_value_text_view"
+        style="@style/Widget.Cyclone.ConditionDetailsLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/weather_pressure"
-        android:textAppearance="?textAppearanceSubtitle1"
-        android:textColor="?android:textColorSecondary"
-        app:layout_constraintEnd_toStartOf="@+id/pressure_value_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wind_label" />
-
-    <TextView
-        android:id="@+id/humidity_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/weather_humidity"
-        android:textAppearance="?textAppearanceSubtitle1"
-        android:textColor="?android:textColorSecondary"
-        app:layout_constraintEnd_toStartOf="@+id/humidity_value_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pressure_label" />
-
-    <TextView
-        android:id="@+id/dew_point_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/weather_dew_point"
-        android:textAppearance="?textAppearanceSubtitle1"
-        android:textColor="?android:textColorSecondary"
-        app:layout_constraintEnd_toStartOf="@+id/dew_point_value_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/humidity_label" />
-
-    <TextView
-        android:id="@+id/visibility_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/weather_visibility"
-        android:textAppearance="?textAppearanceSubtitle1"
-        android:textColor="?android:textColorSecondary"
-        app:layout_constraintEnd_toStartOf="@+id/visibility_value_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dew_point_label" />
-
-    <TextView
-        android:id="@+id/uv_index_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/weather_uv_index"
-        android:textAppearance="?textAppearanceSubtitle1"
-        android:textColor="?android:textColorSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/uv_index_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visibility_label" />
-
-    <TextView
-        android:id="@+id/humidity_value_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:textAppearance="?textAppearanceBody1"
-        app:layout_constraintBaseline_toBaselineOf="@id/humidity_label"
+        app:drawableStartCompat="@drawable/ic_conditions_wind"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="231dp"
-        tools:text="68%" />
-
-    <TextView
-        android:id="@+id/dew_point_value_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:textAppearance="?textAppearanceBody1"
-        app:layout_constraintBaseline_toBaselineOf="@id/dew_point_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/humidity_value_text_view"
-        tools:text="14°" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pressure_value_text_view"
+        tools:text="Wind E 1.0 m/s" />
 
     <TextView
         android:id="@+id/visibility_value_text_view"
-        android:layout_width="wrap_content"
+        style="@style/Widget.Cyclone.ConditionDetailsLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:textAppearance="?textAppearanceBody1"
-        app:layout_constraintBaseline_toBaselineOf="@id/visibility_label"
+        app:drawableStartCompat="@drawable/ic_conditions_visibility"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dew_point_value_text_view"
-        tools:text="10 km" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wind_value_text_view"
+        tools:text="Visibility 10 km" />
 
     <TextView
         android:id="@+id/uv_index_text_view"
-        android:layout_width="wrap_content"
+        style="@style/Widget.Cyclone.ConditionDetailsLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:textAppearance="?textAppearanceBody1"
-        app:layout_constraintBaseline_toBaselineOf="@id/uv_index_label"
+        app:drawableStartCompat="@drawable/ic_conditions_uv_index"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/visibility_value_text_view"
-        tools:text="0" />
+        tools:text="UV index 0 (low)" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,8 +33,7 @@ sealed class DisplayableItem {
         val icon: IconUi,
         val wind: TextResource,
         val pressure: TextResource,
-        val humidity: TextResource,
-        val dewPoint: TextResource,
+        val humidityAndDewPoint: TextResource,
         val visibility: TextResource,
         val uvIndex: TextResource
     ) : DisplayableItem()
