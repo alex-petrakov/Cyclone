@@ -97,9 +97,8 @@ class WeatherFragment : Fragment() {
                 setOnRefreshListener { viewModel.onRefresh() }
             }
         }
-        // TODO: Make the toolbar title clickable instead
+
         toolbar.apply {
-            setNavigationOnClickListener { viewModel.onOpenLocationPicker() }
             inflateMenu(R.menu.menu_weather)
             setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
@@ -111,6 +110,8 @@ class WeatherFragment : Fragment() {
                 }
             }
         }
+
+        toolbarTitleTextView.setOnClickListener { viewModel.onOpenLocationPicker() }
 
         noConnectionView.setPrimaryAction { viewModel.onRetryAfterFailure() }
 
@@ -132,7 +133,7 @@ class WeatherFragment : Fragment() {
     }
 
     private fun renderToolbar(viewState: ToolbarViewState): Unit = with(binding) {
-        toolbar.title = viewState.title.asString(resources)
+        toolbarTitleTextView.text = viewState.title.asString(resources)
     }
 
     private fun renderWeather(viewState: WeatherViewState): Unit = with(binding) {

@@ -19,11 +19,21 @@
             style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="@dimen/toolbar_default_elevation"
-            app:navigationContentDescription="@string/weather_change_location"
-            app:navigationIcon="@drawable/ic_action_select_location"
-            tools:subtitle="Updated just now"
-            tools:title="Moscow" />
+            android:elevation="@dimen/toolbar_default_elevation">
+
+            <TextView
+                android:id="@+id/toolbar_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_clickable_rounded_rectangle"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textAppearance="?textAppearanceHeadline6"
+                app:drawableEndCompat="@drawable/ic_action_expand"
+                tools:text="Moscow" />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
