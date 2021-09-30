@@ -101,8 +101,7 @@ fun WeatherJson.toDomain(): Weather {
         currentConditions.toDomain(),
         hourlyForecast.asSequence()
             .sortedBy { it.timestamp }
-            .drop(1) // The first item is always the current hour, and we don't need it
-            .take(12) // We only display 12 hour forecast
+            .take(13) // We display conditions for the current hour + 12 hour forecast
             .map { it.toDomain(ZoneOffset.ofTotalSeconds(timeZoneOffset)) }
             .toList(),
         dailyForecast.asSequence()

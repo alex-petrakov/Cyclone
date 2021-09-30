@@ -204,7 +204,12 @@ class WeatherViewModel(
     }
 
     private fun List<HourConditions>.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.HourlyForecastUi {
-        return DisplayableItem.HourlyForecastUi(map { it.toUiModel(preferredUnits) })
+        val currentHourConditions = take(1).map { currentHourConditions ->
+            currentHourConditions.toUiModel(preferredUnits)
+                .copy(time = TextResource.from(R.string.weather_now))
+        }
+        val otherHoursConditions = drop(1).map { it.toUiModel(preferredUnits) }
+        return DisplayableItem.HourlyForecastUi(currentHourConditions + otherHoursConditions)
     }
 
     private fun HourConditions.toUiModel(preferredUnits: PreferredUnits): HourConditionsUi {

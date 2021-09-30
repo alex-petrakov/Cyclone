@@ -40,6 +40,7 @@
     <string name="template_pressure_millibar">%s mbar</string>
     <string name="template_pressure_mmhg">%s mmHg</string>
     <string name="template_pressure_inhg">%s inHg</string>
+    <string name="weather_now">Now</string>
     <string name="weather_today">Today</string>
 
     <string name="locations_title">Locations</string>
