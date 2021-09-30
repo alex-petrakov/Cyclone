@@ -1,12 +1,17 @@
 <resources>
 
     <style name="Theme.Cyclone.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_light</item>
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="colorSecondary">@color/primary</item>
         <item name="colorSecondaryVariant">@color/primary_light</item>
         <item name="colorOnSecondary">@color/on_primary</item>
+        <item name="colorError">@color/destruction</item>
 
         <item name="floatingActionButtonStyle">@style/Widget.Cyclone.FloatingActionButton</item>
         <item name="extendedFloatingActionButtonStyle">
@@ -14,13 +19,13 @@
         </item>
 
         <!-- Custom attributes -->
-        <item name="colorPrecipitation">#1B9AD0</item>
-        <item name="colorDestructive">#D75F5F</item>
-        <item name="colorDestructiveRipple">#33D75F5F</item>
+        <item name="colorPrecipitation">@color/precipitation</item>
+        <item name="colorDestructive">@color/destruction</item>
+        <item name="colorDestructiveRipple">@color/destructionRipple</item>
     </style>
 
     <style name="Theme.Cyclone" parent="Theme.Cyclone.Base">
-        <item name="android:statusBarColor">#BDBDBD</item>
+        <item name="android:statusBarColor">@color/surface_dark</item>
     </style>
 
     <style name="Widget.Cyclone.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
