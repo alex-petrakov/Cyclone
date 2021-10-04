@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -67,16 +67,14 @@ class WeatherViewModel(
     private val pressureFormatter = PressureFormatter()
 
     init {
-        viewModelScope.launch {
-            combine(
-                locationsRepository.getSelectedLocationStream(),
-                unitsRepository.getPreferredUnitsStream()
-            ) { location, _ -> location }
-                .onEach { location ->
-                    _toolbarViewState.value = ToolbarViewState(location.toUiModel())
-                    showLoadingAndLoadForecast()
-                }.collect()
-        }
+        val selectedLocation = locationsRepository.getSelectedLocationStream()
+        val preferredUnits = unitsRepository.getPreferredUnitsStream()
+        combine(selectedLocation, preferredUnits) { location, units -> location to units }
+            .onEach { (location, _) ->
+                _toolbarViewState.value = ToolbarViewState(location.toUiModel())
+                showLoadingAndLoadForecast()
+            }
+            .launchIn(viewModelScope)
     }
 
     fun onRetryAfterFailure() {
