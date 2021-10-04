@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
@@ -23,7 +23,7 @@ class ErrorView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = 0,
     @StyleRes defStyleRes: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
+) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     private val iconImageView: ImageView
 
@@ -58,8 +58,9 @@ class ErrorView @JvmOverloads constructor(
         }
 
     init {
-        inflate(context, R.layout.layout_error_view, this)
+        orientation = VERTICAL
         setPadding(16.dp, 16.dp, 16.dp, 16.dp)
+        inflate(context, R.layout.layout_error_view, this)
 
         iconImageView = findViewById(R.id.icon_image_view)
         messageTextView = findViewById(R.id.message_text_view)
