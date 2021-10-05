@@ -37,20 +37,6 @@ class LocationsFragment : Fragment() {
         onRemoveItem = { location -> viewModel.onTryToRemoveLocation(location) }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        childFragmentManager.setFragmentResultListener(
-            RemovalConfirmationDialog.TAG,
-            this
-        ) { _, bundle ->
-            val action = bundle.getString(RemovalConfirmationDialog.RESULT_ACTION)
-            if (action == RemovalConfirmationDialog.ACTION_REMOVE) {
-                val locationId = bundle.getInt(RemovalConfirmationDialog.RESULT_LOCATION_ID)
-                viewModel.onConfirmLocationRemoval(locationId)
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
