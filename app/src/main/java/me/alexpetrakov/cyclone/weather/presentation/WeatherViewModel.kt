@@ -105,6 +105,29 @@ class WeatherViewModel(
         _viewEffect.value = ViewEffect.OpenLocationSettings
     }
 
+    fun onLocationPermissionCheckResult(result: PermissionCheckResult) {
+        when (result) {
+            PermissionCheckResult.PERMISSION_IS_GRANTED -> showLoadingAndLoadForecast()
+            PermissionCheckResult.PERMISSION_IS_NOT_GRANTED -> {
+                _viewEffect.value = ViewEffect.ShowLocationPermissionRequest
+            }
+            PermissionCheckResult.RATIONALE_REQUIRED -> {
+                _viewEffect.value = ViewEffect.ShowLocationPermissionRationale
+            }
+        }
+    }
+
+    fun onLocationPermissionRationaleOutcome(rationaleOutcome: RationaleOutcome) {
+        when (rationaleOutcome) {
+            RationaleOutcome.ACCEPTED -> {
+                _viewEffect.value = ViewEffect.ShowLocationPermissionRequest
+            }
+            RationaleOutcome.DENIED -> {
+                _weatherViewState.value = WeatherViewState.Error.NoLocationAccess
+            }
+        }
+    }
+
     fun onLocationAccessGranted() {
         showLoadingAndLoadForecast()
     }
@@ -164,7 +187,7 @@ class WeatherViewModel(
 
     private fun mapFailureToViewEffect(fail: Fail): ViewEffect {
         return when (fail) {
-            is Fail.LocationAccessDenied -> ViewEffect.RequestLocationAccess
+            is Fail.LocationAccessDenied -> ViewEffect.CheckLocationAccess
             is Fail.LocationIsDisabled -> ViewEffect.ResolveException(fail.cause)
             else -> ViewEffect.None
         }
@@ -264,6 +287,17 @@ class WeatherViewModel(
             is Location.StoredLocation -> TextResource.from(name)
         }
     }
+}
+
+enum class RationaleOutcome {
+    ACCEPTED,
+    DENIED
+}
+
+enum class PermissionCheckResult {
+    PERMISSION_IS_GRANTED,
+    PERMISSION_IS_NOT_GRANTED,
+    RATIONALE_REQUIRED
 }
 
 private fun String.capitalizingFirstLetter(): String {

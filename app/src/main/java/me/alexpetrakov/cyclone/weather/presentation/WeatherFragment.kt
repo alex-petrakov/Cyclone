@@ -24,9 +24,7 @@ import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
-import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.ACTION_CANCEL
-import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.ACTION_CONTINUE
-import me.alexpetrakov.cyclone.weather.presentation.LocationRationaleDialog.Companion.KEY_ACTION
+import me.alexpetrakov.cyclone.weather.presentation.PermissionCheckResult.*
 import me.alexpetrakov.cyclone.weather.presentation.list.WeatherAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -56,20 +54,6 @@ class WeatherFragment : Fragment() {
                 else -> viewModel.onLocationRetrievalErrorNotResolved()
             }
         }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        childFragmentManager.setFragmentResultListener(
-            LocationRationaleDialog.TAG,
-            this
-        ) { _, result ->
-            val action = result.getString(KEY_ACTION) ?: return@setFragmentResultListener
-            when (action) {
-                ACTION_CONTINUE -> showSystemLocationPermissionRequest()
-                ACTION_CANCEL -> viewModel.onLocationAccessDenied()
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -190,7 +174,9 @@ class WeatherFragment : Fragment() {
         when (viewEffect) {
             ViewEffect.OpenAppSettings -> openAppSettings()
             ViewEffect.OpenLocationSettings -> openLocationSettings()
-            ViewEffect.RequestLocationAccess -> requestLocationAccess()
+            ViewEffect.CheckLocationAccess -> checkLocationAccess()
+            ViewEffect.ShowLocationPermissionRationale -> showLocationPermissionRationale()
+            ViewEffect.ShowLocationPermissionRequest -> showSystemLocationPermissionRequest()
             is ViewEffect.ResolveException -> tryToResolveException(viewEffect.throwable)
             ViewEffect.None -> {
             }
@@ -225,11 +211,15 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    private fun requestLocationAccess() {
+    private fun checkLocationAccess() {
         when {
-            locationPermissionIsGranted -> viewModel.onLocationAccessGranted()
-            shouldShowPermissionRationale -> showLocationPermissionRationale()
-            else -> showSystemLocationPermissionRequest()
+            locationPermissionIsGranted -> viewModel.onLocationPermissionCheckResult(
+                PERMISSION_IS_GRANTED
+            )
+            shouldShowPermissionRationale -> viewModel.onLocationPermissionCheckResult(
+                RATIONALE_REQUIRED
+            )
+            else -> viewModel.onLocationPermissionCheckResult(PERMISSION_IS_NOT_GRANTED)
         }
     }
 
