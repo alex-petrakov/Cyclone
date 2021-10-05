@@ -4,11 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import me.alexpetrakov.cyclone.common.presentation.extensions.withAdapterPosition
 import me.alexpetrakov.cyclone.databinding.ItemSearchResultBinding
 
-class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
-
-    var onClickItem: ((SearchResultUiItem) -> Unit)? = null
+class ResultsAdapter(
+    private val onItemClick: (SearchResultUiItem) -> Unit
+) : RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
 
     private var items: List<SearchResultUiItem> = emptyList()
 
@@ -23,8 +24,8 @@ class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchResultBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding) { adapterPosition ->
-            onClickItem?.invoke(items[adapterPosition])
+        return ViewHolder(binding) { position ->
+            onItemClick.invoke(items[position])
         }
     }
 
@@ -38,7 +39,9 @@ class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener { onClick(adapterPosition) }
+            binding.root.setOnClickListener {
+                withAdapterPosition { position -> onClick(position) }
+            }
         }
 
         fun bind(searchResult: SearchResultUiItem): Unit = with(binding) {

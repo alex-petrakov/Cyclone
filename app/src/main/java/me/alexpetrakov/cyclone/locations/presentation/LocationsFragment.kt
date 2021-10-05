@@ -32,10 +32,11 @@ class LocationsFragment : Fragment() {
         }
     )
 
-    private val locationsAdapter = LocationsAdapter(itemTouchHelper).apply {
-        onClickItem = { location -> viewModel.onSelectLocation(location) }
-        onRemoveItem = { location -> viewModel.onTryToRemoveLocation(location) }
-    }
+    private val locationsAdapter = LocationsAdapter(
+        itemTouchHelper,
+        onItemClick = { location -> viewModel.onSelectLocation(location) },
+        onRemoveButtonClick = { location -> viewModel.onTryToRemoveLocation(location) }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

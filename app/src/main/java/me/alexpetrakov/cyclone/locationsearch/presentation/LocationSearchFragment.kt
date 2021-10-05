@@ -23,9 +23,9 @@ class LocationSearchFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val resultsAdapter = ResultsAdapter().apply {
-        onClickItem = { clickedItem -> viewModel.onAddSearchResultToSavedLocations(clickedItem) }
-    }
+    private val resultsAdapter = ResultsAdapter(
+        onItemClick = { clickedItem -> viewModel.onAddSearchResultToSavedLocations(clickedItem) }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,

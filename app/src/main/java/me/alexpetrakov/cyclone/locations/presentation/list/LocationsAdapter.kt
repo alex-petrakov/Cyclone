@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.common.presentation.asString
+import me.alexpetrakov.cyclone.common.presentation.extensions.withAdapterPosition
 import me.alexpetrakov.cyclone.databinding.ItemLocationBinding
 import me.alexpetrakov.cyclone.locations.presentation.LocationUiItem
 
-class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
-    ListAdapter<LocationUiItem, LocationsAdapter.ViewHolder>(LocationUiItem.ItemCallback) {
-
-    var onClickItem: ((LocationUiItem) -> Unit)? = null
-
-    var onRemoveItem: ((LocationUiItem) -> Unit)? = null
+class LocationsAdapter(
+    private val itemTouchHelper: ItemTouchHelper,
+    private val onItemClick: (LocationUiItem) -> Unit,
+    private val onRemoveButtonClick: (LocationUiItem) -> Unit
+) : ListAdapter<LocationUiItem, LocationsAdapter.ViewHolder>(LocationUiItem.ItemCallback) {
 
     private val onStartDragListener = { viewHolder: ViewHolder ->
         itemTouchHelper.startDrag(viewHolder)
@@ -29,8 +29,8 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
         val binding = ItemLocationBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(
             binding,
-            { adapterPosition -> onClickItem?.invoke(getItem(adapterPosition)) },
-            { adapterPosition -> onRemoveItem?.invoke(getItem(adapterPosition)) },
+            { position -> onItemClick.invoke(getItem(position)) },
+            { position -> onRemoveButtonClick.invoke(getItem(position)) },
             onStartDragListener
         )
     }
@@ -57,8 +57,12 @@ class LocationsAdapter(private val itemTouchHelper: ItemTouchHelper) :
 
         init {
             binding.apply {
-                removeButton.setOnClickListener { onClickRemove(adapterPosition) }
-                root.setOnClickListener { onClick(adapterPosition) }
+                removeButton.setOnClickListener {
+                    withAdapterPosition { position -> onClickRemove(position) }
+                }
+                root.setOnClickListener {
+                    withAdapterPosition { position -> onClick(position) }
+                }
             }
         }
 
