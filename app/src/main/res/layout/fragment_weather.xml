@@ -37,6 +37,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
+        android:id="@+id/weather_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -46,9 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="true"
-            app:hideAnimationBehavior="outward"
-            app:showAnimationBehavior="outward" />
+            android:indeterminate="true" />
 
         <include
             android:id="@+id/content_view"
