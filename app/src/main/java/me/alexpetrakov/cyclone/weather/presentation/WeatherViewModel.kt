@@ -16,6 +16,7 @@ import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
+import me.alexpetrakov.cyclone.common.presentation.extensions.withCapitalizedFirstChar
 import me.alexpetrakov.cyclone.locations.domain.Location
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
 import me.alexpetrakov.cyclone.units.domain.PreferredUnits
@@ -24,7 +25,6 @@ import me.alexpetrakov.cyclone.weather.domain.*
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.util.*
 
 class WeatherViewModel(
     private val getWeather: GetWeather,
@@ -213,7 +213,7 @@ class WeatherViewModel(
         val uvIndexValue = uvIndex.toString()
         return DisplayableItem.CurrentConditionsUi(
             temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
-            overallConditions[0].title.asTextResource(),
+            overallConditions[0].description.asTextResource(),
             TextResource.from(R.string.weather_template_feels_like, feelsLikeTemperature),
             overallConditions[0].icon.toUiModel(),
             TextResource.from(R.string.weather_template_wind, windValue),
@@ -239,7 +239,7 @@ class WeatherViewModel(
             temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
             percentFormatter.format(precipitationChance).asTextResource(),
             precipitationChance > 0,
-            overallConditions[0].title.asTextResource(),
+            overallConditions[0].description.asTextResource(),
             overallConditions[0].icon.toUiModel()
         )
     }
@@ -257,10 +257,10 @@ class WeatherViewModel(
 
     private fun DayConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.DayConditionsUi {
         return DisplayableItem.DayConditionsUi(
-            dateFormatter.format(localDate).capitalizingFirstLetter().asTextResource(),
+            dateFormatter.format(localDate).withCapitalizedFirstChar().asTextResource(),
             temperatureFormatter.format(tempLow, preferredUnits.temperatureUnit),
             temperatureFormatter.format(tempHigh, preferredUnits.temperatureUnit),
-            overallConditions[0].title.asTextResource(),
+            overallConditions[0].description.asTextResource(),
             overallConditions[0].icon.toUiModel(),
             percentFormatter.format(precipitationChance).asTextResource(),
             precipitationChance > 0
@@ -298,14 +298,4 @@ enum class PermissionCheckResult {
     PERMISSION_IS_GRANTED,
     PERMISSION_IS_NOT_GRANTED,
     RATIONALE_REQUIRED
-}
-
-private fun String.capitalizingFirstLetter(): String {
-    return this.replaceFirstChar { char ->
-        if (char.isLowerCase()) {
-            char.titlecase(Locale.getDefault())
-        } else {
-            char.toString()
-        }
-    }
 }

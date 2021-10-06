@@ -8,6 +8,7 @@ interface ForecastApi {
     @GET("data/2.5/onecall?exclude=minutely,alerts")
     suspend fun getWeather(
         @Query("lat") latitude: Double,
-        @Query("lon") longitude: Double
+        @Query("lon") longitude: Double,
+        @Query("lang") languageCode: String
     ): WeatherJson
 }

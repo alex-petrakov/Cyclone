@@ -12,6 +12,7 @@ import me.alexpetrakov.cyclone.weather.domain.Fail
 import me.alexpetrakov.cyclone.weather.domain.Weather
 import me.alexpetrakov.cyclone.weather.domain.WeatherRepository
 import retrofit2.HttpException
+import java.util.*
 
 class WeatherProvider(
     private val forecastApi: ForecastApi
@@ -19,8 +20,22 @@ class WeatherProvider(
 
     override suspend fun getWeather(coordinates: Coordinates): Result<Weather, Fail> {
         return Result.fromNetworkRequest {
-            forecastApi.getWeather(coordinates.lat, coordinates.lon)
+            forecastApi.getWeather(
+                coordinates.lat,
+                coordinates.lon,
+                getOpenWeatherCompatibleLanguageCode()
+            )
         }.map { toDomainModel(it) }
+    }
+
+    private fun getOpenWeatherCompatibleLanguageCode(): String {
+        val languageCode = when (val locale = Locale.getDefault()) {
+            Locale.TRADITIONAL_CHINESE,
+            Locale.SIMPLIFIED_CHINESE,
+            Locale("pt", "BR") -> locale.toString()
+            else -> locale.language
+        }
+        return if (languageCode.isNotEmpty()) languageCode else Locale.ENGLISH.language
     }
 
     private suspend fun toDomainModel(weatherJson: WeatherJson): Weather {

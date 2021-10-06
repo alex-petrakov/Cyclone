@@ -2,6 +2,7 @@ package me.alexpetrakov.cyclone.weather.data.openweathermap
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import me.alexpetrakov.cyclone.common.presentation.extensions.withCapitalizedFirstChar
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Distance
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Pressure
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Speed
@@ -149,7 +150,7 @@ private fun CurrentJson.toDomain(): CurrentConditions {
 }
 
 private fun OverallConditionsJson.toDomain(): OverallConditions {
-    return OverallConditions(id, title, description, icon.toDomain())
+    return OverallConditions(id, title, description.withCapitalizedFirstChar(), icon.toDomain())
 }
 
 private fun IconJson.toDomain(): Icon {
