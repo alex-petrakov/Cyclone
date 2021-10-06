@@ -117,7 +117,7 @@ private fun DayConditionsJson.toDomain(zoneOffset: ZoneOffset): DayConditions {
         timestamp.atOffset(zoneOffset),
         temperature.max,
         temperature.min,
-        overallConditions.map { it.toDomain() },
+        overallConditions[0].toDomain(),
         precipitationChance
     )
 }
@@ -126,7 +126,7 @@ private fun HourConditionsJson.toDomain(zoneOffset: ZoneOffset): HourConditions 
     return HourConditions(
         timestamp.atOffset(zoneOffset),
         temperature,
-        overallConditions.map { it.toDomain() },
+        overallConditions[0].toDomain(),
         precipitationChance
     )
 }
@@ -135,7 +135,7 @@ private fun CurrentJson.toDomain(): CurrentConditions {
     return CurrentConditions(
         temperature,
         feelsLike,
-        overallConditions.map { it.toDomain() },
+        overallConditions[0].toDomain(),
         pressure,
         humidity / 100.0,
         dewPoint,
@@ -150,7 +150,7 @@ private fun CurrentJson.toDomain(): CurrentConditions {
 }
 
 private fun OverallConditionsJson.toDomain(): OverallConditions {
-    return OverallConditions(id, title, description.withCapitalizedFirstChar(), icon.toDomain())
+    return OverallConditions(id, description.withCapitalizedFirstChar(), icon.toDomain())
 }
 
 private fun IconJson.toDomain(): Icon {

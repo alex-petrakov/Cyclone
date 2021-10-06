@@ -17,7 +17,7 @@ data class Weather(
 data class CurrentConditions(
     val temperature: Temperature,
     val feelsLike: Temperature,
-    val overallConditions: List<OverallConditions>,
+    val overallConditions: OverallConditions,
     val pressure: Pressure,
     val humidity: Double,
     val dewPoint: Temperature,
@@ -28,8 +28,7 @@ data class CurrentConditions(
 
 data class OverallConditions(
     val id: Int,
-    val title: String,
-    val description: String,
+    val name: String,
     val icon: Icon
 )
 
@@ -54,7 +53,7 @@ data class Wind(
 data class HourConditions(
     val timestamp: OffsetDateTime,
     val temperature: Temperature,
-    val overallConditions: List<OverallConditions>,
+    val overallConditions: OverallConditions,
     val precipitationChance: Double
 ) {
     val localTime: LocalTime
@@ -65,7 +64,7 @@ data class DayConditions(
     val timestamp: OffsetDateTime,
     val tempHigh: Temperature,
     val tempLow: Temperature,
-    val overallConditions: List<OverallConditions>,
+    val overallConditions: OverallConditions,
     val precipitationChance: Double
 ) {
     val localDate: LocalDate

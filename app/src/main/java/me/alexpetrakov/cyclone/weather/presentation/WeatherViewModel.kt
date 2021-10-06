@@ -213,9 +213,9 @@ class WeatherViewModel(
         val uvIndexValue = uvIndex.toString()
         return DisplayableItem.CurrentConditionsUi(
             temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
-            overallConditions[0].description.asTextResource(),
+            overallConditions.name.asTextResource(),
             TextResource.from(R.string.weather_template_feels_like, feelsLikeTemperature),
-            overallConditions[0].icon.toUiModel(),
+            overallConditions.icon.toUiModel(),
             TextResource.from(R.string.weather_template_wind, windValue),
             TextResource.from(R.string.weather_template_pressure, pressureValue),
             TextResource.from(R.string.weather_template_humidity, humidityValue, dewPointValue),
@@ -239,8 +239,8 @@ class WeatherViewModel(
             temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
             percentFormatter.format(precipitationChance).asTextResource(),
             precipitationChance > 0,
-            overallConditions[0].description.asTextResource(),
-            overallConditions[0].icon.toUiModel()
+            overallConditions.name.asTextResource(),
+            overallConditions.icon.toUiModel()
         )
     }
 
@@ -260,8 +260,8 @@ class WeatherViewModel(
             dateFormatter.format(localDate).withCapitalizedFirstChar().asTextResource(),
             temperatureFormatter.format(tempLow, preferredUnits.temperatureUnit),
             temperatureFormatter.format(tempHigh, preferredUnits.temperatureUnit),
-            overallConditions[0].description.asTextResource(),
-            overallConditions[0].icon.toUiModel(),
+            overallConditions.name.asTextResource(),
+            overallConditions.icon.toUiModel(),
             percentFormatter.format(precipitationChance).asTextResource(),
             precipitationChance > 0
         )
