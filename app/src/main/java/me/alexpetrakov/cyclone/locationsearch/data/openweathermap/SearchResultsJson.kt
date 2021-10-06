@@ -9,7 +9,7 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class SearchResultJson(
     @Json(name = "name") val internationalName: String,
-    @Json(name = "local_names") val languagesToLocalNames: Map<String, String>,
+    @Json(name = "local_names") val languagesToLocalNames: Map<String, String>?,
     @Json(name = "lat") val lat: Double,
     @Json(name = "lon") val lon: Double,
     @Json(name = "country") val country: String,
@@ -17,7 +17,7 @@ data class SearchResultJson(
 )
 
 fun SearchResultJson.toDomain(locale: Locale): SearchResult {
-    val placeName = languagesToLocalNames[locale.language] ?: internationalName
+    val placeName = languagesToLocalNames?.get(locale.language) ?: internationalName
     val countryName = if (state != null) {
         "$country, $state"
     } else {
