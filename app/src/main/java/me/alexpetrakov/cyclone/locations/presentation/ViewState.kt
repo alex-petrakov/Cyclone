@@ -6,7 +6,8 @@ import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 
 data class ViewState(
-    val locations: List<LocationUiItem>
+    val locations: List<LocationUiItem>,
+    val addActionIsAvailable: Boolean
 )
 
 data class LocationUiItem(

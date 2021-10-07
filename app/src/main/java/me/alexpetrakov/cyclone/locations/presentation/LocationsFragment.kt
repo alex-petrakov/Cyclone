@@ -67,8 +67,13 @@ class LocationsFragment : Fragment() {
         viewEffect.observe(viewLifecycleOwner) { handle(it) }
     }
 
-    private fun render(viewState: ViewState) {
+    private fun render(viewState: ViewState): Unit = with(binding) {
         locationsAdapter.submitList(viewState.locations)
+        if (viewState.addActionIsAvailable) {
+            addFloatingButton.show()
+        } else {
+            addFloatingButton.hide()
+        }
     }
 
     private fun handle(viewEffect: ViewEffect) {

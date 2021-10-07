@@ -47,5 +47,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:text="@string/app_action_add"
+        android:visibility="gone"
         app:icon="@drawable/ic_action_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -21,7 +21,7 @@ class LocationsViewModel(
 ) : ViewModel() {
 
     val viewState = locationsRepository.getLocationsStream()
-        .map { list -> ViewState(list.map { it.toUiModel() }) }
+        .map { list -> ViewState(list.mapToUiModels(), list.size <= 5) }
         .asLiveData()
 
     private val _viewEffect = SingleLiveEvent<ViewEffect>()
@@ -53,8 +53,19 @@ class LocationsViewModel(
         }
     }
 
+    fun onSelectLocation(item: LocationUiItem) {
+        viewModelScope.launch {
+            locationsRepository.selectLocation(item.id)
+            router.newRootScreen(AppScreens.weather())
+        }
+    }
+
     fun onNavigateBack() {
         router.exit()
+    }
+
+    private fun List<Location>.mapToUiModels(): List<LocationUiItem> {
+        return map { it.toUiModel() }
     }
 
     private fun Location.toUiModel(): LocationUiItem {
@@ -65,13 +76,6 @@ class LocationsViewModel(
                 name.asTextResource(),
                 true
             )
-        }
-    }
-
-    fun onSelectLocation(item: LocationUiItem) {
-        viewModelScope.launch {
-            locationsRepository.selectLocation(item.id)
-            router.newRootScreen(AppScreens.weather())
         }
     }
 }
