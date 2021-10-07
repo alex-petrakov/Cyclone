@@ -79,6 +79,8 @@ class WeatherFragment : Fragment() {
             }
             swipeToRefreshLayout.apply {
                 setProgressViewEndTarget(true, progressViewEndOffset)
+                setColorSchemeResources(R.color.on_primary_light)
+                setProgressBackgroundColorSchemeResource(R.color.primary_light)
                 setOnRefreshListener { viewModel.onRefresh() }
             }
         }
