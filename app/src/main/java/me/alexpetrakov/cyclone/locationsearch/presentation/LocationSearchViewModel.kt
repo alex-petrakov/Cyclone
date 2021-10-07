@@ -5,8 +5,7 @@ import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.alexpetrakov.cyclone.locations.domain.Location
-import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.Fail
 import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchRepository
 import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
@@ -14,7 +13,7 @@ import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
 class LocationSearchViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val locationSearchRepository: LocationSearchRepository,
-    private val locationsRepository: LocationsRepository,
+    private val locationsInteractor: LocationsInteractor,
     private val router: Router
 ) : ViewModel() {
 
@@ -61,9 +60,7 @@ class LocationSearchViewModel(
 
     fun onAddSearchResultToSavedLocations(searchResult: SearchResultUiItem) {
         viewModelScope.launch {
-            locationsRepository.createLocation(
-                Location.StoredLocation(0, searchResult.placeName, searchResult.coordinates)
-            )
+            locationsInteractor.saveLocation(searchResult.placeName, searchResult.coordinates)
             router.exit()
         }
     }

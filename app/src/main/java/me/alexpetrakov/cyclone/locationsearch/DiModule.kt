@@ -18,8 +18,8 @@ val locationSearchModule = module {
     viewModel { params ->
         LocationSearchViewModel(
             savedStateHandle = params.get(),
-            locationsRepository = get(),
             locationSearchRepository = get(),
+            locationsInteractor = get(),
             router = get()
         )
     }

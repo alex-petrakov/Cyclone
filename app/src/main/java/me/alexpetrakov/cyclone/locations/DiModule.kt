@@ -6,6 +6,7 @@ import androidx.room.Room
 import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.locations.data.LocationsDataStore
 import me.alexpetrakov.cyclone.locations.data.db.AppDatabase
+import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
 import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
 import me.alexpetrakov.cyclone.locations.presentation.LocationsViewModel
 import org.koin.android.ext.koin.androidContext
@@ -29,10 +30,16 @@ val locationModule = module {
         )
     }
 
+    factory {
+        LocationsInteractor(
+            locationsRepository = get()
+        )
+    }
+
     viewModel {
         LocationsViewModel(
             router = get(),
-            locationsRepository = get()
+            locationsInteractor = get()
         )
     }
 }

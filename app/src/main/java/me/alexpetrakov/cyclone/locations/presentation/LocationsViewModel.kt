@@ -13,15 +13,20 @@ import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.Location
-import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
 
 class LocationsViewModel(
     private val router: Router,
-    private val locationsRepository: LocationsRepository
+    private val locationsInteractor: LocationsInteractor
 ) : ViewModel() {
 
-    val viewState = locationsRepository.getLocationsStream()
-        .map { list -> ViewState(list.mapToUiModels(), list.size <= 5) }
+    val viewState = locationsInteractor.savedLocationsStream
+        .map { list ->
+            ViewState(
+                list.mapToUiModels(),
+                !locationsInteractor.isLocationsLimitReached()
+            )
+        }
         .asLiveData()
 
     private val _viewEffect = SingleLiveEvent<ViewEffect>()
@@ -35,8 +40,8 @@ class LocationsViewModel(
 
     fun onUpdateLocationsOrder(currentList: List<LocationUiItem>) {
         viewModelScope.launch {
-            val ids = currentList.drop(1).map { it.id }
-            locationsRepository.updateLocationsOrder(ids)
+            val ids = currentList.map { it.id }
+            locationsInteractor.updateLocationsOrder(ids)
         }
     }
 
@@ -49,13 +54,13 @@ class LocationsViewModel(
 
     fun onConfirmLocationRemoval(locationId: Int) {
         viewModelScope.launch {
-            locationsRepository.removeLocationById(locationId)
+            locationsInteractor.removeLocation(locationId)
         }
     }
 
     fun onSelectLocation(item: LocationUiItem) {
         viewModelScope.launch {
-            locationsRepository.selectLocation(item.id)
+            locationsInteractor.selectLocation(item.id)
             router.newRootScreen(AppScreens.weather())
         }
     }

@@ -1,6 +1,6 @@
 package me.alexpetrakov.cyclone.locations.domain
 
-sealed class Location() {
+sealed class Location {
 
     abstract val id: Int
 
