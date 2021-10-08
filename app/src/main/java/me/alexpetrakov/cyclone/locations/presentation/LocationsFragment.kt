@@ -54,7 +54,10 @@ class LocationsFragment : Fragment() {
 
     private fun prepareView(): Unit = with(binding) {
         toolbar.setOnClickListener { viewModel.onNavigateBack() }
-        addFloatingButton.setOnClickListener { viewModel.onAddLocation() }
+        addFloatingButton.apply {
+            setAnimateShowBeforeLayout(true)
+            setOnClickListener { viewModel.onAddLocation() }
+        }
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = locationsAdapter
