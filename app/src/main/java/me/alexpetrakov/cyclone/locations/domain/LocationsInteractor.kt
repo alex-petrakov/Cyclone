@@ -8,6 +8,9 @@ class LocationsInteractor(private val locationsRepository: LocationsRepository) 
     val savedLocationsStream: Flow<List<Location>>
         get() = locationsRepository.getLocationsStream()
 
+    val selectedLocationStream: Flow<Location>
+        get() = locationsRepository.getSelectedLocationStream()
+
     suspend fun saveLocation(name: String, coordinates: Coordinates) {
         if (isLocationsLimitReached()) {
             return
@@ -31,6 +34,10 @@ class LocationsInteractor(private val locationsRepository: LocationsRepository) 
 
     suspend fun selectLocation(id: Int) {
         locationsRepository.selectLocation(id)
+    }
+
+    suspend fun getSelectedLocation(): Location {
+        return locationsRepository.getSelectedLocation()
     }
 
     companion object {

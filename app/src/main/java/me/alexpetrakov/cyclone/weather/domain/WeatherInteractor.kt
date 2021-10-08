@@ -5,12 +5,12 @@ import com.github.kittinunf.result.flatMap
 import me.alexpetrakov.cyclone.locations.domain.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.Location
 
-class GetWeather(
+class WeatherInteractor(
     private val weatherRepo: WeatherRepository,
     private val locationRepo: DeviceLocator
 ) {
 
-    suspend operator fun invoke(location: Location): Result<Weather, Fail> {
+    suspend fun getWeather(location: Location): Result<Weather, Fail> {
         return location.loadCoordinates().flatMap { coordinates ->
             weatherRepo.getWeather(coordinates)
         }

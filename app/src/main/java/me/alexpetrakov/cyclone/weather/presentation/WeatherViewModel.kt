@@ -18,18 +18,18 @@ import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.common.presentation.extensions.withCapitalizedFirstChar
 import me.alexpetrakov.cyclone.locations.domain.Location
-import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
 import me.alexpetrakov.cyclone.units.domain.PreferredUnits
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository
+import me.alexpetrakov.cyclone.units.domain.UnitsInteractor
 import me.alexpetrakov.cyclone.weather.domain.*
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 class WeatherViewModel(
-    private val getWeather: GetWeather,
-    private val locationsRepository: LocationsRepository,
-    private val unitsRepository: UnitsRepository,
+    private val weatherInteractor: WeatherInteractor,
+    private val locationsInteractor: LocationsInteractor,
+    private val unitsInteractor: UnitsInteractor,
     private val router: Router
 ) : ViewModel() {
 
@@ -67,8 +67,8 @@ class WeatherViewModel(
     private val pressureFormatter = PressureFormatter()
 
     init {
-        val selectedLocation = locationsRepository.getSelectedLocationStream()
-        val preferredUnits = unitsRepository.getPreferredUnitsStream()
+        val selectedLocation = locationsInteractor.selectedLocationStream
+        val preferredUnits = unitsInteractor.preferredUnitsStream
         combine(selectedLocation, preferredUnits) { location, units -> location to units }
             .onEach { (location, _) ->
                 _toolbarViewState.value = ToolbarViewState(location.toUiModel())
@@ -156,7 +156,7 @@ class WeatherViewModel(
 
     private fun loadForecast() {
         viewModelScope.launch {
-            val weather = getWeather(locationsRepository.getSelectedLocation())
+            val weather = weatherInteractor.getWeather(locationsInteractor.getSelectedLocation())
             _weatherViewState.value = weather.fold(
                 { mapWeatherToViewState(it) },
                 ::mapFailureToViewState
@@ -166,7 +166,7 @@ class WeatherViewModel(
     }
 
     private suspend fun mapWeatherToViewState(weather: Weather): WeatherViewState {
-        val preferredUnits = unitsRepository.getPreferredUnits()
+        val preferredUnits = unitsInteractor.getPreferredUnits()
         return withContext(Dispatchers.Default) {
             WeatherViewState.Content(false, weather.toUiModel(preferredUnits))
         }

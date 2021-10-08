@@ -5,7 +5,7 @@ import me.alexpetrakov.cyclone.weather.data.DeviceLocationProvider
 import me.alexpetrakov.cyclone.weather.data.WeatherProvider
 import me.alexpetrakov.cyclone.weather.data.openweathermap.ForecastApi
 import me.alexpetrakov.cyclone.weather.domain.DeviceLocator
-import me.alexpetrakov.cyclone.weather.domain.GetWeather
+import me.alexpetrakov.cyclone.weather.domain.WeatherInteractor
 import me.alexpetrakov.cyclone.weather.domain.WeatherRepository
 import me.alexpetrakov.cyclone.weather.presentation.WeatherViewModel
 import org.koin.android.ext.koin.androidContext
@@ -28,7 +28,7 @@ val weatherModule = module {
     }
 
     factory {
-        GetWeather(
+        WeatherInteractor(
             weatherRepo = get(),
             locationRepo = get()
         )
@@ -36,9 +36,9 @@ val weatherModule = module {
 
     viewModel {
         WeatherViewModel(
-            getWeather = get(),
-            locationsRepository = get(),
-            unitsRepository = get(),
+            weatherInteractor = get(),
+            locationsInteractor = get(),
+            unitsInteractor = get(),
             router = get()
         )
     }
