@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
 import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
 import me.alexpetrakov.cyclone.databinding.FragmentLocationSearchBinding
+import me.alexpetrakov.cyclone.locationsearch.presentation.list.ResultsAdapter
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class LocationSearchFragment : Fragment() {

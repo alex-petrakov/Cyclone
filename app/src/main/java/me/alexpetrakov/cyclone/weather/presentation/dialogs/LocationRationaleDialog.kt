@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.weather.presentation
+package me.alexpetrakov.cyclone.weather.presentation.dialogs
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -7,6 +7,8 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.extensions.parentViewModel
+import me.alexpetrakov.cyclone.weather.presentation.RationaleOutcome
+import me.alexpetrakov.cyclone.weather.presentation.WeatherViewModel
 
 class LocationRationaleDialog : DialogFragment() {
 

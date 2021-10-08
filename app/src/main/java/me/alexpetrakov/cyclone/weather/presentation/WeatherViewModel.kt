@@ -23,6 +23,10 @@ import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
 import me.alexpetrakov.cyclone.units.domain.model.PreferredUnits
 import me.alexpetrakov.cyclone.weather.domain.interactors.WeatherInteractor
 import me.alexpetrakov.cyclone.weather.domain.model.*
+import me.alexpetrakov.cyclone.weather.presentation.formatters.DistanceFormatter
+import me.alexpetrakov.cyclone.weather.presentation.formatters.PressureFormatter
+import me.alexpetrakov.cyclone.weather.presentation.formatters.SpeedFormatter
+import me.alexpetrakov.cyclone.weather.presentation.formatters.TemperatureFormatter
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle

@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.locations.presentation
+package me.alexpetrakov.cyclone.locations.presentation.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.extensions.parentViewModel
+import me.alexpetrakov.cyclone.locations.presentation.LocationsViewModel
 
 class RemovalConfirmationDialog : DialogFragment() {
 

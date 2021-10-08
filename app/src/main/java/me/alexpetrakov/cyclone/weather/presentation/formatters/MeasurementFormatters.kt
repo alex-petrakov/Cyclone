@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.weather.presentation
+package me.alexpetrakov.cyclone.weather.presentation.formatters
 
 import androidx.annotation.StringRes
 import me.alexpetrakov.cyclone.R

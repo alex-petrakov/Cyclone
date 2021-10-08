@@ -26,6 +26,7 @@ import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
 import me.alexpetrakov.cyclone.weather.presentation.PermissionCheckResult.*
+import me.alexpetrakov.cyclone.weather.presentation.dialogs.LocationRationaleDialog
 import me.alexpetrakov.cyclone.weather.presentation.list.WeatherAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

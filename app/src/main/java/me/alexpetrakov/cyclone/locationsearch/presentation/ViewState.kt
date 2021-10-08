@@ -1,5 +1,7 @@
 package me.alexpetrakov.cyclone.locationsearch.presentation
 
+import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
+
 sealed class SearchResultsViewState {
 
     abstract val isLoading: Boolean
@@ -13,3 +15,9 @@ sealed class SearchResultsViewState {
 
     data class Error(override val isLoading: Boolean) : SearchResultsViewState()
 }
+
+data class SearchResultUiItem(
+    val placeName: String,
+    val countryName: String,
+    val coordinates: Coordinates
+)

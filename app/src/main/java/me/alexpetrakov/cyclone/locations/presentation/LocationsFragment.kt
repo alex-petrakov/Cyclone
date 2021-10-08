@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
+import me.alexpetrakov.cyclone.locations.presentation.dialogs.RemovalConfirmationDialog
 import me.alexpetrakov.cyclone.locations.presentation.list.LocationsAdapter
 import me.alexpetrakov.cyclone.locations.presentation.list.OnMoveItemCallback
 import org.koin.androidx.viewmodel.ext.android.viewModel

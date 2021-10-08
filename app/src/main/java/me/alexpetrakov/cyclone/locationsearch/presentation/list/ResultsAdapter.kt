@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.locationsearch.presentation
+package me.alexpetrakov.cyclone.locationsearch.presentation.list
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.common.presentation.extensions.withAdapterPosition
 import me.alexpetrakov.cyclone.databinding.ItemSearchResultBinding
+import me.alexpetrakov.cyclone.locationsearch.presentation.SearchResultUiItem
 
 class ResultsAdapter(
     private val onItemClick: (SearchResultUiItem) -> Unit
