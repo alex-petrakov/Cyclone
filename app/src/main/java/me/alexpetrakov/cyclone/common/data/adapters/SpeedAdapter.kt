@@ -2,8 +2,8 @@ package me.alexpetrakov.cyclone.common.data.adapters
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Speed
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.Speed
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.SpeedUnit
 
 class SpeedAdapter {
 

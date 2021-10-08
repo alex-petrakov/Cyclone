@@ -17,11 +17,12 @@ import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.common.presentation.extensions.withCapitalizedFirstChar
-import me.alexpetrakov.cyclone.locations.domain.Location
-import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
-import me.alexpetrakov.cyclone.units.domain.PreferredUnits
-import me.alexpetrakov.cyclone.units.domain.UnitsInteractor
-import me.alexpetrakov.cyclone.weather.domain.*
+import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
+import me.alexpetrakov.cyclone.locations.domain.model.Location
+import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
+import me.alexpetrakov.cyclone.units.domain.model.PreferredUnits
+import me.alexpetrakov.cyclone.weather.domain.interactors.WeatherInteractor
+import me.alexpetrakov.cyclone.weather.domain.model.*
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle

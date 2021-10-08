@@ -4,9 +4,9 @@ import com.google.android.gms.location.LocationServices
 import me.alexpetrakov.cyclone.weather.data.DeviceLocationProvider
 import me.alexpetrakov.cyclone.weather.data.WeatherProvider
 import me.alexpetrakov.cyclone.weather.data.openweathermap.ForecastApi
-import me.alexpetrakov.cyclone.weather.domain.DeviceLocator
-import me.alexpetrakov.cyclone.weather.domain.WeatherInteractor
-import me.alexpetrakov.cyclone.weather.domain.WeatherRepository
+import me.alexpetrakov.cyclone.weather.domain.interactors.WeatherInteractor
+import me.alexpetrakov.cyclone.weather.domain.repositories.DeviceLocator
+import me.alexpetrakov.cyclone.weather.domain.repositories.WeatherRepository
 import me.alexpetrakov.cyclone.weather.presentation.WeatherViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

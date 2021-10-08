@@ -4,13 +4,13 @@ import com.github.kittinunf.result.Result
 import com.github.kittinunf.result.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.alexpetrakov.cyclone.locations.domain.Coordinates
+import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
 import me.alexpetrakov.cyclone.weather.data.openweathermap.ForecastApi
 import me.alexpetrakov.cyclone.weather.data.openweathermap.WeatherJson
 import me.alexpetrakov.cyclone.weather.data.openweathermap.toDomain
-import me.alexpetrakov.cyclone.weather.domain.Fail
-import me.alexpetrakov.cyclone.weather.domain.Weather
-import me.alexpetrakov.cyclone.weather.domain.WeatherRepository
+import me.alexpetrakov.cyclone.weather.domain.model.Fail
+import me.alexpetrakov.cyclone.weather.domain.model.Weather
+import me.alexpetrakov.cyclone.weather.domain.repositories.WeatherRepository
 import retrofit2.HttpException
 import java.util.*
 

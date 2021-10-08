@@ -2,8 +2,8 @@ package me.alexpetrakov.cyclone.common.data.adapters
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Distance
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.Distance
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.LengthUnit
 
 class DistanceAdapter {
 

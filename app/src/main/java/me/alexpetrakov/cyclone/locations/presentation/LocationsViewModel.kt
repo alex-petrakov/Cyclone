@@ -12,8 +12,8 @@ import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
-import me.alexpetrakov.cyclone.locations.domain.Location
-import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
+import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
+import me.alexpetrakov.cyclone.locations.domain.model.Location
 
 class LocationsViewModel(
     private val router: Router,

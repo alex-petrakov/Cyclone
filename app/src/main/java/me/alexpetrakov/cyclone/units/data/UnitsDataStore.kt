@@ -7,17 +7,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import me.alexpetrakov.cyclone.units.domain.PreferredUnits
-import me.alexpetrakov.cyclone.units.domain.UnitsLocale
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_DISTANCE_UNIT
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_PRESSURE_UNIT
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_SPEED_UNIT
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository.Companion.PREF_KEY_TEMPERATURE_UNIT
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.PressureUnit
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.TemperatureUnit
+import me.alexpetrakov.cyclone.units.domain.model.PreferredUnits
+import me.alexpetrakov.cyclone.units.domain.model.UnitsLocale
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.LengthUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.PressureUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.SpeedUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.TemperatureUnit
+import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository
+import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Companion.PREF_KEY_DISTANCE_UNIT
+import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Companion.PREF_KEY_PRESSURE_UNIT
+import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Companion.PREF_KEY_SPEED_UNIT
+import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Companion.PREF_KEY_TEMPERATURE_UNIT
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UnitsDataStore(prefs: SharedPreferences) : UnitsRepository {

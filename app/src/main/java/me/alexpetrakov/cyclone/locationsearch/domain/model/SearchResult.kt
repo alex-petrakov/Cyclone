@@ -1,8 +1,8 @@
-package me.alexpetrakov.cyclone.locationsearch.presentation
+package me.alexpetrakov.cyclone.locationsearch.domain.model
 
 import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
 
-data class SearchResultUiItem(
+data class SearchResult(
     val placeName: String,
     val countryName: String,
     val coordinates: Coordinates

@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.locations.data.db.AppDatabase
 import me.alexpetrakov.cyclone.locations.data.db.LocationEntity
-import me.alexpetrakov.cyclone.locations.domain.Coordinates
-import me.alexpetrakov.cyclone.locations.domain.Location
-import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
+import me.alexpetrakov.cyclone.locations.domain.model.Location
+import me.alexpetrakov.cyclone.locations.domain.repositories.LocationsRepository
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LocationsDataStore(

@@ -16,9 +16,9 @@ import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.tasks.await
-import me.alexpetrakov.cyclone.locations.domain.Coordinates
-import me.alexpetrakov.cyclone.weather.domain.DeviceLocator
-import me.alexpetrakov.cyclone.weather.domain.Fail
+import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
+import me.alexpetrakov.cyclone.weather.domain.model.Fail
+import me.alexpetrakov.cyclone.weather.domain.repositories.DeviceLocator
 import java.util.concurrent.TimeUnit.MINUTES
 
 class DeviceLocationProvider(

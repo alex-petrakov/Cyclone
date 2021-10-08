@@ -2,8 +2,8 @@ package me.alexpetrakov.cyclone.locationsearch.data.openweathermap
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import me.alexpetrakov.cyclone.locations.domain.Coordinates
-import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
+import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
+import me.alexpetrakov.cyclone.locationsearch.domain.model.SearchResult
 import java.util.*
 
 @JsonClass(generateAdapter = true)

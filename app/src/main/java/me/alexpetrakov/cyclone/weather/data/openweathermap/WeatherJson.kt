@@ -3,11 +3,11 @@ package me.alexpetrakov.cyclone.weather.data.openweathermap
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import me.alexpetrakov.cyclone.common.presentation.extensions.withCapitalizedFirstChar
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Distance
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Pressure
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Speed
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.Temperature
-import me.alexpetrakov.cyclone.weather.domain.*
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.Distance
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.Pressure
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.Speed
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.Temperature
+import me.alexpetrakov.cyclone.weather.domain.model.*
 import java.time.Instant
 import java.time.ZoneOffset
 import kotlin.math.roundToInt

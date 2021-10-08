@@ -2,8 +2,8 @@ package me.alexpetrakov.cyclone.locationsearch
 
 import me.alexpetrakov.cyclone.locationsearch.data.LocationSearchProvider
 import me.alexpetrakov.cyclone.locationsearch.data.openweathermap.GeocodingApi
-import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchInteractor
-import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchRepository
+import me.alexpetrakov.cyclone.locationsearch.domain.interactors.LocationSearchInteractor
+import me.alexpetrakov.cyclone.locationsearch.domain.repositories.LocationSearchRepository
 import me.alexpetrakov.cyclone.locationsearch.presentation.LocationSearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

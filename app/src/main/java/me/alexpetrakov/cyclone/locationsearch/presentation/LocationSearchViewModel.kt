@@ -5,10 +5,10 @@ import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
-import me.alexpetrakov.cyclone.locationsearch.domain.Fail
-import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchInteractor
-import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
+import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
+import me.alexpetrakov.cyclone.locationsearch.domain.interactors.LocationSearchInteractor
+import me.alexpetrakov.cyclone.locationsearch.domain.model.Fail
+import me.alexpetrakov.cyclone.locationsearch.domain.model.SearchResult
 
 class LocationSearchViewModel(
     private val savedStateHandle: SavedStateHandle,

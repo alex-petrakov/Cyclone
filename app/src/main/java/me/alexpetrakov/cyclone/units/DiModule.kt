@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import me.alexpetrakov.cyclone.units.data.UnitsDataStore
-import me.alexpetrakov.cyclone.units.domain.UnitsInteractor
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository
+import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
+import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

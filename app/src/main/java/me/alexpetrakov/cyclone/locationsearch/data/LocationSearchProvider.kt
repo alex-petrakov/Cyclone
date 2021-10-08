@@ -7,9 +7,9 @@ import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.locationsearch.data.openweathermap.GeocodingApi
 import me.alexpetrakov.cyclone.locationsearch.data.openweathermap.SearchResultJson
 import me.alexpetrakov.cyclone.locationsearch.data.openweathermap.toDomain
-import me.alexpetrakov.cyclone.locationsearch.domain.Fail
-import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchRepository
-import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
+import me.alexpetrakov.cyclone.locationsearch.domain.model.Fail
+import me.alexpetrakov.cyclone.locationsearch.domain.model.SearchResult
+import me.alexpetrakov.cyclone.locationsearch.domain.repositories.LocationSearchRepository
 import retrofit2.HttpException
 import java.util.*
 

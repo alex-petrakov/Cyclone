@@ -6,8 +6,8 @@ import androidx.room.Room
 import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.locations.data.LocationsDataStore
 import me.alexpetrakov.cyclone.locations.data.db.AppDatabase
-import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
-import me.alexpetrakov.cyclone.locations.domain.LocationsRepository
+import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
+import me.alexpetrakov.cyclone.locations.domain.repositories.LocationsRepository
 import me.alexpetrakov.cyclone.locations.presentation.LocationsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

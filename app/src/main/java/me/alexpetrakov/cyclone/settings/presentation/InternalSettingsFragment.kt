@@ -6,12 +6,12 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import me.alexpetrakov.cyclone.R
-import me.alexpetrakov.cyclone.units.domain.UnitsInteractor
-import me.alexpetrakov.cyclone.units.domain.UnitsRepository
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.PressureUnit
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.SpeedUnit
-import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.TemperatureUnit
+import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.LengthUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.PressureUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.SpeedUnit
+import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.TemperatureUnit
+import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository
 import org.koin.android.ext.android.inject
 
 class InternalSettingsFragment : PreferenceFragmentCompat() {
