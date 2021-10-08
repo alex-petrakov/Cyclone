@@ -7,12 +7,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.alexpetrakov.cyclone.locations.domain.LocationsInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.Fail
-import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchRepository
+import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.SearchResult
 
 class LocationSearchViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val locationSearchRepository: LocationSearchRepository,
+    private val locationSearchInteractor: LocationSearchInteractor,
     private val locationsInteractor: LocationsInteractor,
     private val router: Router
 ) : ViewModel() {
@@ -50,7 +50,7 @@ class LocationSearchViewModel(
             is SearchResultsViewState.Error -> currentState.copy(isLoading = true)
         }
         viewModelScope.launch {
-            _searchResultsViewState.value = locationSearchRepository.searchLocations(text)
+            _searchResultsViewState.value = locationSearchInteractor.searchLocations(text)
                 .fold(
                     { results -> mapSearchResultsToViewState(results) },
                     ::mapFailureToViewState

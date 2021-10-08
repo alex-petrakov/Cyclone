@@ -2,6 +2,7 @@ package me.alexpetrakov.cyclone.locationsearch
 
 import me.alexpetrakov.cyclone.locationsearch.data.LocationSearchProvider
 import me.alexpetrakov.cyclone.locationsearch.data.openweathermap.GeocodingApi
+import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.LocationSearchRepository
 import me.alexpetrakov.cyclone.locationsearch.presentation.LocationSearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,10 +16,12 @@ val locationSearchModule = module {
         LocationSearchProvider(geocodingApi)
     }
 
+    factory { LocationSearchInteractor(locationSearchRepository = get()) }
+
     viewModel { params ->
         LocationSearchViewModel(
             savedStateHandle = params.get(),
-            locationSearchRepository = get(),
+            locationSearchInteractor = get(),
             locationsInteractor = get(),
             router = get()
         )
