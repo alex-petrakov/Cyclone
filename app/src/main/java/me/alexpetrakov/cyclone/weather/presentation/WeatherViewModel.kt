@@ -199,7 +199,7 @@ class WeatherViewModel(
             DisplayableItem.HeaderUi(TextResource.from(R.string.weather_today_title)),
             hourlyForecast.toUiModel(preferredUnits),
             DisplayableItem.HeaderUi(TextResource.from(R.string.weather_this_week_title)),
-        ) + dailyForecast.toUiModel(preferredUnits)
+        ) + dailyForecast.toUiModel(preferredUnits) + DisplayableItem.DataProviderNotice
     }
 
     private fun CurrentConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.CurrentConditionsUi {

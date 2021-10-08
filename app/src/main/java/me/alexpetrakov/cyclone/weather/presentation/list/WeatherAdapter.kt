@@ -9,10 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.asString
-import me.alexpetrakov.cyclone.databinding.ItemCurrentConditionsBinding
-import me.alexpetrakov.cyclone.databinding.ItemDayConditionsBinding
-import me.alexpetrakov.cyclone.databinding.ItemHeaderBinding
-import me.alexpetrakov.cyclone.databinding.ItemHourlyForecastBinding
+import me.alexpetrakov.cyclone.databinding.*
 import me.alexpetrakov.cyclone.weather.presentation.DisplayableItem
 
 class WeatherAdapter :
@@ -24,6 +21,7 @@ class WeatherAdapter :
             is DisplayableItem.CurrentConditionsUi -> R.layout.item_current_conditions
             is DisplayableItem.HourlyForecastUi -> R.layout.item_hourly_forecast
             is DisplayableItem.DayConditionsUi -> R.layout.item_day_conditions
+            DisplayableItem.DataProviderNotice -> R.layout.item_data_provider_notice
         }
     }
 
@@ -33,6 +31,7 @@ class WeatherAdapter :
             R.layout.item_current_conditions -> CurrentConditionsViewHolder.from(parent)
             R.layout.item_hourly_forecast -> HourlyForecastViewHolder.from(parent)
             R.layout.item_day_conditions -> DayConditionsViewHolder.from(parent)
+            R.layout.item_data_provider_notice -> DataProviderNoticeViewHolder.from(parent)
             else -> throw IllegalStateException("Unknown view type: $viewType")
         }
     }
@@ -44,6 +43,9 @@ class WeatherAdapter :
             is CurrentConditionsViewHolder -> holder.bind(item as DisplayableItem.CurrentConditionsUi)
             is HourlyForecastViewHolder -> holder.bind(item as DisplayableItem.HourlyForecastUi)
             is DayConditionsViewHolder -> holder.bind(item as DisplayableItem.DayConditionsUi)
+            is DataProviderNoticeViewHolder -> {
+                // Do nothing
+            }
             else -> throw IllegalStateException("Unexpected view holder type: ${holder::class.java}")
         }
     }
@@ -148,6 +150,19 @@ class WeatherAdapter :
                 return DayConditionsViewHolder(
                     ItemDayConditionsBinding.inflate(layoutInflater, parent, false),
                     parent.context.resources
+                )
+            }
+        }
+    }
+
+    class DataProviderNoticeViewHolder(
+        binding: ItemDataProviderNoticeBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        companion object {
+            fun from(parent: ViewGroup): DataProviderNoticeViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return DataProviderNoticeViewHolder(
+                    ItemDataProviderNoticeBinding.inflate(layoutInflater, parent, false)
                 )
             }
         }

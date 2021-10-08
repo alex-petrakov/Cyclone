@@ -42,6 +42,7 @@
     <string name="template_pressure_inhg">%s inHg</string>
     <string name="weather_now">Now</string>
     <string name="weather_today">Today</string>
+    <string name="weather_weather_data_is_provided_by">Weather data is provided by OpenWeather</string>
 
     <string name="locations_title">Locations</string>
     <string name="locations_action_remove_location">Remove location</string>

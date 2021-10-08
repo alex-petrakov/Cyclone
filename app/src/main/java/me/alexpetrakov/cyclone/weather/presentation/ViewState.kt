@@ -50,6 +50,8 @@ sealed class DisplayableItem {
 
     data class HourlyForecastUi(val hourConditions: List<HourConditionsUi>) : DisplayableItem()
 
+    object DataProviderNotice : DisplayableItem()
+
     // TODO: Implement DiffUtil.ItemCallback
     object DiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
         override fun areItemsTheSame(oldItem: DisplayableItem, newItem: DisplayableItem): Boolean {
