@@ -6,6 +6,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import me.alexpetrakov.cyclone.R
+import me.alexpetrakov.cyclone.units.domain.UnitsInteractor
 import me.alexpetrakov.cyclone.units.domain.UnitsRepository
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.LengthUnit
 import me.alexpetrakov.cyclone.units.domain.unitsofmeasure.PressureUnit
@@ -15,7 +16,7 @@ import org.koin.android.ext.android.inject
 
 class InternalSettingsFragment : PreferenceFragmentCompat() {
 
-    private val unitsRepository by inject<UnitsRepository>()
+    private val unitsInteractor by inject<UnitsInteractor>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val context = preferenceManager.context
@@ -35,53 +36,53 @@ class InternalSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun buildTemperatureUnitsPreference(context: Context): Preference {
-        val temperatureUnits = unitsRepository.temperatureUnits
+        val temperatureUnits = unitsInteractor.temperatureUnits
         return ListPreference(context).apply {
             key = UnitsRepository.PREF_KEY_TEMPERATURE_UNIT
             title = getString(R.string.settings_temperature_units)
             dialogTitle = title
             entries = temperatureUnits.map { it.getLocalizedName(context) }.toTypedArray()
             entryValues = temperatureUnits.map { it.symbol }.toTypedArray()
-            value = unitsRepository.defaultTemperatureUnit.symbol
+            value = unitsInteractor.defaultTemperatureUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }
 
     private fun buildDistanceUnitsPreference(context: Context): Preference {
-        val distanceUnits = unitsRepository.distanceUnits
+        val distanceUnits = unitsInteractor.distanceUnits
         return ListPreference(context).apply {
             key = UnitsRepository.PREF_KEY_DISTANCE_UNIT
             title = getString(R.string.settings_distance_units)
             dialogTitle = title
             entries = distanceUnits.map { it.getLocalizedName(context) }.toTypedArray()
             entryValues = distanceUnits.map { it.symbol }.toTypedArray()
-            value = unitsRepository.defaultDistanceUnit.symbol
+            value = unitsInteractor.defaultDistanceUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }
 
     private fun buildSpeedUnitsPreference(context: Context): Preference {
-        val speedUnits = unitsRepository.speedUnits
+        val speedUnits = unitsInteractor.speedUnits
         return ListPreference(context).apply {
             key = UnitsRepository.PREF_KEY_SPEED_UNIT
             title = getString(R.string.settings_speed_units)
             dialogTitle = title
             entries = speedUnits.map { it.getLocalizedName(context) }.toTypedArray()
             entryValues = speedUnits.map { it.symbol }.toTypedArray()
-            value = unitsRepository.defaultSpeedUnit.symbol
+            value = unitsInteractor.defaultSpeedUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }
 
     private fun buildPressureUnitsPreference(context: Context): Preference {
-        val pressureUnits = unitsRepository.pressureUnits
+        val pressureUnits = unitsInteractor.pressureUnits
         return ListPreference(context).apply {
             key = UnitsRepository.PREF_KEY_PRESSURE_UNIT
             title = getString(R.string.settings_pressure_units)
             dialogTitle = title
             entries = pressureUnits.map { it.getLocalizedName(context) }.toTypedArray()
             entryValues = pressureUnits.map { it.symbol }.toTypedArray()
-            value = unitsRepository.defaultPressureUnit.symbol
+            value = unitsInteractor.defaultPressureUnit.symbol
             summaryProvider = BasicListPreferenceSummaryProvider()
         }
     }
