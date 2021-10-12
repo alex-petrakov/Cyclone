@@ -201,7 +201,7 @@ class WeatherFragment : Fragment() {
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(
                 requireContext(),
-                R.string.weather_error_activity_not_found,
+                R.string.weather_unable_to_open_settings,
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -216,7 +216,7 @@ class WeatherFragment : Fragment() {
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(
                 requireContext(),
-                R.string.weather_error_activity_not_found,
+                R.string.weather_unable_to_open_settings,
                 Toast.LENGTH_LONG
             ).show()
         }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Cyclone</string>
     <string name="app_action_try_again">Try again</string>
     <string name="app_current_location">Current location</string>
@@ -10,43 +10,43 @@
     <string name="app_action_open_settings">Open settings</string>
     <string name="app_error_no_connection">Can\'t connect to the server</string>
 
-    <string name="weather_template_pressure">Pressure %s</string>
-    <string name="weather_template_wind">Wind %s</string>
-    <string name="weather_template_humidity">Humidity %s · Dew point %s</string>
-    <string name="weather_template_visibility">Visibility %s</string>
-    <string name="weather_template_feels_like">Feels like %s</string>
-    <string name="weather_template_uv_index">UV index %s</string>
+    <string name="weather_template_pressure">Pressure <xliff:g example="767 mmHg" id="pressure value">%s</xliff:g></string>
+    <string name="weather_template_wind">Wind <xliff:g example="5 m/s" id="wind speed">%s</xliff:g></string>
+    <string name="weather_template_humidity">Humidity <xliff:g example="67%" id="percent">%s</xliff:g> · Dew point <xliff:g example="14°" id="temperature value">%s</xliff:g></string>
+    <string name="weather_template_visibility">Visibility <xliff:g example="10 km" id="distance value">%s</xliff:g></string>
+    <string name="weather_template_feels_like">Feels like <xliff:g example="14°" id="temperature">%s</xliff:g></string>
+    <string name="weather_template_uv_index">UV index <xliff:g example="1" id="integer value">%s</xliff:g></string>
     <string name="weather_now_title">Now</string>
     <string name="weather_today_title">Today</string>
     <string name="weather_this_week_title">This week</string>
     <string name="weather_error_no_location_access">To get weather conditions in your area, the app needs permission to access your location.</string>
     <string name="weather_error_no_available_location">Location is not available. Make sure that device location is enabled.</string>
-    <string name="weather_error_activity_not_found">Unable to find an Activity for this action</string>
+    <string name="weather_unable_to_open_settings">Can\'t open settings</string>
     <string name="weather_allow_access_to_your_location">Allow access to your location</string>
     <string name="weather_location_permission_rationale_message">To get weather in your area, the app needs access to your location.\nYour location info is never used for anything other than showing you a forecast.</string>
     <string name="weather_change_location">Change location</string>
     <string name="weather_action_open_settings">Settings</string>
-    <string name="template_temperature_degree">%s°</string>
-    <string name="template_temperature_kelvin">%s K</string>
-    <string name="template_length_meter">%s m</string>
-    <string name="template_length_kilometer">%s km</string>
-    <string name="template_length_mile">%s mi</string>
-    <string name="template_speed_meter_per_second">%s m/s</string>
-    <string name="template_speed_kilometer_per_hour">%s km/h</string>
-    <string name="template_speed_mile_per_hour">%s mph</string>
-    <string name="template_pressure_pascal">%s Pa</string>
-    <string name="template_pressure_hectopascal">%s hPa</string>
-    <string name="template_pressure_kilopascal">%s kPa</string>
-    <string name="template_pressure_millibar">%s mbar</string>
-    <string name="template_pressure_mmhg">%s mmHg</string>
-    <string name="template_pressure_inhg">%s inHg</string>
+    <string name="weather_template_temperature_degree"><xliff:g example="9" id="temperature value">%s</xliff:g>°</string>
+    <string name="weather_template_temperature_kelvin"><xliff:g example="282" id="temperature value">%s</xliff:g>K</string>
+    <string name="weather_template_length_meter"><xliff:g example="10,000" id="distance value">%s</xliff:g> m</string>
+    <string name="weather_template_length_kilometer"><xliff:g example="10" id="distance value">%s</xliff:g> km</string>
+    <string name="weather_template_length_mile"><xliff:g example="6" id="distance value">%s</xliff:g> mi</string>
+    <string name="weather_template_speed_meter_per_second"><xliff:g example="3" id="speed value">%s</xliff:g> m/s</string>
+    <string name="weather_template_speed_kilometer_per_hour"><xliff:g example="12" id="speed value">%s</xliff:g> km/h</string>
+    <string name="weather_template_speed_mile_per_hour"><xliff:g example="7" id="speed value">%s</xliff:g> mph</string>
+    <string name="weather_template_pressure_pascal"><xliff:g example="101,600" id="pressure value">%s</xliff:g> Pa</string>
+    <string name="weather_template_pressure_hectopascal"><xliff:g example="1,016" id="pressure value">%s</xliff:g> hPa</string>
+    <string name="weather_template_pressure_kilopascal"><xliff:g example="102" id="pressure value">%s</xliff:g> kPa</string>
+    <string name="weather_template_pressure_millibar"><xliff:g example="1,016" id="pressure value">%s</xliff:g> mbar</string>
+    <string name="weather_template_pressure_mmhg"><xliff:g example="762" id="pressure value">%s</xliff:g> mmHg</string>
+    <string name="weather_template_pressure_inhg"><xliff:g example="30" id="pressure value">%s</xliff:g> inHg</string>
     <string name="weather_now">Now</string>
     <string name="weather_today">Today</string>
     <string name="weather_weather_data_is_provided_by">Weather data is provided by OpenWeather</string>
 
     <string name="locations_title">Locations</string>
     <string name="locations_action_remove_location">Remove location</string>
-    <string name="locations_removal_confirmation_template">Remove %s from saved locations?</string>
+    <string name="locations_removal_confirmation_template">Remove <xliff:g example="Chicago" id="location name">%s</xliff:g> from saved locations?</string>
 
     <string name="location_search_search_locations">Search locations</string>
     <string name="location_search_nothing_found">Nothing found</string>

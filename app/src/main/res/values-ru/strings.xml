@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Cyclone</string>
+    <string name="app_current_location">Текущее местоположение</string>
+    <string name="app_action_navigate_up">Перейти наверх</string>
+    <string name="app_action_add">Добавить</string>
+    <string name="app_action_remove">Удалить</string>
+    <string name="app_action_continue">Продолжить</string>
+    <string name="app_action_cancel">Отмена</string>
+    <string name="app_action_open_settings">Настройки</string>
+    <string name="app_action_try_again">Попробовать ещё раз</string>
+    <string name="app_error_no_connection">Не удалось подключиться к серверу</string>
+
+    <string name="weather_template_pressure">Давление <xliff:g example="767 mmHg" id="pressure value">%s</xliff:g></string>
+    <string name="weather_template_wind">Ветер <xliff:g example="5 m/s" id="wind speed">%s</xliff:g></string>
+    <string name="weather_template_humidity">Влажность <xliff:g example="67%" id="percent">%s</xliff:g> · Точка росы <xliff:g example="14°" id="temperature value">%s</xliff:g></string>
+    <string name="weather_template_visibility">Видимость <xliff:g example="10 km" id="distance value">%s</xliff:g></string>
+    <string name="weather_template_feels_like">Ощущается как <xliff:g example="14°" id="temperature">%s</xliff:g></string>
+    <string name="weather_template_uv_index">УФ-индекс <xliff:g example="1" id="integer value">%s</xliff:g></string>
+    <string name="weather_now_title">Сейчас</string>
+    <string name="weather_today_title">Сегодня</string>
+    <string name="weather_this_week_title">На этой неделе</string>
+    <string name="weather_error_no_location_access">Чтобы получить прогноз погоды для вашего района, приложению необходим доступ к местоположению устройства.</string>
+    <string name="weather_error_no_available_location">Не удалось определить ваше местоположение. Убедитесь, что определение местоположения включено в настройках.</string>
+    <string name="weather_unable_to_open_settings">Не удалось открыть экран настроек</string>
+    <string name="weather_allow_access_to_your_location">Предоставьте доступ к местоположению</string>
+    <string name="weather_location_permission_rationale_message">Чтобы получить прогноз погоды для вашего района, приложению необходим доступ к местоположению устройства. Эти данные используются только для получения прогноза погоды.</string>
+    <string name="weather_change_location">Изменить место</string>
+    <string name="weather_action_open_settings">Настройки</string>
+    <string name="weather_template_temperature_degree"><xliff:g example="9" id="temperature value">%s</xliff:g>°</string>
+    <string name="weather_template_temperature_kelvin"><xliff:g example="282" id="temperature value">%s</xliff:g>K</string>
+    <string name="weather_template_length_meter"><xliff:g example="10,000" id="distance value">%s</xliff:g> м</string>
+    <string name="weather_template_length_kilometer"><xliff:g example="10" id="distance value">%s</xliff:g> км</string>
+    <string name="weather_template_length_mile"><xliff:g example="6" id="distance value">%s</xliff:g> mi</string>
+    <string name="weather_template_speed_meter_per_second"><xliff:g example="3" id="speed value">%s</xliff:g> м/с</string>
+    <string name="weather_template_speed_kilometer_per_hour"><xliff:g example="12" id="speed value">%s</xliff:g> км/ч</string>
+    <string name="weather_template_speed_mile_per_hour"><xliff:g example="7" id="speed value">%s</xliff:g> mph</string>
+    <string name="weather_template_pressure_pascal"><xliff:g example="101,600" id="pressure value">%s</xliff:g> Па</string>
+    <string name="weather_template_pressure_hectopascal"><xliff:g example="101,600" id="pressure value">%s</xliff:g> гПа</string>
+    <string name="weather_template_pressure_kilopascal"><xliff:g example="102" id="pressure value">%s</xliff:g> кПа</string>
+    <string name="weather_template_pressure_millibar"><xliff:g example="1,016" id="pressure value">%s</xliff:g> мбар</string>
+    <string name="weather_template_pressure_mmhg"><xliff:g example="762" id="pressure value">%s</xliff:g> мм. рт. ст.</string>
+    <string name="weather_template_pressure_inhg"><xliff:g example="30" id="pressure value">%s</xliff:g> inHg</string>
+    <string name="weather_now">Сейчас</string>
+    <string name="weather_today">Сегодня</string>
+    <string name="weather_weather_data_is_provided_by">Погодные данные предоставлены OpenWeather</string>
+
+    <string name="locations_title">Места</string>
+    <string name="locations_action_remove_location">Удалить место</string>
+    <string name="locations_removal_confirmation_template">Удалить <xliff:g example="Chicago" id="location name">%s</xliff:g> из сохранённых мест?</string>
+
+    <string name="location_search_search_locations">Поиск мест</string>
+    <string name="location_search_nothing_found">Ничего не найдено</string>
+
+    <string name="settings_title_settings">Настройки</string>
+    <string name="settings_temperature_units">Единицы температуры</string>
+    <string name="settings_distance_units">Единицы расстояния</string>
+    <string name="settings_speed_units">Единицы скорости</string>
+    <string name="settings_pressure_units">Единицы давления</string>
+    <string name="settings_celsius">Градусы Цельсия (°C)</string>
+    <string name="settings_fahrenheit">Градусы Фаренгейта (°F)</string>
+    <string name="settings_kelvin">Кельвины (K)</string>
+    <string name="settings_meters">Метры (м)</string>
+    <string name="settings_kilometers">Километры (км)</string>
+    <string name="settings_miles">Мили (mi)</string>
+    <string name="settings_meters_per_second">Метры в секунду (м/с)</string>
+    <string name="settings_kilometers_per_hour">Километры в час (км/ч)</string>
+    <string name="settings_miles_per_hour">Мили в час (mph)</string>
+    <string name="settings_pascals">Паскали (Па)</string>
+    <string name="settings_hectopascals">Гектопаскали (гПа)</string>
+    <string name="settings_kilopascals">Килопаскали (кПа)</string>
+    <string name="settings_millibars">Миллибары (мбар)</string>
+    <string name="settings_millimeters_of_mercur">Миллиметры ртутного столба (мм рт. ст.)</string>
+    <string name="settings_inches_of_mercury">Дюймы ртутного столба (inHg)</string>
+</resources>
