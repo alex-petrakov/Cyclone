@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.TextResource
+import java.time.OffsetDateTime
 
 data class ToolbarViewState(val title: TextResource)
 
@@ -24,7 +25,19 @@ sealed class WeatherViewState {
 }
 
 sealed class DisplayableItem {
-    data class HeaderUi(val text: TextResource) : DisplayableItem()
+
+    data class HeaderUi(val id: Int, val text: TextResource) : DisplayableItem() {
+        override fun hasSameIdentityWith(other: DisplayableItem): Boolean {
+            return other is HeaderUi && this.id == other.id
+        }
+
+        override fun hasSameContentWith(other: DisplayableItem) = this == other
+
+        companion object {
+            const val TODAY_ID = 0
+            const val THIS_WEEK_ID = 1
+        }
+    }
 
     data class CurrentConditionsUi(
         val temperature: TextResource,
@@ -36,9 +49,16 @@ sealed class DisplayableItem {
         val humidityAndDewPoint: TextResource,
         val visibility: TextResource,
         val uvIndex: TextResource
-    ) : DisplayableItem()
+    ) : DisplayableItem() {
+
+        // We assume that we have only one such item in the list at any given time
+        override fun hasSameIdentityWith(other: DisplayableItem) = other is CurrentConditionsUi
+
+        override fun hasSameContentWith(other: DisplayableItem) = this == other
+    }
 
     data class DayConditionsUi(
+        val rawDate: OffsetDateTime,
         val date: TextResource,
         val temperatureLow: TextResource,
         val temperatureHigh: TextResource,
@@ -46,28 +66,48 @@ sealed class DisplayableItem {
         val icon: IconUi,
         val precipitationChance: TextResource,
         val precipitationChanceIsVisible: Boolean
-    ) : DisplayableItem()
+    ) : DisplayableItem() {
 
-    data class HourlyForecastUi(val hourConditions: List<HourConditionsUi>) : DisplayableItem()
-
-    object DataProviderNotice : DisplayableItem()
-
-    // TODO: Implement DiffUtil.ItemCallback
-    object DiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
-        override fun areItemsTheSame(oldItem: DisplayableItem, newItem: DisplayableItem): Boolean {
-            return false
+        override fun hasSameIdentityWith(other: DisplayableItem): Boolean {
+            return other is DayConditionsUi && this.rawDate == other.rawDate
         }
 
-        override fun areContentsTheSame(
-            oldItem: DisplayableItem,
-            newItem: DisplayableItem
-        ): Boolean {
-            return false
+        override fun hasSameContentWith(other: DisplayableItem) = this == other
+    }
+
+    data class HourlyForecastUi(val hourConditions: List<HourConditionsUi>) : DisplayableItem() {
+
+        // We assume that we have only one such item in the list at any given time
+        override fun hasSameIdentityWith(other: DisplayableItem) = other is HourlyForecastUi
+
+        override fun hasSameContentWith(other: DisplayableItem) = this == other
+    }
+
+    object DataProviderNotice : DisplayableItem() {
+
+        // We assume that we have only one such item in the list at any given time
+        override fun hasSameIdentityWith(other: DisplayableItem) = other is DataProviderNotice
+
+        override fun hasSameContentWith(other: DisplayableItem) = true
+    }
+
+    abstract fun hasSameIdentityWith(other: DisplayableItem): Boolean
+
+    abstract fun hasSameContentWith(other: DisplayableItem): Boolean
+
+    object DiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
+        override fun areItemsTheSame(old: DisplayableItem, new: DisplayableItem): Boolean {
+            return old.hasSameIdentityWith(new)
+        }
+
+        override fun areContentsTheSame(old: DisplayableItem, new: DisplayableItem): Boolean {
+            return old.hasSameContentWith(new)
         }
     }
 }
 
 data class HourConditionsUi(
+    val rawTime: OffsetDateTime,
     val time: TextResource,
     val temperature: TextResource,
     val precipitationChance: TextResource,
@@ -75,20 +115,13 @@ data class HourConditionsUi(
     val conditions: TextResource,
     val icon: IconUi
 ) {
-    // TODO: Implement DiffUtil.ItemCallback
     object DiffCallback : DiffUtil.ItemCallback<HourConditionsUi>() {
-        override fun areItemsTheSame(
-            oldItem: HourConditionsUi,
-            newItem: HourConditionsUi
-        ): Boolean {
-            return false
+        override fun areItemsTheSame(old: HourConditionsUi, new: HourConditionsUi): Boolean {
+            return old.rawTime == new.rawTime
         }
 
-        override fun areContentsTheSame(
-            oldItem: HourConditionsUi,
-            newItem: HourConditionsUi
-        ): Boolean {
-            return false
+        override fun areContentsTheSame(old: HourConditionsUi, new: HourConditionsUi): Boolean {
+            return old == new
         }
     }
 }

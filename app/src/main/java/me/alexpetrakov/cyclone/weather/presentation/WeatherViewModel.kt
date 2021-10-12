@@ -23,6 +23,9 @@ import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
 import me.alexpetrakov.cyclone.units.domain.model.PreferredUnits
 import me.alexpetrakov.cyclone.weather.domain.interactors.WeatherInteractor
 import me.alexpetrakov.cyclone.weather.domain.model.*
+import me.alexpetrakov.cyclone.weather.presentation.DisplayableItem.*
+import me.alexpetrakov.cyclone.weather.presentation.DisplayableItem.HeaderUi.Companion.THIS_WEEK_ID
+import me.alexpetrakov.cyclone.weather.presentation.DisplayableItem.HeaderUi.Companion.TODAY_ID
 import me.alexpetrakov.cyclone.weather.presentation.formatters.DistanceFormatter
 import me.alexpetrakov.cyclone.weather.presentation.formatters.PressureFormatter
 import me.alexpetrakov.cyclone.weather.presentation.formatters.SpeedFormatter
@@ -201,13 +204,13 @@ class WeatherViewModel(
     private fun Weather.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem> {
         return listOf(
             currentConditions.toUiModel(preferredUnits),
-            DisplayableItem.HeaderUi(TextResource.from(R.string.weather_today_title)),
+            HeaderUi(TODAY_ID, TextResource.from(R.string.weather_today_title)),
             hourlyForecast.toUiModel(preferredUnits),
-            DisplayableItem.HeaderUi(TextResource.from(R.string.weather_this_week_title)),
-        ) + dailyForecast.toUiModel(preferredUnits) + DisplayableItem.DataProviderNotice
+            HeaderUi(THIS_WEEK_ID, TextResource.from(R.string.weather_this_week_title)),
+        ) + dailyForecast.toUiModel(preferredUnits) + DataProviderNotice
     }
 
-    private fun CurrentConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.CurrentConditionsUi {
+    private fun CurrentConditions.toUiModel(preferredUnits: PreferredUnits): CurrentConditionsUi {
         val feelsLikeTemperature =
             temperatureFormatter.format(feelsLike, preferredUnits.temperatureUnit)
         val windValue = speedFormatter.format(wind.speed, preferredUnits.speedUnit)
@@ -216,7 +219,7 @@ class WeatherViewModel(
         val dewPointValue = temperatureFormatter.format(dewPoint, preferredUnits.temperatureUnit)
         val visibilityValue = distanceFormatter.format(visibility, preferredUnits.lengthUnit)
         val uvIndexValue = uvIndex.toString()
-        return DisplayableItem.CurrentConditionsUi(
+        return CurrentConditionsUi(
             temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
             overallConditions.name.asTextResource(),
             TextResource.from(R.string.weather_template_feels_like, feelsLikeTemperature),
@@ -229,17 +232,18 @@ class WeatherViewModel(
         )
     }
 
-    private fun List<HourConditions>.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.HourlyForecastUi {
+    private fun List<HourConditions>.toUiModel(preferredUnits: PreferredUnits): HourlyForecastUi {
         val currentHourConditions = take(1).map { currentHourConditions ->
             currentHourConditions.toUiModel(preferredUnits)
                 .copy(time = TextResource.from(R.string.weather_now))
         }
         val otherHoursConditions = drop(1).map { it.toUiModel(preferredUnits) }
-        return DisplayableItem.HourlyForecastUi(currentHourConditions + otherHoursConditions)
+        return HourlyForecastUi(currentHourConditions + otherHoursConditions)
     }
 
     private fun HourConditions.toUiModel(preferredUnits: PreferredUnits): HourConditionsUi {
         return HourConditionsUi(
+            timestamp,
             timeFormatter.format(localTime).asTextResource(),
             temperatureFormatter.format(temperature, preferredUnits.temperatureUnit),
             percentFormatter.format(precipitationChance).asTextResource(),
@@ -249,7 +253,7 @@ class WeatherViewModel(
         )
     }
 
-    private fun List<DayConditions>.toUiModel(preferredUnits: PreferredUnits): List<DisplayableItem.DayConditionsUi> {
+    private fun List<DayConditions>.toUiModel(preferredUnits: PreferredUnits): List<DayConditionsUi> {
         val todayConditions = take(1).map { todayConditions ->
             todayConditions.toUiModel(preferredUnits)
                 .copy(date = TextResource.from(R.string.weather_today))
@@ -260,8 +264,9 @@ class WeatherViewModel(
         return todayConditions + otherDaysConditions
     }
 
-    private fun DayConditions.toUiModel(preferredUnits: PreferredUnits): DisplayableItem.DayConditionsUi {
-        return DisplayableItem.DayConditionsUi(
+    private fun DayConditions.toUiModel(preferredUnits: PreferredUnits): DayConditionsUi {
+        return DayConditionsUi(
+            timestamp,
             dateFormatter.format(localDate).withCapitalizedFirstChar().asTextResource(),
             temperatureFormatter.format(tempLow, preferredUnits.temperatureUnit),
             temperatureFormatter.format(tempHigh, preferredUnits.temperatureUnit),
