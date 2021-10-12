@@ -13,4 +13,6 @@
     <color name="precipitation">#1B9AD0</color>
     <color name="destruction">#D75F5F</color>
     <color name="destructionRipple">#33D75F5F</color>
+
+    <color name="dividerColor">#1F000000</color>
 </resources>

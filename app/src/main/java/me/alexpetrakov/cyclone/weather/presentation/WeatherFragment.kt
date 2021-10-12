@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ import com.google.android.gms.common.api.ResolvableApiException
 import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.asString
+import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
 import me.alexpetrakov.cyclone.weather.presentation.PermissionCheckResult.*
 import me.alexpetrakov.cyclone.weather.presentation.dialogs.LocationRationaleDialog
@@ -75,6 +77,10 @@ class WeatherFragment : Fragment() {
     private fun prepareViews(): Unit = with(binding) {
         contentView.apply {
             recyclerView.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    extendBottomPaddingWithSystemInsets()
+                }
+                clipToPadding = false
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = weatherAdapter
             }

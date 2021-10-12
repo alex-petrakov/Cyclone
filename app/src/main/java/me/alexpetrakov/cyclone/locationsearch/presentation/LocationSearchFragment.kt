@@ -1,5 +1,6 @@
 package me.alexpetrakov.cyclone.locationsearch.presentation
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
 import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
 import me.alexpetrakov.cyclone.databinding.FragmentLocationSearchBinding
@@ -47,6 +49,10 @@ class LocationSearchFragment : Fragment() {
         toolbar.setNavigationOnClickListener { viewModel.onNavigateBack() }
         progressIndicator.setVisibilityAfterHide(View.GONE)
         recyclerView.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                extendBottomPaddingWithSystemInsets()
+            }
+            clipToPadding = false
             layoutManager = LinearLayoutManager(requireContext())
             adapter = resultsAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {

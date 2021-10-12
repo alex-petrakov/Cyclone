@@ -1,11 +1,16 @@
 package me.alexpetrakov.cyclone.settings.presentation
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.R
+import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.LengthUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.PressureUnit
@@ -33,6 +38,19 @@ class InternalSettingsFragment : PreferenceFragmentCompat() {
         }
 
         preferenceScreen = screen
+    }
+
+    override fun onCreateRecyclerView(
+        inflater: LayoutInflater?,
+        parent: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): RecyclerView {
+        return super.onCreateRecyclerView(inflater, parent, savedInstanceState).apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                extendBottomPaddingWithSystemInsets()
+            }
+            clipToPadding = false
+        }
     }
 
     private fun buildTemperatureUnitsPreference(context: Context): Preference {

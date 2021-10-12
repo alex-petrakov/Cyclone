@@ -1,5 +1,6 @@
 package me.alexpetrakov.cyclone.locations.presentation
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asString
+import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomMarginWithSystemInsets
+import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
 import me.alexpetrakov.cyclone.locations.presentation.dialogs.RemovalConfirmationDialog
 import me.alexpetrakov.cyclone.locations.presentation.list.LocationsAdapter
@@ -56,10 +59,17 @@ class LocationsFragment : Fragment() {
     private fun prepareView(): Unit = with(binding) {
         toolbar.setOnClickListener { viewModel.onNavigateBack() }
         addFloatingButton.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                extendBottomMarginWithSystemInsets()
+            }
             setAnimateShowBeforeLayout(true)
             setOnClickListener { viewModel.onAddLocation() }
         }
         recyclerView.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                extendBottomPaddingWithSystemInsets()
+            }
+            clipToPadding = false
             layoutManager = LinearLayoutManager(requireContext())
             adapter = locationsAdapter
         }
