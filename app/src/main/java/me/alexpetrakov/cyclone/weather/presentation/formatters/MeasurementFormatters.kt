@@ -6,6 +6,7 @@ import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.units.domain.model.measurements.Measurement
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.*
 import java.text.NumberFormat
+import kotlin.math.roundToInt
 
 interface MeasurementFormatter<U : UnitDimension<U>> {
 
@@ -14,13 +15,14 @@ interface MeasurementFormatter<U : UnitDimension<U>> {
     fun format(measurement: Measurement<U>): TextResource
 }
 
-abstract class AbstractFormatter<U : UnitDimension<U>>(protected val numberFormat: NumberFormat) :
-    MeasurementFormatter<U> {
+abstract class AbstractFormatter<U : UnitDimension<U>>(
+    private val numberFormat: NumberFormat
+) : MeasurementFormatter<U> {
 
     override fun format(measurement: Measurement<U>, targetUnit: U): TextResource {
-        val convertedMeasurement = measurement.convertTo(targetUnit)
-        val templateResId = getTemplate(convertedMeasurement.unit)
-        val formattedValue = numberFormat.format(convertedMeasurement.value)
+        val convertedValue = measurement.convertTo(targetUnit).value.roundToInt()
+        val formattedValue = numberFormat.format(convertedValue)
+        val templateResId = getTemplate(targetUnit)
         return TextResource.from(templateResId, formattedValue)
     }
 
