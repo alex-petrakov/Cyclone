@@ -58,7 +58,7 @@ class LocationSearchFragment : Fragment() {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                        hideKeyboard()
+                        viewModel.onScrollResults()
                     }
                 }
             })
@@ -67,7 +67,6 @@ class LocationSearchFragment : Fragment() {
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_SEARCH -> {
-                        hideKeyboard()
                         viewModel.onPerformSearch()
                         true
                     }
@@ -84,6 +83,7 @@ class LocationSearchFragment : Fragment() {
     private fun observeViewModel(): Unit = with(viewModel) {
         searchResultsViewState.observe(viewLifecycleOwner) { render(it) }
         queryViewState.observe(viewLifecycleOwner) { renderQuery(it) }
+        viewEffect.observe(viewLifecycleOwner) { handle(it) }
     }
 
     private fun render(viewState: SearchResultsViewState): Unit = with(binding) {
@@ -120,6 +120,12 @@ class LocationSearchFragment : Fragment() {
 
     private fun renderContent(viewState: SearchResultsViewState.Content) {
         resultsAdapter.submitList(viewState.searchResults)
+    }
+
+    private fun handle(effect: ViewEffect) {
+        when (effect) {
+            ViewEffect.HIDE_KEYBOARD -> hideKeyboard()
+        }
     }
 
     override fun onDestroyView() {

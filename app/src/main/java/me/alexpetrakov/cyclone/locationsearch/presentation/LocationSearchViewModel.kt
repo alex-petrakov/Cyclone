@@ -5,6 +5,7 @@ import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.alexpetrakov.cyclone.common.presentation.SingleLiveEvent
 import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.interactors.LocationSearchInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.model.Fail
@@ -25,6 +26,10 @@ class LocationSearchViewModel(
 
     val queryViewState get() = savedStateHandle.getLiveData(STATE_QUERY, "")
 
+    private val _viewEffect = SingleLiveEvent<ViewEffect>()
+
+    val viewEffect: LiveData<ViewEffect> get() = _viewEffect
+
     init {
         if (savedStateHandle.contains(STATE_QUERY)) {
             onPerformSearch()
@@ -39,6 +44,7 @@ class LocationSearchViewModel(
     }
 
     fun onPerformSearch() {
+        dispatchHideKeyboardEvent()
         val text = queryViewState.value!!
         if (text.isBlank()) {
             return
@@ -59,10 +65,24 @@ class LocationSearchViewModel(
     }
 
     fun onAddSearchResultToSavedLocations(searchResult: SearchResultUiItem) {
+        dispatchHideKeyboardEvent()
         viewModelScope.launch {
             locationsInteractor.saveLocation(searchResult.placeName, searchResult.coordinates)
             router.exit()
         }
+    }
+
+    fun onScrollResults() {
+        dispatchHideKeyboardEvent()
+    }
+
+    fun onNavigateBack() {
+        dispatchHideKeyboardEvent()
+        router.exit()
+    }
+
+    private fun dispatchHideKeyboardEvent() {
+        _viewEffect.value = ViewEffect.HIDE_KEYBOARD
     }
 
     private suspend fun mapSearchResultsToViewState(searchResults: List<SearchResult>): SearchResultsViewState {
@@ -83,10 +103,6 @@ class LocationSearchViewModel(
 
     private fun mapFailureToViewState(fail: Fail): SearchResultsViewState {
         return SearchResultsViewState.Error(isLoading = false)
-    }
-
-    fun onNavigateBack() {
-        router.exit()
     }
 
     companion object {
