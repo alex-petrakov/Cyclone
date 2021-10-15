@@ -25,7 +25,6 @@
     <string name="weather_unable_to_open_settings">Не удалось открыть экран настроек</string>
     <string name="weather_allow_access_to_your_location">Предоставьте доступ к местоположению</string>
     <string name="weather_location_permission_rationale_message">Чтобы получить прогноз погоды для вашего района, приложению необходим доступ к местоположению устройства. Эти данные используются только для получения прогноза погоды.</string>
-    <string name="weather_change_location">Изменить место</string>
     <string name="weather_action_open_settings">Настройки</string>
     <string name="weather_template_temperature_degree"><xliff:g example="9" id="temperature value">%s</xliff:g>°</string>
     <string name="weather_template_temperature_kelvin"><xliff:g example="282" id="temperature value">%s</xliff:g>K</string>
