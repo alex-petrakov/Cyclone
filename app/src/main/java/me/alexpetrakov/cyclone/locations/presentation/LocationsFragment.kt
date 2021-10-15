@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,6 +58,7 @@ class LocationsFragment : Fragment() {
     }
 
     private fun prepareView(): Unit = with(binding) {
+        ViewCompat.setOnApplyWindowInsetsListener(collapsingToolbarLayout, null)
         toolbar.setOnClickListener { viewModel.onNavigateBack() }
         addFloatingButton.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

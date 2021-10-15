@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.github.terrakok.cicerone.Router
 import me.alexpetrakov.cyclone.databinding.FragmentSettingsBinding
@@ -32,6 +33,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun prepareView(): Unit = with(binding) {
+        ViewCompat.setOnApplyWindowInsetsListener(collapsingToolbarLayout, null)
         toolbar.setNavigationOnClickListener { router.exit() }
     }
 

@@ -51,7 +51,6 @@ fun View.extendBottomPaddingWithSystemInsets() {
         view.updatePadding(
             bottom = paddingState.bottom + windowInsets.systemBars.bottom
         )
-        WindowInsetsCompat.CONSUMED
     }
 }
 
