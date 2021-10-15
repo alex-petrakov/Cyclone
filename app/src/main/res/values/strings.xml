@@ -68,6 +68,6 @@
     <string name="settings_hectopascals">Hectopascals (hPa)</string>
     <string name="settings_kilopascals">Kilopascals (kPa)</string>
     <string name="settings_millibars">Millibars (mbar)</string>
-    <string name="settings_millimeters_of_mercur">Millimeters of mercury (mmHg)</string>
+    <string name="settings_millimeters_of_mercury">Millimeters of mercury (mmHg)</string>
     <string name="settings_inches_of_mercury">Inches of mercury (inHg)</string>
 </resources>

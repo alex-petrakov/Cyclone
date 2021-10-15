@@ -69,6 +69,6 @@
     <string name="settings_hectopascals">Гектопаскали (гПа)</string>
     <string name="settings_kilopascals">Килопаскали (кПа)</string>
     <string name="settings_millibars">Миллибары (мбар)</string>
-    <string name="settings_millimeters_of_mercur">Миллиметры ртутного столба (мм рт. ст.)</string>
+    <string name="settings_millimeters_of_mercury">Миллиметры ртутного столба (мм рт. ст.)</string>
     <string name="settings_inches_of_mercury">Дюймы ртутного столба (inHg)</string>
 </resources>

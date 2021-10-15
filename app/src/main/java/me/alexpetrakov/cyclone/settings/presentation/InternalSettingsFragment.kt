@@ -145,7 +145,7 @@ private fun PressureUnit.getLocalizedName(context: Context): String {
         PressureUnit.Hectopascals -> R.string.settings_hectopascals
         PressureUnit.Kilopascals -> R.string.settings_kilopascals
         PressureUnit.Millibars -> R.string.settings_millibars
-        PressureUnit.MillimetersOfMercury -> R.string.settings_millimeters_of_mercur
+        PressureUnit.MillimetersOfMercury -> R.string.settings_millimeters_of_mercury
         PressureUnit.InchesOfMercury -> R.string.settings_inches_of_mercury
     }
     return context.getString(resId)
