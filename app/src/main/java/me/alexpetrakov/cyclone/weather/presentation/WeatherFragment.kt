@@ -75,11 +75,15 @@ class WeatherFragment : Fragment() {
     }
 
     private fun prepareViews(): Unit = with(binding) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            contentView.recyclerView.extendBottomPaddingWithSystemInsets()
+            noConnectionView.extendBottomPaddingWithSystemInsets()
+            noLocationAccessView.extendBottomPaddingWithSystemInsets()
+            noAvailableLocationView.extendBottomPaddingWithSystemInsets()
+        }
+
         contentView.apply {
             recyclerView.apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    extendBottomPaddingWithSystemInsets()
-                }
                 clipToPadding = false
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = weatherAdapter
