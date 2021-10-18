@@ -100,7 +100,9 @@ class LocationSearchViewModel(
     }
 
     private fun mapFailureToViewState(fail: Fail): SearchResultsViewState {
-        return SearchResultsViewState.Error(isLoading = false)
+        return when (fail) {
+            is Fail.NoConnection -> SearchResultsViewState.Error(isLoading = false)
+        }
     }
 
     companion object {

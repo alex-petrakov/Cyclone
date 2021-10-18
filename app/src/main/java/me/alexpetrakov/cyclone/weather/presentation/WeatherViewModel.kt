@@ -166,7 +166,10 @@ class WeatherViewModel(
                 { mapWeatherToViewState(it) },
                 ::mapFailureToViewState
             )
-            _viewEffect.value = weather.fold(::mapWeatherToViewEffect, ::mapFailureToViewEffect)
+            _viewEffect.value = weather.fold(
+                { ViewEffect.None },
+                ::mapFailureToViewEffect
+            )
         }
     }
 
@@ -184,10 +187,6 @@ class WeatherViewModel(
             is Fail.LocationIsNotAvailable -> WeatherViewState.Error.NoAvailableLocation
             is Fail.NoConnection -> WeatherViewState.Error.NoConnection
         }
-    }
-
-    private fun mapWeatherToViewEffect(weather: Weather): ViewEffect {
-        return ViewEffect.None
     }
 
     private fun mapFailureToViewEffect(fail: Fail): ViewEffect {
