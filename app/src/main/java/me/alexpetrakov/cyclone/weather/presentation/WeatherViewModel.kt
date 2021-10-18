@@ -44,17 +44,14 @@ class WeatherViewModel(
     private val _weatherViewState = MutableLiveData<WeatherViewState>().apply {
         value = WeatherViewState.Loading
     }
-
-    val weatherViewState get() = _weatherViewState
+    val weatherViewState: LiveData<WeatherViewState> get() = _weatherViewState
 
     private val _toolbarViewState = MutableLiveData<ToolbarViewState>().apply {
         value = ToolbarViewState("".asTextResource())
     }
-
-    val toolbarViewState get() = _toolbarViewState
+    val toolbarViewState: LiveData<ToolbarViewState> get() = _toolbarViewState
 
     private val _viewEffect = SingleLiveEvent<ViewEffect>()
-
     val viewEffect: LiveData<ViewEffect> get() = _viewEffect
 
     private val dateFormatter = DateTimeFormatter.ofPattern("EEEE d")

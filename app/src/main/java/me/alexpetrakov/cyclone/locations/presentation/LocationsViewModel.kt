@@ -20,7 +20,7 @@ class LocationsViewModel(
     private val locationsInteractor: LocationsInteractor
 ) : ViewModel() {
 
-    val viewState = locationsInteractor.savedLocationsStream
+    val viewState: LiveData<ViewState> = locationsInteractor.savedLocationsStream
         .map { list ->
             ViewState(
                 list.mapToUiModels(),
@@ -30,7 +30,6 @@ class LocationsViewModel(
         .asLiveData()
 
     private val _viewEffect = SingleLiveEvent<ViewEffect>()
-
     val viewEffect: LiveData<ViewEffect> get() = _viewEffect
 
 

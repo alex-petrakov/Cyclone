@@ -21,13 +21,11 @@ class LocationSearchViewModel(
     private val _searchResultsViewState = MutableLiveData<SearchResultsViewState>().apply {
         value = SearchResultsViewState.Content(isLoading = false, emptyList())
     }
-
     val searchResultsViewState: LiveData<SearchResultsViewState> get() = _searchResultsViewState
 
-    val queryViewState get() = savedStateHandle.getLiveData(STATE_QUERY, "")
+    val queryViewState: LiveData<String> get() = savedStateHandle.getLiveData(STATE_QUERY, "")
 
     private val _viewEffect = SingleLiveEvent<ViewEffect>()
-
     val viewEffect: LiveData<ViewEffect> get() = _viewEffect
 
     init {
