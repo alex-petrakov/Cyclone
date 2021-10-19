@@ -22,6 +22,7 @@ val weatherModule = module {
 
     single<DeviceLocator> {
         DeviceLocationProvider(
+            androidContext(),
             LocationServices.getFusedLocationProviderClient(androidContext()),
             LocationServices.getSettingsClient(androidContext())
         )
