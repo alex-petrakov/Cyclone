@@ -27,7 +27,7 @@ class LocationsInteractor(private val locationsRepository: LocationsRepository) 
     }
 
     suspend fun updateLocationsOrder(ids: List<Int>) {
-        val filteredIds = ids.filter { it == Location.CurrentLocation.id }
+        val filteredIds = ids.filter { it != Location.CurrentLocation.id }
         locationsRepository.updateLocationsOrder(filteredIds)
     }
 
