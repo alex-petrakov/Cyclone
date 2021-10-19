@@ -27,9 +27,8 @@ class LocationRationaleDialog : DialogFragment() {
             .create()
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
+    override fun onCancel(dialog: DialogInterface) {
         viewModel.onLocationPermissionRationaleOutcome(RationaleOutcome.DENIED)
-        super.onDismiss(dialog)
     }
 
     companion object {
