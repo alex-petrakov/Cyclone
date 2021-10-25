@@ -12,11 +12,15 @@ import me.alexpetrakov.cyclone.locations.data.db.LocationEntity
 import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.model.Location
 import me.alexpetrakov.cyclone.locations.domain.repositories.LocationsRepository
+import javax.inject.Inject
+import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocationsDataStore(
+@Singleton
+class LocationsDataStore @Inject constructor(
     private val database: AppDatabase,
-    prefs: SharedPreferences
+    @LocationPrefs prefs: SharedPreferences
 ) : LocationsRepository {
 
     private val locationDao get() = database.locationDao()
@@ -80,4 +84,7 @@ class LocationsDataStore(
             position
         )
     }
+
+    @Qualifier
+    annotation class LocationPrefs
 }

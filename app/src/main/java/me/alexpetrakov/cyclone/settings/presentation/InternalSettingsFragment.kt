@@ -11,17 +11,24 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
+import me.alexpetrakov.cyclone.common.presentation.extensions.requireAppComponent
 import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.LengthUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.PressureUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.SpeedUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.TemperatureUnit
 import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
 class InternalSettingsFragment : PreferenceFragmentCompat() {
 
-    private val unitsInteractor by inject<UnitsInteractor>()
+    @Inject
+    lateinit var unitsInteractor: UnitsInteractor
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requireAppComponent().inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val context = preferenceManager.context

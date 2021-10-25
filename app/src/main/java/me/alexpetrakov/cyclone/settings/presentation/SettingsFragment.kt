@@ -7,16 +7,23 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.github.terrakok.cicerone.Router
+import me.alexpetrakov.cyclone.common.presentation.extensions.requireAppComponent
 import me.alexpetrakov.cyclone.databinding.FragmentSettingsBinding
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
 class SettingsFragment : Fragment() {
 
-    private val router by inject<Router>()
+    @Inject
+    lateinit var router: Router
 
     private var _binding: FragmentSettingsBinding? = null
 
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requireAppComponent().inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

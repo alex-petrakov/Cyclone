@@ -1,9 +1,6 @@
 package me.alexpetrakov.cyclone.locations.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -14,6 +11,7 @@ import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
 import me.alexpetrakov.cyclone.locations.domain.model.Location
+import javax.inject.Inject
 
 class LocationsViewModel(
     private val router: Router,
@@ -80,6 +78,18 @@ class LocationsViewModel(
                 name.asTextResource(),
                 true
             )
+        }
+    }
+
+    class Factory @Inject constructor(
+        private val router: Router,
+        private val locationsInteractor: LocationsInteractor
+    ) : ViewModelProvider.Factory {
+
+        @Suppress("unchecked_cast")
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            require(modelClass == LocationsViewModel::class.java)
+            return LocationsViewModel(router, locationsInteractor) as T
         }
     }
 }

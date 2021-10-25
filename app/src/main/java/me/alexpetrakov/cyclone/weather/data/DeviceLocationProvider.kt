@@ -21,8 +21,11 @@ import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
 import me.alexpetrakov.cyclone.weather.domain.model.Fail
 import me.alexpetrakov.cyclone.weather.domain.repositories.DeviceLocator
 import java.util.concurrent.TimeUnit.MINUTES
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DeviceLocationProvider(
+@Singleton
+class DeviceLocationProvider @Inject constructor(
     private val context: Context,
     private val fusedLocationProvider: FusedLocationProviderClient,
     private val settingsClient: SettingsClient

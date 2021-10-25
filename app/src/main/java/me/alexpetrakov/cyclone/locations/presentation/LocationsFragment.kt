@@ -7,21 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomMarginWithSystemInsets
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
+import me.alexpetrakov.cyclone.common.presentation.extensions.requireAppComponent
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
 import me.alexpetrakov.cyclone.locations.presentation.dialogs.RemovalConfirmationDialog
 import me.alexpetrakov.cyclone.locations.presentation.list.LocationsAdapter
 import me.alexpetrakov.cyclone.locations.presentation.list.OnMoveItemCallback
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class LocationsFragment : Fragment() {
 
-    private val viewModel by viewModel<LocationsViewModel>()
+    @Inject
+    lateinit var viewModelFactory: LocationsViewModel.Factory
+
+    private val viewModel by viewModels<LocationsViewModel> { viewModelFactory }
 
     private var _binding: FragmentLocationsBinding? = null
 
@@ -42,6 +47,11 @@ class LocationsFragment : Fragment() {
         onItemClick = { location -> viewModel.onSelectLocation(location) },
         onRemoveButtonClick = { location -> viewModel.onTryToRemoveLocation(location) }
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requireAppComponent().inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

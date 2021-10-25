@@ -12,8 +12,13 @@ import me.alexpetrakov.cyclone.locationsearch.domain.model.SearchResult
 import me.alexpetrakov.cyclone.locationsearch.domain.repositories.LocationSearchRepository
 import retrofit2.HttpException
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocationSearchProvider(private val geocodingApi: GeocodingApi) : LocationSearchRepository {
+@Singleton
+class LocationSearchProvider @Inject constructor(
+    private val geocodingApi: GeocodingApi
+) : LocationSearchRepository {
 
     override suspend fun searchLocations(query: String): Result<List<SearchResult>, Fail> {
         return Result.fromNetworkRequest { geocodingApi.searchLocationsByName(query, 25) }

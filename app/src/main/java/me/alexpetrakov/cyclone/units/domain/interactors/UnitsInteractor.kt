@@ -7,8 +7,9 @@ import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.PressureUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.SpeedUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.TemperatureUnit
 import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository
+import javax.inject.Inject
 
-class UnitsInteractor(private val unitsRepository: UnitsRepository) {
+class UnitsInteractor @Inject constructor(private val unitsRepository: UnitsRepository) {
 
     val temperatureUnits: List<TemperatureUnit> get() = unitsRepository.temperatureUnits
 

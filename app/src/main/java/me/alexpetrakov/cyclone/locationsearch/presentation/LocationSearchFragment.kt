@@ -9,18 +9,25 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
 import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
+import me.alexpetrakov.cyclone.common.presentation.extensions.requireAppComponent
 import me.alexpetrakov.cyclone.databinding.FragmentLocationSearchBinding
 import me.alexpetrakov.cyclone.locationsearch.presentation.list.ResultsAdapter
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import javax.inject.Inject
 
 class LocationSearchFragment : Fragment() {
 
-    private val viewModel by stateViewModel<LocationSearchViewModel>()
+    @Inject
+    lateinit var viewModelFactoryAssistant: LocationSearchViewModel.Factory.Assistant
+
+    private val viewModel by viewModels<LocationSearchViewModel> {
+        viewModelFactoryAssistant.create(this)
+    }
 
     private var _binding: FragmentLocationSearchBinding? = null
 
@@ -29,6 +36,11 @@ class LocationSearchFragment : Fragment() {
     private val resultsAdapter = ResultsAdapter(
         onItemClick = { clickedItem -> viewModel.onAddSearchResultToSavedLocations(clickedItem) }
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requireAppComponent().inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
