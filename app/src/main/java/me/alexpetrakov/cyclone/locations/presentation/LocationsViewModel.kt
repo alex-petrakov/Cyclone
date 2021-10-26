@@ -2,6 +2,9 @@ package me.alexpetrakov.cyclone.locations.presentation
 
 import androidx.lifecycle.*
 import com.github.terrakok.cicerone.Router
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.alexpetrakov.cyclone.AppScreens
@@ -11,9 +14,9 @@ import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
 import me.alexpetrakov.cyclone.locations.domain.model.Location
-import javax.inject.Inject
 
-class LocationsViewModel(
+class LocationsViewModel @AssistedInject constructor(
+    @Assisted private val stateHandle: SavedStateHandle,
     private val router: Router,
     private val locationsInteractor: LocationsInteractor
 ) : ViewModel() {
@@ -81,15 +84,8 @@ class LocationsViewModel(
         }
     }
 
-    class Factory @Inject constructor(
-        private val router: Router,
-        private val locationsInteractor: LocationsInteractor
-    ) : ViewModelProvider.Factory {
-
-        @Suppress("unchecked_cast")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            require(modelClass == LocationsViewModel::class.java)
-            return LocationsViewModel(router, locationsInteractor) as T
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(handle: SavedStateHandle): LocationsViewModel
     }
 }

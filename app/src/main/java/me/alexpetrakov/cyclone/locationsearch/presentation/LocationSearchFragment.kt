@@ -12,10 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
-import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
-import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
-import me.alexpetrakov.cyclone.common.presentation.extensions.requireAppComponent
+import me.alexpetrakov.cyclone.common.presentation.extensions.*
 import me.alexpetrakov.cyclone.databinding.FragmentLocationSearchBinding
 import me.alexpetrakov.cyclone.locationsearch.presentation.list.ResultsAdapter
 import javax.inject.Inject
@@ -23,10 +20,10 @@ import javax.inject.Inject
 class LocationSearchFragment : Fragment() {
 
     @Inject
-    lateinit var viewModelFactoryAssistant: LocationSearchViewModel.Factory.Assistant
+    lateinit var assistedVmFactory: LocationSearchViewModel.Factory
 
     private val viewModel by viewModels<LocationSearchViewModel> {
-        viewModelFactoryAssistant.create(this)
+        newViewModelFactory { handle -> assistedVmFactory.create(handle) }
     }
 
     private var _binding: FragmentLocationSearchBinding? = null

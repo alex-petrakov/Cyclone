@@ -14,6 +14,7 @@ import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomMarginWithSystemInsets
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
+import me.alexpetrakov.cyclone.common.presentation.extensions.newViewModelFactory
 import me.alexpetrakov.cyclone.common.presentation.extensions.requireAppComponent
 import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
 import me.alexpetrakov.cyclone.locations.presentation.dialogs.RemovalConfirmationDialog
@@ -24,9 +25,11 @@ import javax.inject.Inject
 class LocationsFragment : Fragment() {
 
     @Inject
-    lateinit var viewModelFactory: LocationsViewModel.Factory
+    lateinit var assistedVmFactory: LocationsViewModel.Factory
 
-    private val viewModel by viewModels<LocationsViewModel> { viewModelFactory }
+    private val viewModel by viewModels<LocationsViewModel> {
+        newViewModelFactory { handle -> assistedVmFactory.create(handle) }
+    }
 
     private var _binding: FragmentLocationsBinding? = null
 

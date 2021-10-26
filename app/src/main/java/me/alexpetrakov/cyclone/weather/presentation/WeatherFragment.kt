@@ -27,6 +27,7 @@ import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
+import me.alexpetrakov.cyclone.common.presentation.extensions.newViewModelFactory
 import me.alexpetrakov.cyclone.common.presentation.extensions.requireAppComponent
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
 import me.alexpetrakov.cyclone.weather.presentation.PermissionCheckResult.*
@@ -37,9 +38,11 @@ import javax.inject.Inject
 class WeatherFragment : Fragment() {
 
     @Inject
-    lateinit var viewModelFactory: WeatherViewModel.Factory
+    lateinit var assistedVmFactory: WeatherViewModel.Factory
 
-    private val viewModel by viewModels<WeatherViewModel> { viewModelFactory }
+    private val viewModel by viewModels<WeatherViewModel> {
+        newViewModelFactory { handle -> assistedVmFactory.create(handle) }
+    }
 
     private var _binding: FragmentWeatherBinding? = null
 

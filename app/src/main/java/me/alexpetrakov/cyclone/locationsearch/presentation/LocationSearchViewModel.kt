@@ -1,7 +1,6 @@
 package me.alexpetrakov.cyclone.locationsearch.presentation
 
 import androidx.lifecycle.*
-import androidx.savedstate.SavedStateRegistryOwner
 import com.github.terrakok.cicerone.Router
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -15,8 +14,8 @@ import me.alexpetrakov.cyclone.locationsearch.domain.interactors.LocationSearchI
 import me.alexpetrakov.cyclone.locationsearch.domain.model.Fail
 import me.alexpetrakov.cyclone.locationsearch.domain.model.SearchResult
 
-class LocationSearchViewModel(
-    private val savedStateHandle: SavedStateHandle,
+class LocationSearchViewModel @AssistedInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val locationSearchInteractor: LocationSearchInteractor,
     private val locationsInteractor: LocationsInteractor,
     private val router: Router
@@ -113,31 +112,8 @@ class LocationSearchViewModel(
         private const val STATE_QUERY = "QUERY"
     }
 
-    class Factory @AssistedInject constructor(
-        private val locationSearchInteractor: LocationSearchInteractor,
-        private val locationsInteractor: LocationsInteractor,
-        private val router: Router,
-        @Assisted savedStateRegistryOwner: SavedStateRegistryOwner
-    ) : AbstractSavedStateViewModelFactory(savedStateRegistryOwner, null) {
-
-        @Suppress("unchecked_cast")
-        override fun <T : ViewModel?> create(
-            key: String,
-            modelClass: Class<T>,
-            handle: SavedStateHandle
-        ): T {
-            require(modelClass == LocationSearchViewModel::class.java)
-            return LocationSearchViewModel(
-                handle,
-                locationSearchInteractor,
-                locationsInteractor,
-                router
-            ) as T
-        }
-
-        @AssistedFactory
-        interface Assistant {
-            fun create(savedStateRegistryOwner: SavedStateRegistryOwner): Factory
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(handle: SavedStateHandle): LocationSearchViewModel
     }
 }

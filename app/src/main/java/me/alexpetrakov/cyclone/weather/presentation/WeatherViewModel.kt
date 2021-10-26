@@ -2,6 +2,9 @@ package me.alexpetrakov.cyclone.weather.presentation
 
 import androidx.lifecycle.*
 import com.github.terrakok.cicerone.Router
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
@@ -30,9 +33,9 @@ import me.alexpetrakov.cyclone.weather.presentation.formatters.TemperatureFormat
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import javax.inject.Inject
 
-class WeatherViewModel(
+class WeatherViewModel @AssistedInject constructor(
+    @Assisted private val stateHandle: SavedStateHandle,
     private val weatherInteractor: WeatherInteractor,
     private val locationsInteractor: LocationsInteractor,
     private val unitsInteractor: UnitsInteractor,
@@ -292,23 +295,9 @@ class WeatherViewModel(
         }
     }
 
-    class Factory @Inject constructor(
-        private val weatherInteractor: WeatherInteractor,
-        private val locationsInteractor: LocationsInteractor,
-        private val unitsInteractor: UnitsInteractor,
-        private val router: Router
-    ) : ViewModelProvider.Factory {
-
-        @Suppress("unchecked_cast")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            require(modelClass == WeatherViewModel::class.java)
-            return WeatherViewModel(
-                weatherInteractor,
-                locationsInteractor,
-                unitsInteractor,
-                router
-            ) as T
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(handle: SavedStateHandle): WeatherViewModel
     }
 }
 
