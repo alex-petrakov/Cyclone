@@ -9,18 +9,20 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
 import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
 import me.alexpetrakov.cyclone.databinding.FragmentLocationSearchBinding
 import me.alexpetrakov.cyclone.locationsearch.presentation.list.ResultsAdapter
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
+@AndroidEntryPoint
 class LocationSearchFragment : Fragment() {
 
-    private val viewModel by stateViewModel<LocationSearchViewModel>()
+    private val viewModel by viewModels<LocationSearchViewModel>()
 
     private var _binding: FragmentLocationSearchBinding? = null
 

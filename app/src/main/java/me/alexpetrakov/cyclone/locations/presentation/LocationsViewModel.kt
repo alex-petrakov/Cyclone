@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.alexpetrakov.cyclone.AppScreens
@@ -14,8 +15,10 @@ import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asTextResource
 import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
 import me.alexpetrakov.cyclone.locations.domain.model.Location
+import javax.inject.Inject
 
-class LocationsViewModel(
+@HiltViewModel
+class LocationsViewModel @Inject constructor(
     private val router: Router,
     private val locationsInteractor: LocationsInteractor
 ) : ViewModel() {

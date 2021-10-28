@@ -8,8 +8,9 @@ import me.alexpetrakov.cyclone.weather.domain.model.Fail
 import me.alexpetrakov.cyclone.weather.domain.model.Weather
 import me.alexpetrakov.cyclone.weather.domain.repositories.DeviceLocator
 import me.alexpetrakov.cyclone.weather.domain.repositories.WeatherRepository
+import javax.inject.Inject
 
-class WeatherInteractor(
+class WeatherInteractor @Inject constructor(
     private val weatherRepo: WeatherRepository,
     private val locationRepo: DeviceLocator
 ) {

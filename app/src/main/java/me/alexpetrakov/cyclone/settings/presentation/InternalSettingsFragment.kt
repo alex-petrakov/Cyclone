@@ -9,6 +9,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.units.domain.interactors.UnitsInteractor
@@ -17,11 +18,13 @@ import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.PressureUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.SpeedUnit
 import me.alexpetrakov.cyclone.units.domain.model.unitsofmeasure.TemperatureUnit
 import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class InternalSettingsFragment : PreferenceFragmentCompat() {
 
-    private val unitsInteractor by inject<UnitsInteractor>()
+    @Inject
+    lateinit var unitsInteractor: UnitsInteractor
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val context = preferenceManager.context

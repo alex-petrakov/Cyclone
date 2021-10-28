@@ -13,8 +13,11 @@ import me.alexpetrakov.cyclone.weather.domain.model.Weather
 import me.alexpetrakov.cyclone.weather.domain.repositories.WeatherRepository
 import retrofit2.HttpException
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class WeatherProvider(
+@Singleton
+class WeatherProvider @Inject constructor(
     private val forecastApi: ForecastApi
 ) : WeatherRepository {
 

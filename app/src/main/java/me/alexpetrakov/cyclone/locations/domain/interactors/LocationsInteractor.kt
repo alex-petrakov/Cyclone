@@ -5,8 +5,9 @@ import kotlinx.coroutines.flow.first
 import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.model.Location
 import me.alexpetrakov.cyclone.locations.domain.repositories.LocationsRepository
+import javax.inject.Inject
 
-class LocationsInteractor(private val locationsRepository: LocationsRepository) {
+class LocationsInteractor @Inject constructor(private val locationsRepository: LocationsRepository) {
 
     val savedLocationsStream: Flow<List<Location>>
         get() = locationsRepository.getLocationsStream()

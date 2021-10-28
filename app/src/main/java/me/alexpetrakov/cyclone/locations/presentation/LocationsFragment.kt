@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomMarginWithSystemInsets
@@ -17,11 +19,11 @@ import me.alexpetrakov.cyclone.databinding.FragmentLocationsBinding
 import me.alexpetrakov.cyclone.locations.presentation.dialogs.RemovalConfirmationDialog
 import me.alexpetrakov.cyclone.locations.presentation.list.LocationsAdapter
 import me.alexpetrakov.cyclone.locations.presentation.list.OnMoveItemCallback
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class LocationsFragment : Fragment() {
 
-    private val viewModel by viewModel<LocationsViewModel>()
+    private val viewModel by viewModels<LocationsViewModel>()
 
     private var _binding: FragmentLocationsBinding? = null
 

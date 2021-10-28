@@ -2,6 +2,7 @@ package me.alexpetrakov.cyclone.locationsearch.presentation
 
 import androidx.lifecycle.*
 import com.github.terrakok.cicerone.Router
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -10,8 +11,10 @@ import me.alexpetrakov.cyclone.locations.domain.interactors.LocationsInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.interactors.LocationSearchInteractor
 import me.alexpetrakov.cyclone.locationsearch.domain.model.Fail
 import me.alexpetrakov.cyclone.locationsearch.domain.model.SearchResult
+import javax.inject.Inject
 
-class LocationSearchViewModel(
+@HiltViewModel
+class LocationSearchViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val locationSearchInteractor: LocationSearchInteractor,
     private val locationsInteractor: LocationsInteractor,

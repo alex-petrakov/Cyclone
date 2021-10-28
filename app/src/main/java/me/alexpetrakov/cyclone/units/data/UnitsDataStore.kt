@@ -18,9 +18,16 @@ import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Compani
 import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Companion.PREF_KEY_PRESSURE_UNIT
 import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Companion.PREF_KEY_SPEED_UNIT
 import me.alexpetrakov.cyclone.units.domain.repositories.UnitsRepository.Companion.PREF_KEY_TEMPERATURE_UNIT
+import javax.inject.Inject
+import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class UnitsDataStore(prefs: SharedPreferences) : UnitsRepository {
+@Singleton
+class UnitsDataStore @Inject constructor(@UnitPrefs prefs: SharedPreferences) : UnitsRepository {
+
+    @Qualifier
+    annotation class UnitPrefs
 
     override val temperatureUnits: List<TemperatureUnit>
         get() = TemperatureUnit.values().toList()

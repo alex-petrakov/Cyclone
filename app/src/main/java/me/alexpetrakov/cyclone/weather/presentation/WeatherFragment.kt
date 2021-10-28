@@ -19,9 +19,11 @@ import androidx.activity.result.contract.ActivityResultContracts.StartIntentSend
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
 import com.google.android.gms.common.api.ResolvableApiException
+import dagger.hilt.android.AndroidEntryPoint
 import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.R
 import me.alexpetrakov.cyclone.common.presentation.asString
@@ -30,11 +32,11 @@ import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
 import me.alexpetrakov.cyclone.weather.presentation.PermissionCheckResult.*
 import me.alexpetrakov.cyclone.weather.presentation.dialogs.LocationRationaleDialog
 import me.alexpetrakov.cyclone.weather.presentation.list.WeatherAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
-    private val viewModel by viewModel<WeatherViewModel>()
+    private val viewModel by viewModels<WeatherViewModel>()
 
     private var _binding: FragmentWeatherBinding? = null
 

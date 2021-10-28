@@ -15,15 +15,19 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.tasks.CancellationTokenSource
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.tasks.await
 import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
 import me.alexpetrakov.cyclone.weather.domain.model.Fail
 import me.alexpetrakov.cyclone.weather.domain.repositories.DeviceLocator
 import java.util.concurrent.TimeUnit.MINUTES
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DeviceLocationProvider(
-    private val context: Context,
+@Singleton
+class DeviceLocationProvider @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val fusedLocationProvider: FusedLocationProviderClient,
     private val settingsClient: SettingsClient
 ) : DeviceLocator {
