@@ -24,7 +24,7 @@ presentation, domain and data. The presentation layer is organized using à la M
 At the top level, all app classes are packaged by feature, and within each feature the classes are
 packaged by layer.
 
-Core technologies: Koin, Coroutines, Retrofit, Moshi, Room, Cicerone.
+Core technologies: Hilt, Coroutines, Retrofit, Moshi, Room, Cicerone.
 
 ## Download
 
