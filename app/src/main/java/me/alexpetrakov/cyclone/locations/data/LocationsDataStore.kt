@@ -7,7 +7,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import me.alexpetrakov.cyclone.locations.data.db.AppDatabase
+import me.alexpetrakov.cyclone.locations.data.db.LocationDao
 import me.alexpetrakov.cyclone.locations.data.db.LocationEntity
 import me.alexpetrakov.cyclone.locations.domain.model.Coordinates
 import me.alexpetrakov.cyclone.locations.domain.model.Location
@@ -19,14 +19,12 @@ import javax.inject.Singleton
 @OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class LocationsDataStore @Inject constructor(
-    private val database: AppDatabase,
+    private val locationDao: LocationDao,
     @LocationPrefs prefs: SharedPreferences
 ) : LocationsRepository {
 
     @Qualifier
     annotation class LocationPrefs
-
-    private val locationDao get() = database.locationDao()
 
     private val flowPrefs = FlowSharedPreferences(prefs)
 
