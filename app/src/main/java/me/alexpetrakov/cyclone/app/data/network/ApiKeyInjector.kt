@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.common.data
+package me.alexpetrakov.cyclone.app.data.network
 
 import me.alexpetrakov.cyclone.BuildConfig
 import okhttp3.Interceptor

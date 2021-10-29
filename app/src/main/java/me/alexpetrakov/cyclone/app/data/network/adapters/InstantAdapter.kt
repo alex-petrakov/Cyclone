@@ -1,4 +1,4 @@
-package me.alexpetrakov.cyclone.common.data.adapters
+package me.alexpetrakov.cyclone.app.data.network.adapters
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
