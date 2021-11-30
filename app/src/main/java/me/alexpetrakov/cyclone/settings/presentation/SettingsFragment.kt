@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.github.terrakok.cicerone.Router
 import dagger.hilt.android.AndroidEntryPoint
+import me.alexpetrakov.cyclone.common.presentation.MaterialZAxisTransition
 import me.alexpetrakov.cyclone.databinding.FragmentSettingsBinding
 import javax.inject.Inject
 
@@ -20,6 +21,11 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
 
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MaterialZAxisTransition.setupOriginAndDestination(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

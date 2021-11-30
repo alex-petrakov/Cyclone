@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import me.alexpetrakov.cyclone.common.presentation.MaterialZAxisTransition
 import me.alexpetrakov.cyclone.common.presentation.TextResource
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomMarginWithSystemInsets
@@ -44,6 +45,11 @@ class LocationsFragment : Fragment() {
         onItemClick = { location -> viewModel.onSelectLocation(location) },
         onRemoveButtonClick = { location -> viewModel.onTryToRemoveLocation(location) }
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MaterialZAxisTransition.setupOriginAndDestination(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

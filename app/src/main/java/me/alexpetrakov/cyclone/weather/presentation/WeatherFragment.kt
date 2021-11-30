@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.ResolvableApiException
 import dagger.hilt.android.AndroidEntryPoint
 import me.alexpetrakov.cyclone.BuildConfig
 import me.alexpetrakov.cyclone.R
+import me.alexpetrakov.cyclone.common.presentation.MaterialZAxisTransition
 import me.alexpetrakov.cyclone.common.presentation.asString
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.databinding.FragmentWeatherBinding
@@ -60,6 +61,11 @@ class WeatherFragment : Fragment() {
                 else -> viewModel.onLocationRetrievalErrorNotResolved()
             }
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MaterialZAxisTransition.setupOrigin(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

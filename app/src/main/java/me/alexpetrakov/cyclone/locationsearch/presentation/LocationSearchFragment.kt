@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import me.alexpetrakov.cyclone.common.presentation.MaterialZAxisTransition
 import me.alexpetrakov.cyclone.common.presentation.extensions.extendBottomPaddingWithSystemInsets
 import me.alexpetrakov.cyclone.common.presentation.extensions.focusAndShowKeyboard
 import me.alexpetrakov.cyclone.common.presentation.extensions.hideKeyboard
@@ -31,6 +32,11 @@ class LocationSearchFragment : Fragment() {
     private val resultsAdapter = ResultsAdapter(
         onItemClick = { clickedItem -> viewModel.onAddSearchResultToSavedLocations(clickedItem) }
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MaterialZAxisTransition.setupOriginAndDestination(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
